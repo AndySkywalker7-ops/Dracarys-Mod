@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "SSS",
+    "S S"
+  ],
+  "key": {
+    "S": {
+      "item": "dracarysmod:white_dragon_scale"
+    }
+  },
+  "result": {
+    "item": "dracarysmod:white_dragon_scale_helmet",
+    "count": 1
+  }
+}

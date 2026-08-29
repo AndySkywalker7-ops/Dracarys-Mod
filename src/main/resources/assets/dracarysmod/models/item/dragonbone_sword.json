@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/handheld",
+  "textures": {
+    "layer0": "dracarysmod:item/dragonbone_sword"
+  }
+}

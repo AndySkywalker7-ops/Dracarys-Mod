@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/handheld",
+  "textures": {
+    "layer0": "dracarysmod:item/dragon_fang_dagger"
+  }
+}

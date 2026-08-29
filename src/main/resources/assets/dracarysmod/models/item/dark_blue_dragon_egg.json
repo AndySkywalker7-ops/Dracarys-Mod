@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "dracarysmod:item/dark_blue_dragon_egg"
+  }
+}

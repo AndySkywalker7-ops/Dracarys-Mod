@@ -1,0 +1,6 @@
+{
+  "type": "forge:add_features",
+  "biomes": "#dracarysmod:has_dragon_nests",
+  "features": "dracarysmod:dragon_nest",
+  "step": "surface_structures"
+}

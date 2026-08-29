@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "S S",
+    "S S"
+  ],
+  "key": {
+    "S": {
+      "item": "dracarysmod:gray_dragon_scale"
+    }
+  },
+  "result": {
+    "item": "dracarysmod:gray_dragon_scale_boots",
+    "count": 1
+  }
+}

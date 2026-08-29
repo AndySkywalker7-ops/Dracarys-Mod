@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "dracarysmod:item/white_dragon_scale_leggings"
+  }
+}

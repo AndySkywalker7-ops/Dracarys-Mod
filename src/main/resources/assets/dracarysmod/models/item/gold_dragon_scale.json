@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "dracarysmod:item/gold_dragon_scale"
+  }
+}

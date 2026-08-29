@@ -1,0 +1,9 @@
+Dracarys Mod build attempt
+Date: 2026-08-29
+Target: Minecraft 1.20.1 / Forge 47.4.10 / Java 17
+
+$ ./gradlew build
+Gradle is not installed and gradle-wrapper.jar is not bundled in this generated workspace.
+Install Gradle 8.8 or import build.gradle in IntelliJ with JDK 17, then run: gradle build
+
+Exit code: 1

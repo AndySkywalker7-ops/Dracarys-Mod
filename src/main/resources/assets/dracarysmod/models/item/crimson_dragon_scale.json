@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "dracarysmod:item/crimson_dragon_scale"
+  }
+}

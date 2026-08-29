@@ -1,0 +1,20 @@
+{
+  "replace": false,
+  "values": [
+    "dracarysmod:black_dragon_scale",
+    "dracarysmod:white_dragon_scale",
+    "dracarysmod:gray_dragon_scale",
+    "dracarysmod:red_dragon_scale",
+    "dracarysmod:crimson_dragon_scale",
+    "dracarysmod:orange_dragon_scale",
+    "dracarysmod:gold_dragon_scale",
+    "dracarysmod:green_dragon_scale",
+    "dracarysmod:dark_green_dragon_scale",
+    "dracarysmod:blue_dragon_scale",
+    "dracarysmod:dark_blue_dragon_scale",
+    "dracarysmod:turquoise_dragon_scale",
+    "dracarysmod:purple_dragon_scale",
+    "dracarysmod:silver_dragon_scale",
+    "dracarysmod:brown_dragon_scale"
+  ]
+}
