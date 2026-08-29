@@ -27,12 +27,7 @@ public final class DracarysCommands {
 
                                 DragonVariant variant = DragonVariant.byName(StringArgumentType.getString(context, "variant"));
                                 DragonSizeTier size = DragonSizeTier.byName(StringArgumentType.getString(context, "size"));
-                                DragonStage stage;
-                                try {
-                                    stage = DragonStage.valueOf(StringArgumentType.getString(context, "stage").toUpperCase());
-                                } catch (IllegalArgumentException ignored) {
-                                    stage = DragonStage.ADULT;
-                                }
+                                final DragonStage stage = parseStage(StringArgumentType.getString(context, "stage"));
 
                                 dragon.moveTo(player.getX() + 2, player.getY() + 1, player.getZ() + 2, player.getYRot(), 0.0F);
                                 dragon.configureForCommand(variant, size, stage);
@@ -63,6 +58,14 @@ public final class DracarysCommands {
                     return 1;
                 }))
         );
+    }
+
+    private static DragonStage parseStage(String value) {
+        try {
+            return DragonStage.valueOf(value.toUpperCase());
+        } catch (IllegalArgumentException ignored) {
+            return DragonStage.ADULT;
+        }
     }
 
     private DracarysCommands() {}
