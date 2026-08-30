@@ -114,7 +114,7 @@ public class DracarysDragonEntity extends TamableAnimal implements FlyingAnimal 
      */
     @Override
     public boolean shouldRenderAtSqrDistance(double distanceSqr){
-        double renderDistance=Math.max(128.0D,Math.min(320.0D,conceptualLength()*8.0D));
+        double renderDistance=Math.max(192.0D,Math.min(512.0D,conceptualLength()*16.0D));
         return distanceSqr<renderDistance*renderDistance;
     }
 
