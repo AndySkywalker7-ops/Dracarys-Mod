@@ -1,0 +1,30 @@
+Step 4.0.9 static validation
+
+src/main/java/com/dracarys/dracarysmod/entity/DracarysDragonEntity.java: balanced braces: True
+src/main/java/com/dracarys/dracarysmod/entity/DracarysDragonEntity.java: balanced parens: True
+src/main/java/com/dracarys/dracarysmod/entity/DracarysDragonPart.java: balanced braces: True
+src/main/java/com/dracarys/dracarysmod/entity/DracarysDragonPart.java: balanced parens: True
+src/main/java/com/dracarys/dracarysmod/client/render/CleanLongRangeDragonRenderEvents.java: balanced braces: True
+src/main/java/com/dracarys/dracarysmod/client/render/CleanLongRangeDragonRenderEvents.java: balanced parens: True
+PartEntity class exists: True
+7 stable part names: True
+isMultipartEntity override: True
+getParts override: True
+part ID synchronization: True
+damage forwarding: True
+interaction forwarding: True
+parts non-colliding: True
+parts update client/server: True
+bounded span 28: True
+bounded query radius 18: True
+debug F3+B boxes: True
+HUD Step 4.0.9: True
+HUD reports 7 parts: True
+DracarysDragonRenderer intentionally not patched: True
+full project static validator exit 0: True
+
+Dracarys static validation: 424 checks recorded, 0 error(s), 0 warning(s)
+PASS
+
+
+RESULT: PASS

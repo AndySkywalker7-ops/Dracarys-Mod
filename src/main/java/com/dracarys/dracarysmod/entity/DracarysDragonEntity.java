@@ -8,6 +8,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.*;
+import net.minecraftforge.entity.PartEntity;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.server.level.ServerPlayer;
@@ -49,7 +50,70 @@ public class DracarysDragonEntity extends TamableAnimal implements FlyingAnimal 
     private int growthTicks=0;
     private int fireCooldown=0;
 
-    public DracarysDragonEntity(EntityType<? extends TamableAnimal> type, Level level){super(type,level);xpReward=30;}
+    // Step 4.0.9 — stable order is important because part IDs follow parent ID.
+    private final DracarysDragonPart bodyPart;
+    private final DracarysDragonPart headPart;
+    private final DracarysDragonPart neckPart;
+    private final DracarysDragonPart leftWingPart;
+    private final DracarysDragonPart rightWingPart;
+    private final DracarysDragonPart tailPart;
+    private final DracarysDragonPart legsPart;
+    private final DracarysDragonPart[] multipartParts;
+
+    /**
+     * Forge broad-phase support for the bounded multipart foundation.
+     * 18 blocks is deliberately conservative for a 300–600 mod modpack.
+     */
+    private static final double MULTIPART_QUERY_RADIUS = 18.0D;
+    private static final double MAX_MULTIPART_SPAN = 28.0D;
+
+    public DracarysDragonEntity(EntityType<? extends TamableAnimal> type, Level level){
+        super(type,level);
+        xpReward=30;
+
+        bodyPart=new DracarysDragonPart(this,"body");
+        headPart=new DracarysDragonPart(this,"head");
+        neckPart=new DracarysDragonPart(this,"neck");
+        leftWingPart=new DracarysDragonPart(this,"left_wing");
+        rightWingPart=new DracarysDragonPart(this,"right_wing");
+        tailPart=new DracarysDragonPart(this,"tail");
+        legsPart=new DracarysDragonPart(this,"legs");
+        multipartParts=new DracarysDragonPart[]{
+                bodyPart,headPart,neckPart,leftWingPart,rightWingPart,tailPart,legsPart
+        };
+
+        // Forge uses this bounded radius when scanning for large multipart targets.
+        level.increaseMaxEntityRadius(MULTIPART_QUERY_RADIUS);
+    }
+
+    @Override
+    public void setId(int id){
+        super.setId(id);
+        if(multipartParts!=null){
+            for(int i=0;i<multipartParts.length;i++){
+                multipartParts[i].setId(id+i+1);
+            }
+        }
+    }
+
+    @Override
+    public boolean isMultipartEntity(){
+        return true;
+    }
+
+    @Override
+    public PartEntity<?>[] getParts(){
+        return multipartParts;
+    }
+
+    public DracarysDragonPart[] getDragonParts(){
+        return multipartParts;
+    }
+
+    public boolean hurtFromPart(DracarysDragonPart part,DamageSource source,float amount){
+        // Foundation: all zones forward the same damage. Balance comes later.
+        return hurt(source,amount);
+    }
 
     public static AttributeSupplier.Builder createAttributes(){return TamableAnimal.createMobAttributes().add(Attributes.MAX_HEALTH,80).add(Attributes.ATTACK_DAMAGE,12).add(Attributes.ARMOR,8).add(Attributes.MOVEMENT_SPEED,0.24).add(Attributes.FOLLOW_RANGE,48).add(Attributes.KNOCKBACK_RESISTANCE,0.35);}
 
@@ -159,11 +223,98 @@ public class DracarysDragonEntity extends TamableAnimal implements FlyingAnimal 
     private void applyScaledAttributes(boolean heal){float p=getSizeTier().power*getStage().growth();setBase(Attributes.MAX_HEALTH,Math.max(24,90*p*entityData.get(GENE_VITALITY)));setBase(Attributes.ATTACK_DAMAGE,Math.max(5,14*p*entityData.get(GENE_STRENGTH)));setBase(Attributes.ARMOR,Math.min(30,5+7*p));setBase(Attributes.MOVEMENT_SPEED,Mth.clamp(0.28f*entityData.get(GENE_SPEED)/(0.8f+0.18f*p),0.14f,0.34f));setBase(Attributes.KNOCKBACK_RESISTANCE,Mth.clamp(0.18f+0.16f*p,0,0.95f));if(heal)setHealth(getMaxHealth());}
     private void setBase(Attribute a,double v){AttributeInstance i=getAttribute(a);if(i!=null)i.setBaseValue(v);}
 
-    @Override public void tick(){super.tick();if(level().isClientSide)return;if(fireCooldown>0)fireCooldown--;
-        if(isDowned()){int t=entityData.get(DOWNED_TICKS)-1;entityData.set(DOWNED_TICKS,t);setDeltaMovement(getDeltaMovement().multiply(.2,1,.2));if(t<=0)wakeUp();return;}
-        if(isTame()&&getStage().ordinal()<getMaxStage().ordinal()){growthTicks++;int need=(int)(DracarysConfig.GROWTH_STAGE_TICKS.get()/entityData.get(GENE_GROWTH));if(growthTicks>=need){growthTicks=0;setStage(getStage().next());applyScaledAttributes(true);}}
-        LivingEntity target=getTarget();if(target!=null&&target.isAlive()){double d=distanceTo(target);if(getStage().ordinal()>=DragonStage.ADOLESCENT.ordinal()&&d>11)setFlying(true);if(isFlying())flyToward(target);if(d>6&&d<30&&fireCooldown<=0){breatheFire(target);fireCooldown=Math.max(30,90-getStage().ordinal()*8);}}
-        else if(!isVehicle()&&isFlying()&&onGround())setFlying(false);
+    @Override
+    public void tick(){
+        super.tick();
+
+        if(!level().isClientSide){
+            if(fireCooldown>0)fireCooldown--;
+
+            if(isDowned()){
+                int t=entityData.get(DOWNED_TICKS)-1;
+                entityData.set(DOWNED_TICKS,t);
+                setDeltaMovement(getDeltaMovement().multiply(.2,1,.2));
+                if(t<=0)wakeUp();
+                updateMultipartParts();
+                return;
+            }
+
+            if(isTame()&&getStage().ordinal()<getMaxStage().ordinal()){
+                growthTicks++;
+                int need=(int)(DracarysConfig.GROWTH_STAGE_TICKS.get()/entityData.get(GENE_GROWTH));
+                if(growthTicks>=need){
+                    growthTicks=0;
+                    setStage(getStage().next());
+                    applyScaledAttributes(true);
+                }
+            }
+
+            LivingEntity target=getTarget();
+            if(target!=null&&target.isAlive()){
+                double d=distanceTo(target);
+                if(getStage().ordinal()>=DragonStage.ADOLESCENT.ordinal()&&d>11)setFlying(true);
+                if(isFlying())flyToward(target);
+                if(d>6&&d<30&&fireCooldown<=0){
+                    breatheFire(target);
+                    fireCooldown=Math.max(30,90-getStage().ordinal()*8);
+                }
+            }else if(!isVehicle()&&isFlying()&&onGround()){
+                setFlying(false);
+            }
+        }
+
+        // Parts must follow interpolation on client and authoritative movement on server.
+        updateMultipartParts();
+    }
+
+    /**
+     * Updates seven non-colliding physical interaction zones around the current
+     * visual anatomy. The span is intentionally capped so the broad-phase query
+     * radius stays modpack-friendly; exact wing-tip coverage can be profiled later.
+     */
+    private void updateMultipartParts(){
+        double span=Mth.clamp(visualLength(),6.0F,(float)MAX_MULTIPART_SPAN);
+
+        float yaw=(float)Math.toRadians(getYRot());
+        double forwardX=-Mth.sin(yaw);
+        double forwardZ=Mth.cos(yaw);
+        double rightX=forwardZ;
+        double rightZ=-forwardX;
+
+        double bodyY=getY()+Math.max(getBbHeight()*0.72D,span*0.13D);
+
+        updatePart(bodyPart,bodyY,0.00D,0.00D,span*0.13D,span*0.10D,span*0.18D,rightX,rightZ,forwardX,forwardZ);
+        updatePart(neckPart,bodyY+span*0.045D,0.00D,span*0.25D,span*0.085D,span*0.075D,span*0.13D,rightX,rightZ,forwardX,forwardZ);
+        updatePart(headPart,bodyY+span*0.075D,0.00D,span*0.43D,span*0.105D,span*0.085D,span*0.115D,rightX,rightZ,forwardX,forwardZ);
+
+        updatePart(leftWingPart,bodyY+span*0.035D,span*0.27D,span*0.015D,span*0.25D,span*0.040D,span*0.13D,rightX,rightZ,forwardX,forwardZ);
+        updatePart(rightWingPart,bodyY+span*0.035D,-span*0.27D,span*0.015D,span*0.25D,span*0.040D,span*0.13D,rightX,rightZ,forwardX,forwardZ);
+
+        updatePart(tailPart,bodyY-span*0.015D,0.00D,-span*0.36D,span*0.070D,span*0.060D,span*0.23D,rightX,rightZ,forwardX,forwardZ);
+
+        double legsY=getY()+Math.max(getBbHeight()*0.34D,span*0.055D);
+        updatePart(legsPart,legsY,0.00D,0.00D,span*0.14D,span*0.11D,span*0.19D,rightX,rightZ,forwardX,forwardZ);
+    }
+
+    private void updatePart(
+            DracarysDragonPart part,
+            double centerY,
+            double localRight,
+            double localForward,
+            double halfRight,
+            double halfY,
+            double halfForward,
+            double rightX,
+            double rightZ,
+            double forwardX,
+            double forwardZ
+    ){
+        Vec3 center=new Vec3(
+                getX()+rightX*localRight+forwardX*localForward,
+                centerY,
+                getZ()+rightZ*localRight+forwardZ*localForward
+        );
+        part.updateBox(center,halfRight,halfY,halfForward,rightX,rightZ,forwardX,forwardZ);
     }
 
     private void flyToward(LivingEntity target){Vec3 delta=target.getEyePosition().subtract(position().add(0,getBbHeight()*.5,0));if(delta.lengthSqr()>1){Vec3 n=delta.normalize();setDeltaMovement(getDeltaMovement().scale(.86).add(n.scale(.055+0.012*getStage().ordinal())));move(MoverType.SELF,getDeltaMovement());}}
