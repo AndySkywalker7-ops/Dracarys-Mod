@@ -60,12 +60,8 @@ public class DracarysDragonEntity extends TamableAnimal implements FlyingAnimal 
     private final DracarysDragonPart legsPart;
     private final DracarysDragonPart[] multipartParts;
 
-    /**
-     * Forge broad-phase support for the bounded multipart foundation.
-     * 18 blocks is deliberately conservative for a 300–600 mod modpack.
-     */
-    private static final double MULTIPART_QUERY_RADIUS = 18.0D;
-    private static final double MAX_MULTIPART_SPAN = 28.0D;
+    /** Last radius this dragon requested from Forge's multipart broad phase. */
+    private double registeredMultipartRadius = 0.0D;
 
     public DracarysDragonEntity(EntityType<? extends TamableAnimal> type, Level level){
         super(type,level);
@@ -82,8 +78,8 @@ public class DracarysDragonEntity extends TamableAnimal implements FlyingAnimal 
                 bodyPart,headPart,neckPart,leftWingPart,rightWingPart,tailPart,legsPart
         };
 
-        // Forge uses this bounded radius when scanning for large multipart targets.
-        level.increaseMaxEntityRadius(MULTIPART_QUERY_RADIUS);
+        // Start conservatively; updateMultipartParts() raises this only as needed.
+        ensureMultipartQueryRadius();
     }
 
     @Override
@@ -268,12 +264,15 @@ public class DracarysDragonEntity extends TamableAnimal implements FlyingAnimal 
     }
 
     /**
-     * Updates seven non-colliding physical interaction zones around the current
-     * visual anatomy. The span is intentionally capped so the broad-phase query
-     * radius stays modpack-friendly; exact wing-tip coverage can be profiled later.
+     * Step 4.0.9B — updates seven non-colliding interaction zones directly from
+     * the BALANCED model's own coordinate space.
+     *
+     * The previous implementation used visualLength() capped to 28 blocks and
+     * getBbHeight(), so large dragons rendered tens of blocks above the parts.
+     * This version uses renderScale()/16, matching the actual renderer.
      */
     private void updateMultipartParts(){
-        double span=Mth.clamp(visualLength(),6.0F,(float)MAX_MULTIPART_SPAN);
+        ensureMultipartQueryRadius();
 
         float yaw=(float)Math.toRadians(getYRot());
         double forwardX=-Mth.sin(yaw);
@@ -281,19 +280,111 @@ public class DracarysDragonEntity extends TamableAnimal implements FlyingAnimal 
         double rightX=forwardZ;
         double rightZ=-forwardX;
 
-        double bodyY=getY()+Math.max(getBbHeight()*0.72D,span*0.13D);
+        updateModelPart(bodyPart,DragonMultipartLayout.BODY,rightX,rightZ,forwardX,forwardZ);
+        updateModelPart(neckPart,DragonMultipartLayout.NECK,rightX,rightZ,forwardX,forwardZ);
+        updateModelPart(headPart,DragonMultipartLayout.HEAD,rightX,rightZ,forwardX,forwardZ);
+        updateWingPart(leftWingPart,true,rightX,rightZ,forwardX,forwardZ);
+        updateWingPart(rightWingPart,false,rightX,rightZ,forwardX,forwardZ);
+        updateTailPart(rightX,rightZ,forwardX,forwardZ);
+        updateModelPart(legsPart,DragonMultipartLayout.LEGS,rightX,rightZ,forwardX,forwardZ);
+    }
 
-        updatePart(bodyPart,bodyY,0.00D,0.00D,span*0.13D,span*0.10D,span*0.18D,rightX,rightZ,forwardX,forwardZ);
-        updatePart(neckPart,bodyY+span*0.045D,0.00D,span*0.25D,span*0.085D,span*0.075D,span*0.13D,rightX,rightZ,forwardX,forwardZ);
-        updatePart(headPart,bodyY+span*0.075D,0.00D,span*0.43D,span*0.105D,span*0.085D,span*0.115D,rightX,rightZ,forwardX,forwardZ);
+    private void ensureMultipartQueryRadius(){
+        double required=DragonMultipartLayout.requiredQueryRadius(this);
+        if(required>registeredMultipartRadius+0.5D){
+            level().increaseMaxEntityRadius(required);
+            registeredMultipartRadius=required;
+        }
+    }
 
-        updatePart(leftWingPart,bodyY+span*0.035D,span*0.27D,span*0.015D,span*0.25D,span*0.040D,span*0.13D,rightX,rightZ,forwardX,forwardZ);
-        updatePart(rightWingPart,bodyY+span*0.035D,-span*0.27D,span*0.015D,span*0.25D,span*0.040D,span*0.13D,rightX,rightZ,forwardX,forwardZ);
+    private void updateModelPart(
+            DracarysDragonPart part,
+            DragonMultipartLayout.PartSpec spec,
+            double rightX,
+            double rightZ,
+            double forwardX,
+            double forwardZ
+    ){
+        double localRight=DragonMultipartLayout.localRightWorld(this,spec.modelRightPx());
+        double localForward=DragonMultipartLayout.localForwardWorld(this,spec.modelZPx());
+        double centerY=DragonMultipartLayout.worldYForModelY(this,spec.modelYPx());
 
-        updatePart(tailPart,bodyY-span*0.015D,0.00D,-span*0.36D,span*0.070D,span*0.060D,span*0.23D,rightX,rightZ,forwardX,forwardZ);
+        updatePart(
+                part,
+                centerY,
+                localRight,
+                localForward,
+                DragonMultipartLayout.halfExtentWorld(this,spec.halfRightPx()),
+                DragonMultipartLayout.halfExtentWorld(this,spec.halfYPx()),
+                DragonMultipartLayout.halfExtentWorld(this,spec.halfForwardPx()),
+                rightX,rightZ,forwardX,forwardZ
+        );
+    }
 
-        double legsY=getY()+Math.max(getBbHeight()*0.34D,span*0.055D);
-        updatePart(legsPart,legsY,0.00D,0.00D,span*0.14D,span*0.11D,span*0.19D,rightX,rightZ,forwardX,forwardZ);
+    /**
+     * Wings are special because their rendered long axis rolls up/down. A single
+     * broad AABB still represents each wing, but its center and projected X/Y
+     * extents follow the same visible flap phase as the model.
+     */
+    private void updateWingPart(
+            DracarysDragonPart part,
+            boolean left,
+            double rightX,
+            double rightZ,
+            double forwardX,
+            double forwardZ
+    ){
+        double roll=left
+                ?DragonMultipartLayout.leftWingRoll(this)
+                :DragonMultipartLayout.rightWingRoll(this);
+        double side=left?1.0D:-1.0D;
+        double centerRightPx=side*DragonMultipartLayout.WING_CENTER_RIGHT_PX;
+
+        double projectedRightPx=centerRightPx*Math.cos(roll);
+        double projectedModelY=DragonMultipartLayout.WING_CENTER_Y_PX
+                +centerRightPx*Math.sin(roll);
+
+        double absCos=Math.abs(Math.cos(roll));
+        double absSin=Math.abs(Math.sin(roll));
+        double halfRightPx=DragonMultipartLayout.WING_HALF_LENGTH_PX*absCos+8.0D;
+        double halfYPx=DragonMultipartLayout.WING_BASE_HALF_HEIGHT_PX
+                +DragonMultipartLayout.WING_HALF_LENGTH_PX*absSin;
+
+        updatePart(
+                part,
+                DragonMultipartLayout.worldYForModelY(this,projectedModelY),
+                DragonMultipartLayout.localRightWorld(this,projectedRightPx),
+                DragonMultipartLayout.localForwardWorld(this,DragonMultipartLayout.WING_CENTER_Z_PX),
+                DragonMultipartLayout.halfExtentWorld(this,halfRightPx),
+                DragonMultipartLayout.halfExtentWorld(this,halfYPx),
+                DragonMultipartLayout.halfExtentWorld(this,DragonMultipartLayout.WING_HALF_FORWARD_PX),
+                rightX,rightZ,forwardX,forwardZ
+        );
+    }
+
+    /**
+     * Gives the long tail box a small lateral sweep matching the visible tail
+     * animation so arrows aimed at a swaying tail still connect reliably.
+     */
+    private void updateTailPart(
+            double rightX,
+            double rightZ,
+            double forwardX,
+            double forwardZ
+    ){
+        DragonMultipartLayout.PartSpec spec=DragonMultipartLayout.TAIL;
+        double swayPx=Mth.sin(tickCount*0.08F-0.85F)*10.0D;
+
+        updatePart(
+                tailPart,
+                DragonMultipartLayout.worldYForModelY(this,spec.modelYPx()),
+                DragonMultipartLayout.localRightWorld(this,swayPx),
+                DragonMultipartLayout.localForwardWorld(this,spec.modelZPx()),
+                DragonMultipartLayout.halfExtentWorld(this,spec.halfRightPx()+Math.abs(swayPx)*0.35D),
+                DragonMultipartLayout.halfExtentWorld(this,spec.halfYPx()),
+                DragonMultipartLayout.halfExtentWorld(this,spec.halfForwardPx()),
+                rightX,rightZ,forwardX,forwardZ
+        );
     }
 
     private void updatePart(

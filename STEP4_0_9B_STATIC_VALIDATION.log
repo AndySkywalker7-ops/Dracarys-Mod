@@ -1,0 +1,22 @@
+Step 4.0.9B targeted static validation
+19/19 checks passed
+PASS: 7 PartEntity fields retained
+PASS: damage forwarding retained
+PASS: interaction forwarding retained
+PASS: parts remain non-colliding
+PASS: old 28-block span cap removed
+PASS: layout uses renderScale
+PASS: model-pixel ground reference
+PASS: head landmark present
+PASS: dynamic wing pose
+PASS: tail sway
+PASS: dynamic Forge query radius
+PASS: query radius ceiling 112
+PASS: long-range renderer byte-identical
+PASS: DracarysDragonEntity.java braces balanced
+PASS: DracarysDragonEntity.java parens balanced
+PASS: DragonMultipartLayout.java braces balanced
+PASS: DragonMultipartLayout.java parens balanced
+PASS: DracarysDragonPart.java braces balanced
+PASS: DracarysDragonPart.java parens balanced
+RESULT: PASS

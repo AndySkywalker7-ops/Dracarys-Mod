@@ -268,7 +268,7 @@ public final class CleanLongRangeDragonRenderEvents {
         int line = 10;
 
         gui.fill(x - 4, y - 4, x + 420, y + 142, 0xA0000000);
-        draw(gui, minecraft, "DRACARYS RENDER DEBUG - STEP 4.0.9", x, y, 0xFFFFC857);
+        draw(gui, minecraft, "DRACARYS RENDER DEBUG - STEP 4.0.9B", x, y, 0xFFFFC857);
         y += line;
         draw(gui, minecraft, "Stage: " + nearest.getStage().name(), x, y, 0xFFFFFFFF);
         y += line;
