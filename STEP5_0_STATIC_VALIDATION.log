@@ -1,0 +1,72 @@
+STEP 5.0 BALANCED v2 static validation
+Checks: 65
+Passed: 65
+Failed: 0
+
+PASS  public constructor
+PASS  layer id preserved
+PASS  texture atlas unchanged
+PASS  compat bone:body
+PASS  compat bone:neck_01
+PASS  compat bone:neck_02
+PASS  compat bone:neck_03
+PASS  compat bone:head
+PASS  compat bone:jaw
+PASS  compat bone:left_wing_root
+PASS  compat bone:right_wing_root
+PASS  compat bone:upper_arm
+PASS  compat bone:forearm
+PASS  compat bone:left_foreleg
+PASS  compat bone:right_foreleg
+PASS  compat bone:left_hindleg
+PASS  compat bone:right_hindleg
+PASS  compat bone:lower_leg
+PASS  compat bone:tail_01
+PASS  compat bone:tail_02
+PASS  compat bone:tail_03
+PASS  compat bone:tail_04
+PASS  anatomy torso:thorax
+PASS  anatomy torso:abdomen
+PASS  anatomy torso:pelvis
+PASS  anatomy torso:left_scapula
+PASS  anatomy torso:right_scapula
+PASS  anatomy head:left_cheek
+PASS  anatomy head:right_cheek
+PASS  anatomy head:left_brow
+PASS  anatomy head:right_brow
+PASS  anatomy head:left_horn
+PASS  anatomy head:right_horn
+PASS  anatomy head:left_horn_secondary
+PASS  anatomy head:right_horn_secondary
+PASS  anatomy head:cranial_crest
+PASS  anatomy wing:hand
+PASS  anatomy wing:membrane_proximal
+PASS  anatomy wing:membrane_middle
+PASS  anatomy wing:membrane_distal
+PASS  anatomy wing:wing_claw
+PASS  four wing fingers generated
+PASS  anatomy limb:wrist
+PASS  anatomy limb:ankle
+PASS  anatomy limb:foot
+PASS  anatomy limb:outer_toe
+PASS  anatomy limb:claw
+PASS  three primary toes generated
+PASS  modular method:createTorso
+PASS  modular method:createNeckAndHead
+PASS  modular method:createHeadDetails
+PASS  modular method:createWing
+PASS  modular method:createForeleg
+PASS  modular method:createHindleg
+PASS  modular method:createFoot
+PASS  modular method:createTail
+PASS  unchanged:src/main/java/com/dracarys/dracarysmod/client/renderer/DracarysDragonRenderer.java
+PASS  unchanged:src/main/java/com/dracarys/dracarysmod/entity/DracarysDragonEntity.java
+PASS  unchanged:src/main/java/com/dracarys/dracarysmod/entity/DragonMultipartLayout.java
+PASS  unchanged:src/main/java/com/dracarys/dracarysmod/client/render/CleanLongRangeDragonRenderEvents.java
+PASS  unchanged:src/main/java/com/dracarys/dracarysmod/client/model/AbstractDracarysDragonModel.java
+PASS  unchanged:src/main/java/com/dracarys/dracarysmod/client/ClientModEvents.java
+PASS  brace balance
+PASS  paren balance
+PASS  no render pipeline code
+
+RESULT: PASS

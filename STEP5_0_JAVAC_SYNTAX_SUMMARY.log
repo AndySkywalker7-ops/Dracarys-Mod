@@ -1,0 +1,4 @@
+JAVAC syntax/type-resolution attempt
+Expected: unresolved Minecraft/Forge symbols because dependencies are unavailable locally.
+Syntax-shaped diagnostics: 0
+RESULT: PASS (no syntax-shaped diagnostics)
