@@ -87,7 +87,26 @@ public class DracarysDragonEntity extends TamableAnimal implements FlyingAnimal 
     public DragonStage getMaxStage(){return DragonStage.byId(entityData.get(MAX_STAGE));} public void setMaxStage(DragonStage s){entityData.set(MAX_STAGE,s.ordinal());}
     public boolean isDowned(){return entityData.get(DOWNED);} public void setFlying(boolean b){entityData.set(FLYING,b);setNoGravity(b);}
     public float conceptualLength(){DragonSizeTier t=getSizeTier();float base=(t.minLength+t.maxLength)*0.5f*entityData.get(GENE_SIZE);return base*getStage().growth();}
-    public float renderScale(){return Mth.clamp(conceptualLength()/8.0f,0.35f,8.0f);}
+
+    /**
+     * Extra visual growth used by the overhaul. This deliberately does not
+     * modify conceptualLength(), attributes or the collision dimensions.
+     * Juvenile, adult and colossal dragons therefore gain substantially more
+     * visual presence without making pathfinding/combat boxes explode in size.
+     */
+    public float visualStageMultiplier(){
+        return switch(getStage()){
+            case BABY -> 1.00f;
+            case JUVENILE -> 1.25f;
+            case ADOLESCENT -> 1.15f;
+            case ADULT -> 1.35f;
+            case ANCIENT -> 1.25f;
+            case COLOSSAL -> 1.60f;
+        };
+    }
+
+    public float visualLength(){return conceptualLength()*visualStageMultiplier();}
+    public float renderScale(){return Mth.clamp(visualLength()/8.0f,0.35f,12.0f);}
 
     @Override public EntityDimensions getDimensions(Pose pose){float s=Mth.clamp(conceptualLength()/10.0f,0.55f,3.25f);return super.getDimensions(pose).scale(s);}
 
@@ -100,9 +119,9 @@ public class DracarysDragonEntity extends TamableAnimal implements FlyingAnimal 
      */
     @Override
     public AABB getBoundingBoxForCulling(){
-        double length=Math.max(6.0D,conceptualLength());
-        double horizontal=Math.max(4.0D,length*0.65D);
-        double vertical=Math.max(3.0D,length*0.30D);
+        double length=Math.max(6.0D,visualLength());
+        double horizontal=Math.max(4.0D,length*0.70D);
+        double vertical=Math.max(3.0D,length*0.34D);
         return new AABB(getX()-horizontal,getY()-vertical*0.20D,getZ()-horizontal,
                 getX()+horizontal,getY()+vertical,getZ()+horizontal);
     }
@@ -114,7 +133,21 @@ public class DracarysDragonEntity extends TamableAnimal implements FlyingAnimal 
      */
     @Override
     public boolean shouldRenderAtSqrDistance(double distanceSqr){
-        double renderDistance=Math.max(192.0D,Math.min(512.0D,conceptualLength()*16.0D));
+        double stageDistance=switch(getStage()){
+            case BABY -> 256.0D;
+            case JUVENILE -> 384.0D;
+            case ADOLESCENT -> 448.0D;
+            case ADULT -> 640.0D;
+            case ANCIENT -> 768.0D;
+            case COLOSSAL -> 1024.0D;
+        };
+        double sizeFactor=switch(getSizeTier()){
+            case SMALL -> 0.85D;
+            case MEDIUM -> 1.00D;
+            case LARGE -> 1.10D;
+            case GIANT -> 1.20D;
+        };
+        double renderDistance=Math.min(1024.0D,Math.max(224.0D,stageDistance*sizeFactor));
         return distanceSqr<renderDistance*renderDistance;
     }
 
@@ -154,7 +187,7 @@ public class DracarysDragonEntity extends TamableAnimal implements FlyingAnimal 
         setYRot(rider.getYRot());yRotO=getYRot();setXRot(rider.getXRot()*.35f);yBodyRot=getYRot();yHeadRot=getYRot();float forward=rider.zza;float strafe=rider.xxa*.5f;if(rider.getXRot()<-18&&forward>0)setFlying(true);
         if(isFlying()){setNoGravity(true);Vec3 look=rider.getLookAngle();double speed=(0.22+0.035*getSizeTier().ordinal())*Math.max(0.15,Math.abs(forward));Vec3 desired=new Vec3(look.x,look.y*0.8,look.z).normalize().scale(speed*Math.signum(forward==0?1:forward));setDeltaMovement(getDeltaMovement().scale(.72).add(desired));move(MoverType.SELF,getDeltaMovement());if(onGround()&&rider.getXRot()>10)setFlying(false);}else{setSpeed((float)getAttributeValue(Attributes.MOVEMENT_SPEED)*1.4f);super.travel(new Vec3(strafe,input.y,forward));}return;}super.travel(input);}
     @Override protected boolean canAddPassenger(Entity passenger){return getPassengers().isEmpty()&&passenger instanceof Player&&isTame();}
-    @Override public double getPassengersRidingOffset(){return getBbHeight()*.72;}
+    @Override public double getPassengersRidingOffset(){return getBbHeight()*.72*Math.min(visualStageMultiplier(),1.45f);}
     @Override public boolean isFlying(){return entityData.get(FLYING);}
 
     @Override protected void dropCustomDeathLoot(DamageSource source,int looting,boolean recentlyHit){super.dropCustomDeathLoot(source,looting,recentlyHit);int mult=1+getSizeTier().ordinal()*2+getStage().ordinal();spawnAtLocation(new ItemStack(ModItems.SCALES.get(getVariant()).get(),Math.min(64,4+random.nextInt(6)+mult*3)));spawnAtLocation(new ItemStack(ModItems.DRAGON_BONE.get(),3+random.nextInt(5)+mult));spawnAtLocation(new ItemStack(ModItems.RAW_DRAGON_MEAT.get(),4+random.nextInt(7)+mult));if(random.nextFloat()<.65f)spawnAtLocation(ModItems.DRAGON_FANG.get());if(random.nextFloat()<.65f)spawnAtLocation(ModItems.DRAGON_CLAW.get());if(random.nextFloat()<.45f)spawnAtLocation(ModItems.WING_MEMBRANE.get());if(random.nextFloat()<.28f)spawnAtLocation(ModItems.DRAGON_BLOOD.get());if(getSizeTier().ordinal()>=2&&random.nextFloat()<.22f)spawnAtLocation(ModItems.DRAGON_HEART.get());if(getStage().ordinal()>=DragonStage.ANCIENT.ordinal()&&random.nextFloat()<.06f*(1+getSizeTier().ordinal()))spawnAtLocation(ModItems.EGGS.get(getVariant()).get());}
