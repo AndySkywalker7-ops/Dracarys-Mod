@@ -120,8 +120,8 @@ public class DracarysDragonEntity extends TamableAnimal implements FlyingAnimal 
     @Override
     public AABB getBoundingBoxForCulling(){
         double length=Math.max(6.0D,visualLength());
-        double horizontal=Math.max(4.0D,length*0.70D);
-        double vertical=Math.max(3.0D,length*0.34D);
+        double horizontal=Math.max(6.0D,length*0.90D);
+        double vertical=Math.max(4.0D,length*0.42D);
         return new AABB(getX()-horizontal,getY()-vertical*0.20D,getZ()-horizontal,
                 getX()+horizontal,getY()+vertical,getZ()+horizontal);
     }
@@ -134,20 +134,20 @@ public class DracarysDragonEntity extends TamableAnimal implements FlyingAnimal 
     @Override
     public boolean shouldRenderAtSqrDistance(double distanceSqr){
         double stageDistance=switch(getStage()){
-            case BABY -> 256.0D;
-            case JUVENILE -> 384.0D;
-            case ADOLESCENT -> 448.0D;
-            case ADULT -> 640.0D;
-            case ANCIENT -> 768.0D;
-            case COLOSSAL -> 1024.0D;
+            case BABY -> 384.0D;
+            case JUVENILE -> 640.0D;
+            case ADOLESCENT -> 768.0D;
+            case ADULT -> 1024.0D;
+            case ANCIENT -> 1280.0D;
+            case COLOSSAL -> 1536.0D;
         };
         double sizeFactor=switch(getSizeTier()){
-            case SMALL -> 0.85D;
+            case SMALL -> 0.90D;
             case MEDIUM -> 1.00D;
-            case LARGE -> 1.10D;
-            case GIANT -> 1.20D;
+            case LARGE -> 1.08D;
+            case GIANT -> 1.15D;
         };
-        double renderDistance=Math.min(1024.0D,Math.max(224.0D,stageDistance*sizeFactor));
+        double renderDistance=Math.min(1536.0D,Math.max(320.0D,stageDistance*sizeFactor));
         return distanceSqr<renderDistance*renderDistance;
     }
 
