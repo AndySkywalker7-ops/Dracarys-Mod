@@ -1,0 +1,14 @@
+Step 4.0.7B static validation
+FarOpaquePresenceLayer.java braces: True
+FarOpaquePresenceLayer.java parens: True
+DracarysDragonRenderer.java braces: True
+DracarysDragonRenderer.java parens: True
+FarDragonPresenceManager.java braces: True
+FarDragonPresenceManager.java parens: True
+opaque render type: True
+full alpha: True
+full bright: True
+layer registered: True
+outline removed from manager: True
+manual bridge preserved: True
+RESULT: PASS
