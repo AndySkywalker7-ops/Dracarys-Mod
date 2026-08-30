@@ -91,6 +91,33 @@ public class DracarysDragonEntity extends TamableAnimal implements FlyingAnimal 
 
     @Override public EntityDimensions getDimensions(Pose pose){float s=Mth.clamp(conceptualLength()/10.0f,0.55f,3.25f);return super.getDimensions(pose).scale(s);}
 
+    /**
+     * The visual dragon can be far larger than its physical collision box.
+     * Vanilla frustum culling normally uses the physical AABB, which can make
+     * long wings, necks and tails disappear while they are still on-screen.
+     * This culling-only box scales with the conceptual dragon length and does
+     * not change collisions, combat reach or pathfinding.
+     */
+    @Override
+    public AABB getBoundingBoxForCulling(){
+        double length=Math.max(6.0D,conceptualLength());
+        double horizontal=Math.max(4.0D,length*0.65D);
+        double vertical=Math.max(3.0D,length*0.30D);
+        return new AABB(getX()-horizontal,getY()-vertical*0.20D,getZ()-horizontal,
+                getX()+horizontal,getY()+vertical,getZ()+horizontal);
+    }
+
+    /**
+     * Keep larger dragons visible farther away without disabling culling
+     * globally. The EntityType tracking range still provides the hard network
+     * ceiling, so this remains bounded for multiplayer/modpack performance.
+     */
+    @Override
+    public boolean shouldRenderAtSqrDistance(double distanceSqr){
+        double renderDistance=Math.max(128.0D,Math.min(320.0D,conceptualLength()*8.0D));
+        return distanceSqr<renderDistance*renderDistance;
+    }
+
     private void applyScaledAttributes(boolean heal){float p=getSizeTier().power*getStage().growth();setBase(Attributes.MAX_HEALTH,Math.max(24,90*p*entityData.get(GENE_VITALITY)));setBase(Attributes.ATTACK_DAMAGE,Math.max(5,14*p*entityData.get(GENE_STRENGTH)));setBase(Attributes.ARMOR,Math.min(30,5+7*p));setBase(Attributes.MOVEMENT_SPEED,Mth.clamp(0.28f*entityData.get(GENE_SPEED)/(0.8f+0.18f*p),0.14f,0.34f));setBase(Attributes.KNOCKBACK_RESISTANCE,Mth.clamp(0.18f+0.16f*p,0,0.95f));if(heal)setHealth(getMaxHealth());}
     private void setBase(Attribute a,double v){AttributeInstance i=getAttribute(a);if(i!=null)i.setBaseValue(v);}
 
