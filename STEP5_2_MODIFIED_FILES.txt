@@ -1,0 +1,20 @@
+STEP 5.2 — Modified / added files
+
+CODE MODIFIED:
+src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java
+
+DOCUMENTATION / VALIDATION ADDED:
+STEP5_2_BASE_MODEL_FIDELITY.md
+STEP5_2_MODIFIED_FILES.txt
+STEP5_2_STATIC_VALIDATION.log
+STEP5_2_PROJECT_VALIDATION.log
+STEP5_2_JAVAC_ATTEMPT.log
+STEP5_2_JAVAC_SYNTAX_SUMMARY.log
+STEP5_2_BUILD_ATTEMPT.log
+
+CONFIRMED UNCHANGED BY SHA-256:
+src/main/java/com/dracarys/dracarysmod/client/renderer/DracarysDragonRenderer.java
+src/main/java/com/dracarys/dracarysmod/entity/DracarysDragonEntity.java
+src/main/java/com/dracarys/dracarysmod/entity/DragonMultipartLayout.java
+src/main/java/com/dracarys/dracarysmod/client/render/CleanLongRangeDragonRenderEvents.java
+src/main/java/com/dracarys/dracarysmod/client/model/AbstractDracarysDragonModel.java

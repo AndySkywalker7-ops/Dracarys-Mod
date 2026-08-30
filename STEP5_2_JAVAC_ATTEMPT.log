@@ -1,0 +1,1548 @@
+src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java:3: error: cannot find symbol
+import com.dracarys.dracarysmod.DracarysMod;
+                               ^
+  symbol:   class DracarysMod
+  location: package com.dracarys.dracarysmod
+src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java:4: error: cannot find symbol
+import com.dracarys.dracarysmod.client.model.AbstractDracarysDragonModel;
+                                            ^
+  symbol:   class AbstractDracarysDragonModel
+  location: package com.dracarys.dracarysmod.client.model
+src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java:5: error: package com.dracarys.dracarysmod.entity does not exist
+import com.dracarys.dracarysmod.entity.DracarysDragonEntity;
+                                      ^
+src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java:6: error: package net.minecraft.client.model.geom does not exist
+import net.minecraft.client.model.geom.ModelLayerLocation;
+                                      ^
+src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java:7: error: package net.minecraft.client.model.geom does not exist
+import net.minecraft.client.model.geom.ModelPart;
+                                      ^
+src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java:8: error: package net.minecraft.client.model.geom does not exist
+import net.minecraft.client.model.geom.PartPose;
+                                      ^
+src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java:9: error: package net.minecraft.client.model.geom.builders does not exist
+import net.minecraft.client.model.geom.builders.CubeListBuilder;
+                                               ^
+src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java:10: error: package net.minecraft.client.model.geom.builders does not exist
+import net.minecraft.client.model.geom.builders.LayerDefinition;
+                                               ^
+src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java:11: error: package net.minecraft.client.model.geom.builders does not exist
+import net.minecraft.client.model.geom.builders.MeshDefinition;
+                                               ^
+src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java:12: error: package net.minecraft.client.model.geom.builders does not exist
+import net.minecraft.client.model.geom.builders.PartDefinition;
+                                               ^
+src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java:26: error: cannot find symbol
+        extends AbstractDracarysDragonModel<T> {
+                ^
+  symbol: class AbstractDracarysDragonModel
+src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java:25: error: cannot find symbol
+public final class BalancedDragonModel<T extends DracarysDragonEntity>
+                                                 ^
+  symbol: class DracarysDragonEntity
+src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java:28: error: cannot find symbol
+    public static final ModelLayerLocation LAYER = new ModelLayerLocation(
+                        ^
+  symbol:   class ModelLayerLocation
+  location: class BalancedDragonModel<T>
+  where T is a type-variable:
+    T declared in class BalancedDragonModel
+src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java:35: error: cannot find symbol
+    public BalancedDragonModel(ModelPart root) {
+                               ^
+  symbol:   class ModelPart
+  location: class BalancedDragonModel<T>
+  where T is a type-variable:
+    T declared in class BalancedDragonModel
+src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java:39: error: cannot find symbol
+    public static LayerDefinition createBodyLayer() {
+                  ^
+  symbol:   class LayerDefinition
+  location: class BalancedDragonModel<T>
+  where T is a type-variable:
+    T declared in class BalancedDragonModel
+src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java:60: error: cannot find symbol
+    private static PartDefinition createTorso(PartDefinition root) {
+                                              ^
+  symbol:   class PartDefinition
+  location: class BalancedDragonModel<T>
+  where T is a type-variable:
+    T declared in class BalancedDragonModel
+src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java:60: error: cannot find symbol
+    private static PartDefinition createTorso(PartDefinition root) {
+                   ^
+  symbol:   class PartDefinition
+  location: class BalancedDragonModel<T>
+  where T is a type-variable:
+    T declared in class BalancedDragonModel
+src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java:166: error: cannot find symbol
+    private static void createShoulderArchitecture(PartDefinition body) {
+                                                   ^
+  symbol:   class PartDefinition
+  location: class BalancedDragonModel<T>
+  where T is a type-variable:
+    T declared in class BalancedDragonModel
+src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java:196: error: cannot find symbol
+    private static void createDorsalSpines(PartDefinition body) {
+                                           ^
+  symbol:   class PartDefinition
+  location: class BalancedDragonModel<T>
+  where T is a type-variable:
+    T declared in class BalancedDragonModel
+src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java:205: error: cannot find symbol
+    private static void addSpine(PartDefinition parent, String name, float y, float z, float height, int texY) {
+                                 ^
+  symbol:   class PartDefinition
+  location: class BalancedDragonModel<T>
+  where T is a type-variable:
+    T declared in class BalancedDragonModel
+src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java:218: error: cannot find symbol
+    private static void createNeckAndHead(PartDefinition body) {
+                                          ^
+  symbol:   class PartDefinition
+  location: class BalancedDragonModel<T>
+  where T is a type-variable:
+    T declared in class BalancedDragonModel
+src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java:257: error: cannot find symbol
+            PartDefinition parent,
+            ^
+  symbol:   class PartDefinition
+  location: class BalancedDragonModel<T>
+  where T is a type-variable:
+    T declared in class BalancedDragonModel
+src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java:276: error: cannot find symbol
+    private static void addNeckSpines(PartDefinition parent, float height, float y, float z) {
+                                      ^
+  symbol:   class PartDefinition
+  location: class BalancedDragonModel<T>
+  where T is a type-variable:
+    T declared in class BalancedDragonModel
+src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java:292: error: cannot find symbol
+    private static void createHeadMasses(PartDefinition head) {
+                                         ^
+  symbol:   class PartDefinition
+  location: class BalancedDragonModel<T>
+  where T is a type-variable:
+    T declared in class BalancedDragonModel
+src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java:326: error: cannot find symbol
+    private static void createHeadDetails(PartDefinition head) {
+                                          ^
+  symbol:   class PartDefinition
+  location: class BalancedDragonModel<T>
+  where T is a type-variable:
+    T declared in class BalancedDragonModel
+src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java:384: error: cannot find symbol
+    private static void addCranialSpine(PartDefinition parent, String name, float x, float y, float z, float height) {
+                                        ^
+  symbol:   class PartDefinition
+  location: class BalancedDragonModel<T>
+  where T is a type-variable:
+    T declared in class BalancedDragonModel
+src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java:393: error: cannot find symbol
+    private static void createHorn(PartDefinition head, boolean left, boolean primary) {
+                                   ^
+  symbol:   class PartDefinition
+  location: class BalancedDragonModel<T>
+  where T is a type-variable:
+    T declared in class BalancedDragonModel
+src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java:436: error: cannot find symbol
+    private static void createWing(PartDefinition body, boolean left) {
+                                   ^
+  symbol:   class PartDefinition
+  location: class BalancedDragonModel<T>
+  where T is a type-variable:
+    T declared in class BalancedDragonModel
+src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java:568: error: cannot find symbol
+            PartDefinition parent,
+            ^
+  symbol:   class PartDefinition
+  location: class BalancedDragonModel<T>
+  where T is a type-variable:
+    T declared in class BalancedDragonModel
+src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java:595: error: cannot find symbol
+    private static void createWingDigits(PartDefinition hand, boolean left) {
+                                         ^
+  symbol:   class PartDefinition
+  location: class BalancedDragonModel<T>
+  where T is a type-variable:
+    T declared in class BalancedDragonModel
+src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java:657: error: cannot find symbol
+            PartDefinition wingRoot,
+            ^
+  symbol:   class PartDefinition
+  location: class BalancedDragonModel<T>
+  where T is a type-variable:
+    T declared in class BalancedDragonModel
+src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java:658: error: cannot find symbol
+            PartDefinition upperArm,
+            ^
+  symbol:   class PartDefinition
+  location: class BalancedDragonModel<T>
+  where T is a type-variable:
+    T declared in class BalancedDragonModel
+src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java:659: error: cannot find symbol
+            PartDefinition forearm,
+            ^
+  symbol:   class PartDefinition
+  location: class BalancedDragonModel<T>
+  where T is a type-variable:
+    T declared in class BalancedDragonModel
+src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java:660: error: cannot find symbol
+            PartDefinition hand,
+            ^
+  symbol:   class PartDefinition
+  location: class BalancedDragonModel<T>
+  where T is a type-variable:
+    T declared in class BalancedDragonModel
+src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java:682: error: cannot find symbol
+            PartDefinition parent,
+            ^
+  symbol:   class PartDefinition
+  location: class BalancedDragonModel<T>
+  where T is a type-variable:
+    T declared in class BalancedDragonModel
+src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java:727: error: cannot find symbol
+    private static void createForeleg(PartDefinition body, boolean left) {
+                                      ^
+  symbol:   class PartDefinition
+  location: class BalancedDragonModel<T>
+  where T is a type-variable:
+    T declared in class BalancedDragonModel
+src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java:788: error: cannot find symbol
+    private static void createHindleg(PartDefinition body, boolean left) {
+                                      ^
+  symbol:   class PartDefinition
+  location: class BalancedDragonModel<T>
+  where T is a type-variable:
+    T declared in class BalancedDragonModel
+src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java:845: error: cannot find symbol
+    private static void createFoot(PartDefinition parent, boolean left, boolean hind) {
+                                   ^
+  symbol:   class PartDefinition
+  location: class BalancedDragonModel<T>
+  where T is a type-variable:
+    T declared in class BalancedDragonModel
+src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java:907: error: cannot find symbol
+    private static void createTail(PartDefinition body) {
+                                   ^
+  symbol:   class PartDefinition
+  location: class BalancedDragonModel<T>
+  where T is a type-variable:
+    T declared in class BalancedDragonModel
+src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java:952: error: cannot find symbol
+            PartDefinition parent,
+            ^
+  symbol:   class PartDefinition
+  location: class BalancedDragonModel<T>
+  where T is a type-variable:
+    T declared in class BalancedDragonModel
+src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java:972: error: cannot find symbol
+    private static void addTailSpine(PartDefinition parent, String name, float height, float z) {
+                                     ^
+  symbol:   class PartDefinition
+  location: class BalancedDragonModel<T>
+  where T is a type-variable:
+    T declared in class BalancedDragonModel
+src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java:981: error: cannot find symbol
+    private static CubeListBuilder builder(int texX, int texY, boolean left) {
+                   ^
+  symbol:   class CubeListBuilder
+  location: class BalancedDragonModel<T>
+  where T is a type-variable:
+    T declared in class BalancedDragonModel
+src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java:28: error: cannot find symbol
+    public static final ModelLayerLocation LAYER = new ModelLayerLocation(
+                                                       ^
+  symbol:   class ModelLayerLocation
+  location: class BalancedDragonModel<T>
+  where T is a type-variable:
+    T declared in class BalancedDragonModel
+src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java:29: error: cannot find symbol
+            DracarysMod.id("dracarys_dragon_balanced"),
+            ^
+  symbol:   variable DracarysMod
+  location: class BalancedDragonModel<T>
+  where T is a type-variable:
+    T declared in class BalancedDragonModel
+src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java:40: error: cannot find symbol
+        MeshDefinition mesh = new MeshDefinition();
+        ^
+  symbol:   class MeshDefinition
+  location: class BalancedDragonModel<T>
+  where T is a type-variable:
+    T declared in class BalancedDragonModel
+src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java:40: error: cannot find symbol
+        MeshDefinition mesh = new MeshDefinition();
+                                  ^
+  symbol:   class MeshDefinition
+  location: class BalancedDragonModel<T>
+  where T is a type-variable:
+    T declared in class BalancedDragonModel
+src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java:41: error: cannot find symbol
+        PartDefinition root = mesh.getRoot();
+        ^
+  symbol:   class PartDefinition
+  location: class BalancedDragonModel<T>
+  where T is a type-variable:
+    T declared in class BalancedDragonModel
+src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java:43: error: cannot find symbol
+        PartDefinition body = createTorso(root);
+        ^
+  symbol:   class PartDefinition
+  location: class BalancedDragonModel<T>
+  where T is a type-variable:
+    T declared in class BalancedDragonModel
+src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java:53: error: cannot find symbol
+        return LayerDefinition.create(mesh, TEXTURE_SIZE, TEXTURE_SIZE);
+               ^
+  symbol:   variable LayerDefinition
+  location: class BalancedDragonModel<T>
+  where T is a type-variable:
+    T declared in class BalancedDragonModel
+src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java:65: error: cannot find symbol
+        PartDefinition body = root.addOrReplaceChild(
+        ^
+  symbol:   class PartDefinition
+  location: class BalancedDragonModel<T>
+  where T is a type-variable:
+    T declared in class BalancedDragonModel
+src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java:67: error: cannot find symbol
+                CubeListBuilder.create(),
+                ^
+  symbol:   variable CubeListBuilder
+  location: class BalancedDragonModel<T>
+  where T is a type-variable:
+    T declared in class BalancedDragonModel
+src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java:68: error: cannot find symbol
+                PartPose.offset(0.0F, -18.0F, 1.0F)
+                ^
+  symbol:   variable PartPose
+  location: class BalancedDragonModel<T>
+  where T is a type-variable:
+    T declared in class BalancedDragonModel
+src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java:71: error: cannot find symbol
+        PartDefinition thorax = body.addOrReplaceChild(
+        ^
+  symbol:   class PartDefinition
+  location: class BalancedDragonModel<T>
+  where T is a type-variable:
+    T declared in class BalancedDragonModel
+src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java:73: error: cannot find symbol
+                CubeListBuilder.create(),
+                ^
+  symbol:   variable CubeListBuilder
+  location: class BalancedDragonModel<T>
+  where T is a type-variable:
+    T declared in class BalancedDragonModel
+src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java:74: error: cannot find symbol
+                PartPose.offsetAndRotation(0.0F, -1.0F, -9.0F, 0.02F, 0.0F, 0.0F)
+                ^
+  symbol:   variable PartPose
+  location: class BalancedDragonModel<T>
+  where T is a type-variable:
+    T declared in class BalancedDragonModel
+src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java:80: error: cannot find symbol
+                CubeListBuilder.create().texOffs(0, 0)
+                ^
+  symbol:   variable CubeListBuilder
+  location: class BalancedDragonModel<T>
+  where T is a type-variable:
+    T declared in class BalancedDragonModel
+src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java:82: error: cannot find symbol
+                PartPose.offsetAndRotation(0.0F, -1.0F, 0.0F, -0.03F, 0.0F, 0.0F)
+                ^
+  symbol:   variable PartPose
+  location: class BalancedDragonModel<T>
+  where T is a type-variable:
+    T declared in class BalancedDragonModel
+src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java:86: error: cannot find symbol
+                CubeListBuilder.create().texOffs(84, 0)
+                ^
+  symbol:   variable CubeListBuilder
+  location: class BalancedDragonModel<T>
+  where T is a type-variable:
+    T declared in class BalancedDragonModel
+src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java:88: error: cannot find symbol
+                PartPose.offsetAndRotation(0.0F, 1.8F, 0.6F, 0.02F, 0.0F, 0.0F)
+                ^
+  symbol:   variable PartPose
+  location: class BalancedDragonModel<T>
+  where T is a type-variable:
+    T declared in class BalancedDragonModel
+src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java:92: error: cannot find symbol
+                CubeListBuilder.create().texOffs(0, 30)
+                ^
+  symbol:   variable CubeListBuilder
+  location: class BalancedDragonModel<T>
+  where T is a type-variable:
+    T declared in class BalancedDragonModel
+src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java:94: error: cannot find symbol
+                PartPose.offsetAndRotation(0.0F, 5.0F, -0.3F, 0.09F, 0.0F, 0.0F)
+                ^
+  symbol:   variable PartPose
+  location: class BalancedDragonModel<T>
+  where T is a type-variable:
+    T declared in class BalancedDragonModel
+src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java:100: error: cannot find symbol
+                CubeListBuilder.create().texOffs(54, 30)
+                ^
+  symbol:   variable CubeListBuilder
+  location: class BalancedDragonModel<T>
+  where T is a type-variable:
+    T declared in class BalancedDragonModel
+src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java:102: error: cannot find symbol
+                PartPose.offsetAndRotation(8.8F, 2.7F, -4.8F, 0.03F, -0.12F, -0.13F)
+                ^
+  symbol:   variable PartPose
+  location: class BalancedDragonModel<T>
+  where T is a type-variable:
+    T declared in class BalancedDragonModel
+src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java:106: error: cannot find symbol
+                CubeListBuilder.create().texOffs(54, 30).mirror()
+                ^
+  symbol:   variable CubeListBuilder
+  location: class BalancedDragonModel<T>
+  where T is a type-variable:
+    T declared in class BalancedDragonModel
+src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java:108: error: cannot find symbol
+                PartPose.offsetAndRotation(-8.8F, 2.7F, -4.8F, 0.03F, 0.12F, 0.13F)
+                ^
+  symbol:   variable PartPose
+  location: class BalancedDragonModel<T>
+  where T is a type-variable:
+    T declared in class BalancedDragonModel
+src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java:112: error: cannot find symbol
+        PartDefinition abdomen = body.addOrReplaceChild(
+        ^
+  symbol:   class PartDefinition
+  location: class BalancedDragonModel<T>
+  where T is a type-variable:
+    T declared in class BalancedDragonModel
+src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java:114: error: cannot find symbol
+                CubeListBuilder.create(),
+                ^
+  symbol:   variable CubeListBuilder
+  location: class BalancedDragonModel<T>
+  where T is a type-variable:
+    T declared in class BalancedDragonModel
+src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java:115: error: cannot find symbol
+                PartPose.offsetAndRotation(0.0F, 1.2F, 6.0F, 0.04F, 0.0F, 0.0F)
+                ^
+  symbol:   variable PartPose
+  location: class BalancedDragonModel<T>
+  where T is a type-variable:
+    T declared in class BalancedDragonModel
+src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java:119: error: cannot find symbol
+                CubeListBuilder.create().texOffs(92, 30)
+                ^
+  symbol:   variable CubeListBuilder
+  location: class BalancedDragonModel<T>
+  where T is a type-variable:
+    T declared in class BalancedDragonModel
+src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java:121: error: cannot find symbol
+                PartPose.offsetAndRotation(0.0F, 0.0F, 0.0F, 0.02F, 0.0F, 0.0F)
+                ^
+  symbol:   variable PartPose
+  location: class BalancedDragonModel<T>
+  where T is a type-variable:
+    T declared in class BalancedDragonModel
+src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java:125: error: cannot find symbol
+                CubeListBuilder.create().texOffs(92, 52)
+                ^
+  symbol:   variable CubeListBuilder
+  location: class BalancedDragonModel<T>
+  where T is a type-variable:
+    T declared in class BalancedDragonModel
+src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java:127: error: cannot find symbol
+                PartPose.offsetAndRotation(0.0F, 0.8F, 8.0F, -0.04F, 0.0F, 0.0F)
+                ^
+  symbol:   variable PartPose
+  location: class BalancedDragonModel<T>
+  where T is a type-variable:
+    T declared in class BalancedDragonModel
+src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java:131: error: cannot find symbol
+                CubeListBuilder.create().texOffs(138, 30)
+                ^
+  symbol:   variable CubeListBuilder
+  location: class BalancedDragonModel<T>
+  where T is a type-variable:
+    T declared in class BalancedDragonModel
+src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java:133: error: cannot find symbol
+                PartPose.offsetAndRotation(0.0F, 4.2F, 2.0F, 0.10F, 0.0F, 0.0F)
+                ^
+  symbol:   variable PartPose
+  location: class BalancedDragonModel<T>
+  where T is a type-variable:
+    T declared in class BalancedDragonModel
+src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java:137: error: cannot find symbol
+        PartDefinition pelvis = body.addOrReplaceChild(
+        ^
+  symbol:   class PartDefinition
+  location: class BalancedDragonModel<T>
+  where T is a type-variable:
+    T declared in class BalancedDragonModel
+src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java:139: error: cannot find symbol
+                CubeListBuilder.create(),
+                ^
+  symbol:   variable CubeListBuilder
+  location: class BalancedDragonModel<T>
+  where T is a type-variable:
+    T declared in class BalancedDragonModel
+src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java:140: error: cannot find symbol
+                PartPose.offsetAndRotation(0.0F, 1.2F, 18.0F, -0.02F, 0.0F, 0.0F)
+                ^
+  symbol:   variable PartPose
+  location: class BalancedDragonModel<T>
+  where T is a type-variable:
+    T declared in class BalancedDragonModel
+src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java:146: error: cannot find symbol
+                PartPose.ZERO
+                ^
+  symbol:   variable PartPose
+  location: class BalancedDragonModel<T>
+  where T is a type-variable:
+    T declared in class BalancedDragonModel
+src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java:144: error: cannot find symbol
+                CubeListBuilder.create().texOffs(154, 0)
+                ^
+  symbol:   variable CubeListBuilder
+  location: class BalancedDragonModel<T>
+  where T is a type-variable:
+    T declared in class BalancedDragonModel
+src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java:150: error: cannot find symbol
+                CubeListBuilder.create().texOffs(154, 24)
+                ^
+  symbol:   variable CubeListBuilder
+  location: class BalancedDragonModel<T>
+  where T is a type-variable:
+    T declared in class BalancedDragonModel
+src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java:152: error: cannot find symbol
+                PartPose.offsetAndRotation(0.0F, 0.0F, 7.0F, 0.03F, 0.0F, 0.0F)
+                ^
+  symbol:   variable PartPose
+  location: class BalancedDragonModel<T>
+  where T is a type-variable:
+    T declared in class BalancedDragonModel
+src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java:156: error: cannot find symbol
+                CubeListBuilder.create().texOffs(154, 44)
+                ^
+  symbol:   variable CubeListBuilder
+  location: class BalancedDragonModel<T>
+  where T is a type-variable:
+    T declared in class BalancedDragonModel
+src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java:158: error: cannot find symbol
+                PartPose.offsetAndRotation(0.0F, -0.2F, 13.0F, 0.04F, 0.0F, 0.0F)
+                ^
+  symbol:   variable PartPose
+  location: class BalancedDragonModel<T>
+  where T is a type-variable:
+    T declared in class BalancedDragonModel
+src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java:170: error: cannot find symbol
+                CubeListBuilder.create().texOffs(196, 0)
+                ^
+  symbol:   variable CubeListBuilder
+  location: class BalancedDragonModel<T>
+  where T is a type-variable:
+    T declared in class BalancedDragonModel
+src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java:172: error: cannot find symbol
+                PartPose.offsetAndRotation(8.8F, -5.8F, -7.0F, 0.02F, -0.18F, -0.20F)
+                ^
+  symbol:   variable PartPose
+  location: class BalancedDragonModel<T>
+  where T is a type-variable:
+    T declared in class BalancedDragonModel
+src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java:176: error: cannot find symbol
+                CubeListBuilder.create().texOffs(196, 0).mirror()
+                ^
+  symbol:   variable CubeListBuilder
+  location: class BalancedDragonModel<T>
+  where T is a type-variable:
+    T declared in class BalancedDragonModel
+src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java:178: error: cannot find symbol
+                PartPose.offsetAndRotation(-8.8F, -5.8F, -7.0F, 0.02F, 0.18F, 0.20F)
+                ^
+  symbol:   variable PartPose
+  location: class BalancedDragonModel<T>
+  where T is a type-variable:
+    T declared in class BalancedDragonModel
+src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java:184: error: cannot find symbol
+                CubeListBuilder.create().texOffs(196, 18)
+                ^
+  symbol:   variable CubeListBuilder
+  location: class BalancedDragonModel<T>
+  where T is a type-variable:
+    T declared in class BalancedDragonModel
+src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java:186: error: cannot find symbol
+                PartPose.offsetAndRotation(8.5F, 2.2F, -12.0F, 0.02F, -0.08F, -0.10F)
+                ^
+  symbol:   variable PartPose
+  location: class BalancedDragonModel<T>
+  where T is a type-variable:
+    T declared in class BalancedDragonModel
+src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java:190: error: cannot find symbol
+                CubeListBuilder.create().texOffs(196, 18).mirror()
+                ^
+  symbol:   variable CubeListBuilder
+  location: class BalancedDragonModel<T>
+  where T is a type-variable:
+    T declared in class BalancedDragonModel
+src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java:192: error: cannot find symbol
+                PartPose.offsetAndRotation(-8.5F, 2.2F, -12.0F, 0.02F, 0.08F, 0.10F)
+                ^
+  symbol:   variable PartPose
+  location: class BalancedDragonModel<T>
+  where T is a type-variable:
+    T declared in class BalancedDragonModel
+src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java:197: error: cannot find symbol
+        PartDefinition ridge = body.addOrReplaceChild("dorsal_ridge", CubeListBuilder.create(), PartPose.ZERO);
+        ^
+  symbol:   class PartDefinition
+  location: class BalancedDragonModel<T>
+  where T is a type-variable:
+    T declared in class BalancedDragonModel
+src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java:197: error: cannot find symbol
+        PartDefinition ridge = body.addOrReplaceChild("dorsal_ridge", CubeListBuilder.create(), PartPose.ZERO);
+                                                                                                ^
+  symbol:   variable PartPose
+  location: class BalancedDragonModel<T>
+  where T is a type-variable:
+    T declared in class BalancedDragonModel
+src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java:197: error: cannot find symbol
+        PartDefinition ridge = body.addOrReplaceChild("dorsal_ridge", CubeListBuilder.create(), PartPose.ZERO);
+                                                                      ^
+  symbol:   variable CubeListBuilder
+  location: class BalancedDragonModel<T>
+  where T is a type-variable:
+    T declared in class BalancedDragonModel
+src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java:208: error: cannot find symbol
+                CubeListBuilder.create().texOffs(232, texY)
+                ^
+  symbol:   variable CubeListBuilder
+  location: class BalancedDragonModel<T>
+  where T is a type-variable:
+    T declared in class BalancedDragonModel
+src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java:210: error: cannot find symbol
+                PartPose.offsetAndRotation(0.0F, y, z, -0.14F, 0.0F, 0.0F)
+                ^
+  symbol:   variable PartPose
+  location: class BalancedDragonModel<T>
+  where T is a type-variable:
+    T declared in class BalancedDragonModel
+src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java:220: error: cannot find symbol
+        PartDefinition neck01 = body.addOrReplaceChild(
+        ^
+  symbol:   class PartDefinition
+  location: class BalancedDragonModel<T>
+  where T is a type-variable:
+    T declared in class BalancedDragonModel
+src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java:222: error: cannot find symbol
+                CubeListBuilder.create(),
+                ^
+  symbol:   variable CubeListBuilder
+  location: class BalancedDragonModel<T>
+  where T is a type-variable:
+    T declared in class BalancedDragonModel
+src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java:223: error: cannot find symbol
+                PartPose.offsetAndRotation(0.0F, -4.0F, -18.5F, -0.08F, 0.0F, 0.0F)
+                ^
+  symbol:   variable PartPose
+  location: class BalancedDragonModel<T>
+  where T is a type-variable:
+    T declared in class BalancedDragonModel
+src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java:229: error: cannot find symbol
+        PartDefinition neck02 = neck01.addOrReplaceChild(
+        ^
+  symbol:   class PartDefinition
+  location: class BalancedDragonModel<T>
+  where T is a type-variable:
+    T declared in class BalancedDragonModel
+src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java:231: error: cannot find symbol
+                CubeListBuilder.create(),
+                ^
+  symbol:   variable CubeListBuilder
+  location: class BalancedDragonModel<T>
+  where T is a type-variable:
+    T declared in class BalancedDragonModel
+src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java:232: error: cannot find symbol
+                PartPose.offsetAndRotation(0.0F, -2.0F, -17.5F, -0.06F, 0.0F, 0.0F)
+                ^
+  symbol:   variable PartPose
+  location: class BalancedDragonModel<T>
+  where T is a type-variable:
+    T declared in class BalancedDragonModel
+src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java:238: error: cannot find symbol
+        PartDefinition neck03 = neck02.addOrReplaceChild(
+        ^
+  symbol:   class PartDefinition
+  location: class BalancedDragonModel<T>
+  where T is a type-variable:
+    T declared in class BalancedDragonModel
+src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java:240: error: cannot find symbol
+                CubeListBuilder.create(),
+                ^
+  symbol:   variable CubeListBuilder
+  location: class BalancedDragonModel<T>
+  where T is a type-variable:
+    T declared in class BalancedDragonModel
+src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java:241: error: cannot find symbol
+                PartPose.offsetAndRotation(0.0F, -1.0F, -15.5F, 0.02F, 0.0F, 0.0F)
+                ^
+  symbol:   variable PartPose
+  location: class BalancedDragonModel<T>
+  where T is a type-variable:
+    T declared in class BalancedDragonModel
+src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java:246: error: cannot find symbol
+        PartDefinition head = neck03.addOrReplaceChild(
+        ^
+  symbol:   class PartDefinition
+  location: class BalancedDragonModel<T>
+  where T is a type-variable:
+    T declared in class BalancedDragonModel
+src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java:248: error: cannot find symbol
+                CubeListBuilder.create(),
+                ^
+  symbol:   variable CubeListBuilder
+  location: class BalancedDragonModel<T>
+  where T is a type-variable:
+    T declared in class BalancedDragonModel
+src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java:249: error: cannot find symbol
+                PartPose.offsetAndRotation(0.0F, -0.8F, -12.5F, 0.02F, 0.0F, 0.0F)
+                ^
+  symbol:   variable PartPose
+  location: class BalancedDragonModel<T>
+  where T is a type-variable:
+    T declared in class BalancedDragonModel
+src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java:270: error: cannot find symbol
+                CubeListBuilder.create().texOffs(texX, texY)
+                ^
+  symbol:   variable CubeListBuilder
+  location: class BalancedDragonModel<T>
+  where T is a type-variable:
+    T declared in class BalancedDragonModel
+src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java:272: error: cannot find symbol
+                PartPose.offsetAndRotation(x, y, z, -0.08F, 0.0F, 0.0F)
+                ^
+  symbol:   variable PartPose
+  location: class BalancedDragonModel<T>
+  where T is a type-variable:
+    T declared in class BalancedDragonModel
+src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java:277: error: cannot find symbol
+        PartDefinition ridge = parent.addOrReplaceChild("neck_spine_ridge", CubeListBuilder.create(), PartPose.ZERO);
+        ^
+  symbol:   class PartDefinition
+  location: class BalancedDragonModel<T>
+  where T is a type-variable:
+    T declared in class BalancedDragonModel
+src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java:277: error: cannot find symbol
+        PartDefinition ridge = parent.addOrReplaceChild("neck_spine_ridge", CubeListBuilder.create(), PartPose.ZERO);
+                                                                                                      ^
+  symbol:   variable PartPose
+  location: class BalancedDragonModel<T>
+  where T is a type-variable:
+    T declared in class BalancedDragonModel
+src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java:277: error: cannot find symbol
+        PartDefinition ridge = parent.addOrReplaceChild("neck_spine_ridge", CubeListBuilder.create(), PartPose.ZERO);
+                                                                            ^
+  symbol:   variable CubeListBuilder
+  location: class BalancedDragonModel<T>
+  where T is a type-variable:
+    T declared in class BalancedDragonModel
+src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java:280: error: cannot find symbol
+                CubeListBuilder.create().texOffs(224, 78)
+                ^
+  symbol:   variable CubeListBuilder
+  location: class BalancedDragonModel<T>
+  where T is a type-variable:
+    T declared in class BalancedDragonModel
+src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java:282: error: cannot find symbol
+                PartPose.offsetAndRotation(0.0F, y, z, -0.18F, 0.0F, 0.0F)
+                ^
+  symbol:   variable PartPose
+  location: class BalancedDragonModel<T>
+  where T is a type-variable:
+    T declared in class BalancedDragonModel
+src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java:286: error: cannot find symbol
+                CubeListBuilder.create().texOffs(232, 78)
+                ^
+  symbol:   variable CubeListBuilder
+  location: class BalancedDragonModel<T>
+  where T is a type-variable:
+    T declared in class BalancedDragonModel
+src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java:288: error: cannot find symbol
+                PartPose.offsetAndRotation(0.0F, y + 0.3F, z + 6.0F, -0.16F, 0.0F, 0.0F)
+                ^
+  symbol:   variable PartPose
+  location: class BalancedDragonModel<T>
+  where T is a type-variable:
+    T declared in class BalancedDragonModel
+src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java:296: error: cannot find symbol
+                CubeListBuilder.create().texOffs(0, 112)
+                ^
+  symbol:   variable CubeListBuilder
+  location: class BalancedDragonModel<T>
+  where T is a type-variable:
+    T declared in class BalancedDragonModel
+src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java:298: error: cannot find symbol
+                PartPose.offsetAndRotation(0.0F, -0.4F, 0.0F, -0.03F, 0.0F, 0.0F)
+                ^
+  symbol:   variable PartPose
+  location: class BalancedDragonModel<T>
+  where T is a type-variable:
+    T declared in class BalancedDragonModel
+src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java:302: error: cannot find symbol
+                CubeListBuilder.create().texOffs(52, 112)
+                ^
+  symbol:   variable CubeListBuilder
+  location: class BalancedDragonModel<T>
+  where T is a type-variable:
+    T declared in class BalancedDragonModel
+src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java:304: error: cannot find symbol
+                PartPose.offsetAndRotation(0.0F, 0.0F, -8.5F, 0.02F, 0.0F, 0.0F)
+                ^
+  symbol:   variable PartPose
+  location: class BalancedDragonModel<T>
+  where T is a type-variable:
+    T declared in class BalancedDragonModel
+src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java:308: error: cannot find symbol
+                CubeListBuilder.create().texOffs(98, 112)
+                ^
+  symbol:   variable CubeListBuilder
+  location: class BalancedDragonModel<T>
+  where T is a type-variable:
+    T declared in class BalancedDragonModel
+src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java:310: error: cannot find symbol
+                PartPose.offsetAndRotation(0.0F, 0.5F, -16.0F, 0.04F, 0.0F, 0.0F)
+                ^
+  symbol:   variable PartPose
+  location: class BalancedDragonModel<T>
+  where T is a type-variable:
+    T declared in class BalancedDragonModel
+src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java:314: error: cannot find symbol
+                CubeListBuilder.create().texOffs(136, 112)
+                ^
+  symbol:   variable CubeListBuilder
+  location: class BalancedDragonModel<T>
+  where T is a type-variable:
+    T declared in class BalancedDragonModel
+src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java:316: error: cannot find symbol
+                PartPose.offsetAndRotation(0.0F, 0.8F, -22.0F, 0.03F, 0.0F, 0.0F)
+                ^
+  symbol:   variable PartPose
+  location: class BalancedDragonModel<T>
+  where T is a type-variable:
+    T declared in class BalancedDragonModel
+src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java:320: error: cannot find symbol
+                CubeListBuilder.create().texOffs(168, 112)
+                ^
+  symbol:   variable CubeListBuilder
+  location: class BalancedDragonModel<T>
+  where T is a type-variable:
+    T declared in class BalancedDragonModel
+src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java:322: error: cannot find symbol
+                PartPose.offsetAndRotation(0.0F, 1.0F, -27.5F, 0.02F, 0.0F, 0.0F)
+                ^
+  symbol:   variable PartPose
+  location: class BalancedDragonModel<T>
+  where T is a type-variable:
+    T declared in class BalancedDragonModel
+src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java:329: error: cannot find symbol
+                CubeListBuilder.create().texOffs(0, 132)
+                ^
+  symbol:   variable CubeListBuilder
+  location: class BalancedDragonModel<T>
+  where T is a type-variable:
+    T declared in class BalancedDragonModel
+src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java:331: error: cannot find symbol
+                PartPose.offsetAndRotation(5.2F, 1.0F, -8.5F, 0.02F, -0.10F, -0.08F)
+                ^
+  symbol:   variable PartPose
+  location: class BalancedDragonModel<T>
+  where T is a type-variable:
+    T declared in class BalancedDragonModel
+src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java:335: error: cannot find symbol
+                CubeListBuilder.create().texOffs(0, 132).mirror()
+                ^
+  symbol:   variable CubeListBuilder
+  location: class BalancedDragonModel<T>
+  where T is a type-variable:
+    T declared in class BalancedDragonModel
+src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java:337: error: cannot find symbol
+                PartPose.offsetAndRotation(-5.2F, 1.0F, -8.5F, 0.02F, 0.10F, 0.08F)
+                ^
+  symbol:   variable PartPose
+  location: class BalancedDragonModel<T>
+  where T is a type-variable:
+    T declared in class BalancedDragonModel
+src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java:342: error: cannot find symbol
+                CubeListBuilder.create().texOffs(28, 132)
+                ^
+  symbol:   variable CubeListBuilder
+  location: class BalancedDragonModel<T>
+  where T is a type-variable:
+    T declared in class BalancedDragonModel
+src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java:344: error: cannot find symbol
+                PartPose.offsetAndRotation(3.0F, -3.8F, -10.5F, -0.10F, -0.12F, -0.08F)
+                ^
+  symbol:   variable PartPose
+  location: class BalancedDragonModel<T>
+  where T is a type-variable:
+    T declared in class BalancedDragonModel
+src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java:348: error: cannot find symbol
+                CubeListBuilder.create().texOffs(28, 132).mirror()
+                ^
+  symbol:   variable CubeListBuilder
+  location: class BalancedDragonModel<T>
+  where T is a type-variable:
+    T declared in class BalancedDragonModel
+src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java:350: error: cannot find symbol
+                PartPose.offsetAndRotation(-3.0F, -3.8F, -10.5F, -0.10F, 0.12F, 0.08F)
+                ^
+  symbol:   variable PartPose
+  location: class BalancedDragonModel<T>
+  where T is a type-variable:
+    T declared in class BalancedDragonModel
+src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java:354: error: cannot find symbol
+        PartDefinition jaw = head.addOrReplaceChild(
+        ^
+  symbol:   class PartDefinition
+  location: class BalancedDragonModel<T>
+  where T is a type-variable:
+    T declared in class BalancedDragonModel
+src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java:356: error: cannot find symbol
+                CubeListBuilder.create().texOffs(58, 132)
+                ^
+  symbol:   variable CubeListBuilder
+  location: class BalancedDragonModel<T>
+  where T is a type-variable:
+    T declared in class BalancedDragonModel
+src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java:358: error: cannot find symbol
+                PartPose.offsetAndRotation(0.0F, 3.1F, -11.5F, 0.01F, 0.0F, 0.0F)
+                ^
+  symbol:   variable PartPose
+  location: class BalancedDragonModel<T>
+  where T is a type-variable:
+    T declared in class BalancedDragonModel
+src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java:362: error: cannot find symbol
+                CubeListBuilder.create().texOffs(108, 132)
+                ^
+  symbol:   variable CubeListBuilder
+  location: class BalancedDragonModel<T>
+  where T is a type-variable:
+    T declared in class BalancedDragonModel
+src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java:364: error: cannot find symbol
+                PartPose.offsetAndRotation(0.0F, 0.4F, -14.0F, -0.03F, 0.0F, 0.0F)
+                ^
+  symbol:   variable PartPose
+  location: class BalancedDragonModel<T>
+  where T is a type-variable:
+    T declared in class BalancedDragonModel
+src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java:368: error: cannot find symbol
+                CubeListBuilder.create().texOffs(140, 132)
+                ^
+  symbol:   variable CubeListBuilder
+  location: class BalancedDragonModel<T>
+  where T is a type-variable:
+    T declared in class BalancedDragonModel
+src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java:370: error: cannot find symbol
+                PartPose.offsetAndRotation(0.0F, 2.3F, -6.5F, 0.12F, 0.0F, 0.0F)
+                ^
+  symbol:   variable PartPose
+  location: class BalancedDragonModel<T>
+  where T is a type-variable:
+    T declared in class BalancedDragonModel
+src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java:378: error: cannot find symbol
+        PartDefinition crest = head.addOrReplaceChild("cranial_crest", CubeListBuilder.create(), PartPose.ZERO);
+        ^
+  symbol:   class PartDefinition
+  location: class BalancedDragonModel<T>
+  where T is a type-variable:
+    T declared in class BalancedDragonModel
+src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java:378: error: cannot find symbol
+        PartDefinition crest = head.addOrReplaceChild("cranial_crest", CubeListBuilder.create(), PartPose.ZERO);
+                                                                                                 ^
+  symbol:   variable PartPose
+  location: class BalancedDragonModel<T>
+  where T is a type-variable:
+    T declared in class BalancedDragonModel
+src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java:378: error: cannot find symbol
+        PartDefinition crest = head.addOrReplaceChild("cranial_crest", CubeListBuilder.create(), PartPose.ZERO);
+                                                                       ^
+  symbol:   variable CubeListBuilder
+  location: class BalancedDragonModel<T>
+  where T is a type-variable:
+    T declared in class BalancedDragonModel
+src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java:387: error: cannot find symbol
+                CubeListBuilder.create().texOffs(220, 132)
+                ^
+  symbol:   variable CubeListBuilder
+  location: class BalancedDragonModel<T>
+  where T is a type-variable:
+    T declared in class BalancedDragonModel
+src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java:389: error: cannot find symbol
+                PartPose.offsetAndRotation(x, y, z, -0.16F, 0.0F, 0.0F)
+                ^
+  symbol:   variable PartPose
+  location: class BalancedDragonModel<T>
+  where T is a type-variable:
+    T declared in class BalancedDragonModel
+src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java:406: error: cannot find symbol
+        PartDefinition horn = head.addOrReplaceChild(
+        ^
+  symbol:   class PartDefinition
+  location: class BalancedDragonModel<T>
+  where T is a type-variable:
+    T declared in class BalancedDragonModel
+src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java:411: error: cannot find symbol
+                PartPose.offsetAndRotation(
+                ^
+  symbol:   variable PartPose
+  location: class BalancedDragonModel<T>
+  where T is a type-variable:
+    T declared in class BalancedDragonModel
+src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java:425: error: cannot find symbol
+                PartPose.offsetAndRotation(
+                ^
+  symbol:   variable PartPose
+  location: class BalancedDragonModel<T>
+  where T is a type-variable:
+    T declared in class BalancedDragonModel
+src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java:441: error: cannot find symbol
+        PartDefinition wingRoot = body.addOrReplaceChild(
+        ^
+  symbol:   class PartDefinition
+  location: class BalancedDragonModel<T>
+  where T is a type-variable:
+    T declared in class BalancedDragonModel
+src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java:443: error: cannot find symbol
+                CubeListBuilder.create(),
+                ^
+  symbol:   variable CubeListBuilder
+  location: class BalancedDragonModel<T>
+  where T is a type-variable:
+    T declared in class BalancedDragonModel
+src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java:444: error: cannot find symbol
+                PartPose.offset(side * 9.8F, -6.8F, -5.8F)
+                ^
+  symbol:   variable PartPose
+  location: class BalancedDragonModel<T>
+  where T is a type-variable:
+    T declared in class BalancedDragonModel
+src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java:452: error: cannot find symbol
+                PartPose.offsetAndRotation(side * 3.2F, 0.0F, 0.8F, 0.02F, side * -0.12F, side * -0.06F)
+                ^
+  symbol:   variable PartPose
+  location: class BalancedDragonModel<T>
+  where T is a type-variable:
+    T declared in class BalancedDragonModel
+src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java:456: error: cannot find symbol
+        PartDefinition upperArm = wingRoot.addOrReplaceChild(
+        ^
+  symbol:   class PartDefinition
+  location: class BalancedDragonModel<T>
+  where T is a type-variable:
+    T declared in class BalancedDragonModel
+src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java:458: error: cannot find symbol
+                CubeListBuilder.create(),
+                ^
+  symbol:   variable CubeListBuilder
+  location: class BalancedDragonModel<T>
+  where T is a type-variable:
+    T declared in class BalancedDragonModel
+src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java:459: error: cannot find symbol
+                PartPose.offset(side * 5.5F, -0.4F, 1.5F)
+                ^
+  symbol:   variable PartPose
+  location: class BalancedDragonModel<T>
+  where T is a type-variable:
+    T declared in class BalancedDragonModel
+src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java:491: error: cannot find symbol
+                PartPose.offset(side * 27.0F, -0.5F, 8.5F)
+                ^
+  symbol:   variable PartPose
+  location: class BalancedDragonModel<T>
+  where T is a type-variable:
+    T declared in class BalancedDragonModel
+src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java:495: error: cannot find symbol
+        PartDefinition forearm = upperArm.addOrReplaceChild(
+        ^
+  symbol:   class PartDefinition
+  location: class BalancedDragonModel<T>
+  where T is a type-variable:
+    T declared in class BalancedDragonModel
+src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java:497: error: cannot find symbol
+                CubeListBuilder.create(),
+                ^
+  symbol:   variable CubeListBuilder
+  location: class BalancedDragonModel<T>
+  where T is a type-variable:
+    T declared in class BalancedDragonModel
+src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java:498: error: cannot find symbol
+                PartPose.offset(side * 27.0F, -0.8F, 8.5F)
+                ^
+  symbol:   variable PartPose
+  location: class BalancedDragonModel<T>
+  where T is a type-variable:
+    T declared in class BalancedDragonModel
+src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java:530: error: cannot find symbol
+                PartPose.offset(side * 32.0F, -0.6F, 9.5F)
+                ^
+  symbol:   variable PartPose
+  location: class BalancedDragonModel<T>
+  where T is a type-variable:
+    T declared in class BalancedDragonModel
+src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java:533: error: cannot find symbol
+        PartDefinition hand = forearm.addOrReplaceChild(
+        ^
+  symbol:   class PartDefinition
+  location: class BalancedDragonModel<T>
+  where T is a type-variable:
+    T declared in class BalancedDragonModel
+src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java:535: error: cannot find symbol
+                CubeListBuilder.create(),
+                ^
+  symbol:   variable CubeListBuilder
+  location: class BalancedDragonModel<T>
+  where T is a type-variable:
+    T declared in class BalancedDragonModel
+src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java:536: error: cannot find symbol
+                PartPose.offset(side * 31.5F, -0.5F, 9.2F)
+                ^
+  symbol:   variable PartPose
+  location: class BalancedDragonModel<T>
+  where T is a type-variable:
+    T declared in class BalancedDragonModel
+src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java:560: error: cannot find symbol
+                PartPose.offsetAndRotation(
+                ^
+  symbol:   variable PartPose
+  location: class BalancedDragonModel<T>
+  where T is a type-variable:
+    T declared in class BalancedDragonModel
+src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java:591: error: cannot find symbol
+                PartPose.offsetAndRotation(x, y, z, 0.02F, yaw, 0.0F)
+                ^
+  symbol:   variable PartPose
+  location: class BalancedDragonModel<T>
+  where T is a type-variable:
+    T declared in class BalancedDragonModel
+src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java:605: error: cannot find symbol
+            PartDefinition digit = hand.addOrReplaceChild(
+            ^
+  symbol:   class PartDefinition
+  location: class BalancedDragonModel<T>
+  where T is a type-variable:
+    T declared in class BalancedDragonModel
+src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java:616: error: cannot find symbol
+                    PartPose.offsetAndRotation(
+                    ^
+  symbol:   variable PartPose
+  location: class BalancedDragonModel<T>
+  where T is a type-variable:
+    T declared in class BalancedDragonModel
+src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java:639: error: cannot find symbol
+                    PartPose.offsetAndRotation(
+                    ^
+  symbol:   variable PartPose
+  location: class BalancedDragonModel<T>
+  where T is a type-variable:
+    T declared in class BalancedDragonModel
+src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java:695: error: cannot find symbol
+        PartDefinition membrane = parent.addOrReplaceChild(
+        ^
+  symbol:   class PartDefinition
+  location: class BalancedDragonModel<T>
+  where T is a type-variable:
+    T declared in class BalancedDragonModel
+src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java:697: error: cannot find symbol
+                CubeListBuilder.create(),
+                ^
+  symbol:   variable CubeListBuilder
+  location: class BalancedDragonModel<T>
+  where T is a type-variable:
+    T declared in class BalancedDragonModel
+src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java:698: error: cannot find symbol
+                PartPose.offsetAndRotation(x, y, z, 0.03F, yaw, 0.0F)
+                ^
+  symbol:   variable PartPose
+  location: class BalancedDragonModel<T>
+  where T is a type-variable:
+    T declared in class BalancedDragonModel
+src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java:718: error: cannot find symbol
+                    PartPose.offsetAndRotation(0.0F, 0.0F, i * 0.75F, 0.0F, 0.0F, 0.0F)
+                    ^
+  symbol:   variable PartPose
+  location: class BalancedDragonModel<T>
+  where T is a type-variable:
+    T declared in class BalancedDragonModel
+src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java:731: error: cannot find symbol
+        PartDefinition leg = body.addOrReplaceChild(
+        ^
+  symbol:   class PartDefinition
+  location: class BalancedDragonModel<T>
+  where T is a type-variable:
+    T declared in class BalancedDragonModel
+src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java:733: error: cannot find symbol
+                CubeListBuilder.create(),
+                ^
+  symbol:   variable CubeListBuilder
+  location: class BalancedDragonModel<T>
+  where T is a type-variable:
+    T declared in class BalancedDragonModel
+src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java:734: error: cannot find symbol
+                PartPose.offsetAndRotation(side * 8.2F, 2.0F, -12.0F, -0.06F, 0.0F, side * -0.06F)
+                ^
+  symbol:   variable PartPose
+  location: class BalancedDragonModel<T>
+  where T is a type-variable:
+    T declared in class BalancedDragonModel
+src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java:741: error: cannot find symbol
+                PartPose.offsetAndRotation(0.0F, 0.0F, 0.0F, 0.03F, 0.0F, 0.0F)
+                ^
+  symbol:   variable PartPose
+  location: class BalancedDragonModel<T>
+  where T is a type-variable:
+    T declared in class BalancedDragonModel
+src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java:747: error: cannot find symbol
+                PartPose.offsetAndRotation(0.0F, 4.0F, 0.2F, 0.10F, 0.0F, side * 0.02F)
+                ^
+  symbol:   variable PartPose
+  location: class BalancedDragonModel<T>
+  where T is a type-variable:
+    T declared in class BalancedDragonModel
+src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java:753: error: cannot find symbol
+                PartPose.offset(0.0F, 15.0F, 1.5F)
+                ^
+  symbol:   variable PartPose
+  location: class BalancedDragonModel<T>
+  where T is a type-variable:
+    T declared in class BalancedDragonModel
+src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java:756: error: cannot find symbol
+        PartDefinition lowerLeg = leg.addOrReplaceChild(
+        ^
+  symbol:   class PartDefinition
+  location: class BalancedDragonModel<T>
+  where T is a type-variable:
+    T declared in class BalancedDragonModel
+src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java:758: error: cannot find symbol
+                CubeListBuilder.create(),
+                ^
+  symbol:   variable CubeListBuilder
+  location: class BalancedDragonModel<T>
+  where T is a type-variable:
+    T declared in class BalancedDragonModel
+src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java:759: error: cannot find symbol
+                PartPose.offsetAndRotation(0.0F, 15.0F, 1.8F, 0.14F, 0.0F, 0.0F)
+                ^
+  symbol:   variable PartPose
+  location: class BalancedDragonModel<T>
+  where T is a type-variable:
+    T declared in class BalancedDragonModel
+src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java:765: error: cannot find symbol
+                PartPose.ZERO
+                ^
+  symbol:   variable PartPose
+  location: class BalancedDragonModel<T>
+  where T is a type-variable:
+    T declared in class BalancedDragonModel
+src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java:771: error: cannot find symbol
+                PartPose.offsetAndRotation(0.0F, 7.5F, -0.4F, -0.08F, 0.0F, 0.0F)
+                ^
+  symbol:   variable PartPose
+  location: class BalancedDragonModel<T>
+  where T is a type-variable:
+    T declared in class BalancedDragonModel
+src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java:774: error: cannot find symbol
+        PartDefinition wrist = lowerLeg.addOrReplaceChild(
+        ^
+  symbol:   class PartDefinition
+  location: class BalancedDragonModel<T>
+  where T is a type-variable:
+    T declared in class BalancedDragonModel
+src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java:778: error: cannot find symbol
+                PartPose.offsetAndRotation(0.0F, 13.0F, -1.2F, -0.30F, 0.0F, 0.0F)
+                ^
+  symbol:   variable PartPose
+  location: class BalancedDragonModel<T>
+  where T is a type-variable:
+    T declared in class BalancedDragonModel
+src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java:792: error: cannot find symbol
+        PartDefinition leg = body.addOrReplaceChild(
+        ^
+  symbol:   class PartDefinition
+  location: class BalancedDragonModel<T>
+  where T is a type-variable:
+    T declared in class BalancedDragonModel
+src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java:794: error: cannot find symbol
+                CubeListBuilder.create(),
+                ^
+  symbol:   variable CubeListBuilder
+  location: class BalancedDragonModel<T>
+  where T is a type-variable:
+    T declared in class BalancedDragonModel
+src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java:795: error: cannot find symbol
+                PartPose.offsetAndRotation(side * 7.6F, 2.0F, 17.0F, 0.05F, 0.0F, side * -0.04F)
+                ^
+  symbol:   variable PartPose
+  location: class BalancedDragonModel<T>
+  where T is a type-variable:
+    T declared in class BalancedDragonModel
+src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java:802: error: cannot find symbol
+                PartPose.ZERO
+                ^
+  symbol:   variable PartPose
+  location: class BalancedDragonModel<T>
+  where T is a type-variable:
+    T declared in class BalancedDragonModel
+src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java:808: error: cannot find symbol
+                PartPose.offsetAndRotation(0.0F, 4.5F, 1.0F, -0.16F, 0.0F, side * 0.03F)
+                ^
+  symbol:   variable PartPose
+  location: class BalancedDragonModel<T>
+  where T is a type-variable:
+    T declared in class BalancedDragonModel
+src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java:814: error: cannot find symbol
+                PartPose.offset(0.0F, 15.0F, 4.0F)
+                ^
+  symbol:   variable PartPose
+  location: class BalancedDragonModel<T>
+  where T is a type-variable:
+    T declared in class BalancedDragonModel
+src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java:817: error: cannot find symbol
+        PartDefinition lowerLeg = leg.addOrReplaceChild(
+        ^
+  symbol:   class PartDefinition
+  location: class BalancedDragonModel<T>
+  where T is a type-variable:
+    T declared in class BalancedDragonModel
+src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java:819: error: cannot find symbol
+                CubeListBuilder.create(),
+                ^
+  symbol:   variable CubeListBuilder
+  location: class BalancedDragonModel<T>
+  where T is a type-variable:
+    T declared in class BalancedDragonModel
+src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java:820: error: cannot find symbol
+                PartPose.offsetAndRotation(0.0F, 14.0F, 4.3F, 0.22F, 0.0F, 0.0F)
+                ^
+  symbol:   variable PartPose
+  location: class BalancedDragonModel<T>
+  where T is a type-variable:
+    T declared in class BalancedDragonModel
+src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java:826: error: cannot find symbol
+                PartPose.ZERO
+                ^
+  symbol:   variable PartPose
+  location: class BalancedDragonModel<T>
+  where T is a type-variable:
+    T declared in class BalancedDragonModel
+src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java:832: error: cannot find symbol
+                PartPose.offsetAndRotation(0.0F, 8.0F, -1.0F, -0.40F, 0.0F, 0.0F)
+                ^
+  symbol:   variable PartPose
+  location: class BalancedDragonModel<T>
+  where T is a type-variable:
+    T declared in class BalancedDragonModel
+src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java:835: error: cannot find symbol
+        PartDefinition ankle = lowerLeg.addOrReplaceChild(
+        ^
+  symbol:   class PartDefinition
+  location: class BalancedDragonModel<T>
+  where T is a type-variable:
+    T declared in class BalancedDragonModel
+src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java:839: error: cannot find symbol
+                PartPose.offsetAndRotation(0.0F, 14.0F, -3.6F, -0.52F, 0.0F, 0.0F)
+                ^
+  symbol:   variable PartPose
+  location: class BalancedDragonModel<T>
+  where T is a type-variable:
+    T declared in class BalancedDragonModel
+src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java:851: error: cannot find symbol
+        PartDefinition foot = parent.addOrReplaceChild(
+        ^
+  symbol:   class PartDefinition
+  location: class BalancedDragonModel<T>
+  where T is a type-variable:
+    T declared in class BalancedDragonModel
+src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java:855: error: cannot find symbol
+                PartPose.offsetAndRotation(0.0F, y, z, hind ? 0.16F : 0.10F, 0.0F, 0.0F)
+                ^
+  symbol:   variable PartPose
+  location: class BalancedDragonModel<T>
+  where T is a type-variable:
+    T declared in class BalancedDragonModel
+src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java:861: error: cannot find symbol
+            PartDefinition toe = foot.addOrReplaceChild(
+            ^
+  symbol:   class PartDefinition
+  location: class BalancedDragonModel<T>
+  where T is a type-variable:
+    T declared in class BalancedDragonModel
+src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java:865: error: cannot find symbol
+                    PartPose.offsetAndRotation(
+                    ^
+  symbol:   variable PartPose
+  location: class BalancedDragonModel<T>
+  where T is a type-variable:
+    T declared in class BalancedDragonModel
+src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java:878: error: cannot find symbol
+                    PartPose.offsetAndRotation(0.0F, 0.15F, -toeLength + 0.8F, -0.18F, 0.0F, 0.0F)
+                    ^
+  symbol:   variable PartPose
+  location: class BalancedDragonModel<T>
+  where T is a type-variable:
+    T declared in class BalancedDragonModel
+src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java:886: error: cannot find symbol
+                PartPose.offsetAndRotation(
+                ^
+  symbol:   variable PartPose
+  location: class BalancedDragonModel<T>
+  where T is a type-variable:
+    T declared in class BalancedDragonModel
+src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java:899: error: cannot find symbol
+                PartPose.offset(0.0F, 0.35F, 1.0F)
+                ^
+  symbol:   variable PartPose
+  location: class BalancedDragonModel<T>
+  where T is a type-variable:
+    T declared in class BalancedDragonModel
+src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java:908: error: cannot find symbol
+        PartDefinition tail01 = body.addOrReplaceChild(
+        ^
+  symbol:   class PartDefinition
+  location: class BalancedDragonModel<T>
+  where T is a type-variable:
+    T declared in class BalancedDragonModel
+src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java:910: error: cannot find symbol
+                CubeListBuilder.create(),
+                ^
+  symbol:   variable CubeListBuilder
+  location: class BalancedDragonModel<T>
+  where T is a type-variable:
+    T declared in class BalancedDragonModel
+src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java:911: error: cannot find symbol
+                PartPose.offsetAndRotation(0.0F, 0.5F, 28.0F, -0.02F, 0.0F, 0.0F)
+                ^
+  symbol:   variable PartPose
+  location: class BalancedDragonModel<T>
+  where T is a type-variable:
+    T declared in class BalancedDragonModel
+src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java:917: error: cannot find symbol
+        PartDefinition tail02 = tail01.addOrReplaceChild(
+        ^
+  symbol:   class PartDefinition
+  location: class BalancedDragonModel<T>
+  where T is a type-variable:
+    T declared in class BalancedDragonModel
+src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java:919: error: cannot find symbol
+                CubeListBuilder.create(),
+                ^
+  symbol:   variable CubeListBuilder
+  location: class BalancedDragonModel<T>
+  where T is a type-variable:
+    T declared in class BalancedDragonModel
+src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java:920: error: cannot find symbol
+                PartPose.offsetAndRotation(0.0F, 0.1F, 25.0F, 0.03F, 0.0F, 0.0F)
+                ^
+  symbol:   variable PartPose
+  location: class BalancedDragonModel<T>
+  where T is a type-variable:
+    T declared in class BalancedDragonModel
+src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java:926: error: cannot find symbol
+        PartDefinition tail03 = tail02.addOrReplaceChild(
+        ^
+  symbol:   class PartDefinition
+  location: class BalancedDragonModel<T>
+  where T is a type-variable:
+    T declared in class BalancedDragonModel
+src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java:928: error: cannot find symbol
+                CubeListBuilder.create(),
+                ^
+  symbol:   variable CubeListBuilder
+  location: class BalancedDragonModel<T>
+  where T is a type-variable:
+    T declared in class BalancedDragonModel
+src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java:929: error: cannot find symbol
+                PartPose.offsetAndRotation(0.0F, 0.0F, 23.0F, 0.03F, 0.0F, 0.0F)
+                ^
+  symbol:   variable PartPose
+  location: class BalancedDragonModel<T>
+  where T is a type-variable:
+    T declared in class BalancedDragonModel
+src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java:935: error: cannot find symbol
+        PartDefinition tail04 = tail03.addOrReplaceChild(
+        ^
+  symbol:   class PartDefinition
+  location: class BalancedDragonModel<T>
+  where T is a type-variable:
+    T declared in class BalancedDragonModel
+src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java:937: error: cannot find symbol
+                CubeListBuilder.create(),
+                ^
+  symbol:   variable CubeListBuilder
+  location: class BalancedDragonModel<T>
+  where T is a type-variable:
+    T declared in class BalancedDragonModel
+src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java:938: error: cannot find symbol
+                PartPose.offsetAndRotation(0.0F, 0.0F, 21.5F, 0.02F, 0.0F, 0.0F)
+                ^
+  symbol:   variable PartPose
+  location: class BalancedDragonModel<T>
+  where T is a type-variable:
+    T declared in class BalancedDragonModel
+src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java:945: error: cannot find symbol
+                CubeListBuilder.create().texOffs(70, 104)
+                ^
+  symbol:   variable CubeListBuilder
+  location: class BalancedDragonModel<T>
+  where T is a type-variable:
+    T declared in class BalancedDragonModel
+src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java:947: error: cannot find symbol
+                PartPose.offsetAndRotation(0.0F, 0.0F, 22.0F, 0.02F, 0.0F, 0.0F)
+                ^
+  symbol:   variable PartPose
+  location: class BalancedDragonModel<T>
+  where T is a type-variable:
+    T declared in class BalancedDragonModel
+src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java:965: error: cannot find symbol
+                CubeListBuilder.create().texOffs(texX, texY)
+                ^
+  symbol:   variable CubeListBuilder
+  location: class BalancedDragonModel<T>
+  where T is a type-variable:
+    T declared in class BalancedDragonModel
+src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java:968: error: cannot find symbol
+                PartPose.offsetAndRotation(x, y, z, 0.02F, 0.0F, 0.0F)
+                ^
+  symbol:   variable PartPose
+  location: class BalancedDragonModel<T>
+  where T is a type-variable:
+    T declared in class BalancedDragonModel
+src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java:975: error: cannot find symbol
+                CubeListBuilder.create().texOffs(96, 104)
+                ^
+  symbol:   variable CubeListBuilder
+  location: class BalancedDragonModel<T>
+  where T is a type-variable:
+    T declared in class BalancedDragonModel
+src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java:977: error: cannot find symbol
+                PartPose.offsetAndRotation(0.0F, -3.8F, z, -0.12F, 0.0F, 0.0F)
+                ^
+  symbol:   variable PartPose
+  location: class BalancedDragonModel<T>
+  where T is a type-variable:
+    T declared in class BalancedDragonModel
+src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java:982: error: cannot find symbol
+        CubeListBuilder builder = CubeListBuilder.create().texOffs(texX, texY);
+        ^
+  symbol:   class CubeListBuilder
+  location: class BalancedDragonModel<T>
+  where T is a type-variable:
+    T declared in class BalancedDragonModel
+src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java:982: error: cannot find symbol
+        CubeListBuilder builder = CubeListBuilder.create().texOffs(texX, texY);
+                                  ^
+  symbol:   variable CubeListBuilder
+  location: class BalancedDragonModel<T>
+  where T is a type-variable:
+    T declared in class BalancedDragonModel
+227 errors

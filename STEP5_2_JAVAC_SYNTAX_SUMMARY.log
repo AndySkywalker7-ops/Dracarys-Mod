@@ -1,0 +1,4 @@
+STEP 5.2 javac syntax-oriented scan
+Syntax-like diagnostics detected: 0
+Note: full javac cannot resolve Minecraft/Forge symbols in this isolated environment.
+No syntax-like diagnostics detected before dependency-resolution failures.

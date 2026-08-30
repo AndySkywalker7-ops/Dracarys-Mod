@@ -1,0 +1,49 @@
+STEP 5.2 — BALANCED v2 Base Model Fidelity static validation
+Checks: 42
+Passed: 42
+Failed: 0
+
+PASS | compat "body"
+PASS | compat "neck_01"
+PASS | compat "neck_02"
+PASS | compat "neck_03"
+PASS | compat "head"
+PASS | compat "jaw"
+PASS | compat "left_wing_root"
+PASS | compat "right_wing_root"
+PASS | compat "upper_arm"
+PASS | compat "forearm"
+PASS | compat "left_foreleg"
+PASS | compat "right_foreleg"
+PASS | compat "left_hindleg"
+PASS | compat "right_hindleg"
+PASS | compat "tail_01"
+PASS | compat "tail_02"
+PASS | compat "tail_03"
+PASS | compat "tail_04"
+PASS | 4 terrestrial leg builders
+PASS | 2 independent wing builders
+PASS | 3 primary wing digits
+PASS | no fourth primary wing digit
+PASS | wing thumb exists
+PASS | 5 visible neck masses
+PASS | 8 visible tail masses
+PASS | thorax differentiated
+PASS | abdomen differentiated
+PASS | pelvis differentiated
+PASS | front shoulder separate from wing shoulder
+PASS | head is staged low/long
+PASS | wing arm chain exists
+PASS | membranes segmented
+PASS | front foot grounding target
+PASS | no renderScale edits in model
+PASS | balanced braces
+PASS | balanced parentheses
+PASS | no obvious negative literal dimensions | []
+PASS | dracarys renderer unchanged | dc838e28ec00b2d004154f000990b3f26ff1506c631399aa5b350c6f6fffec92
+PASS | entity unchanged | 02e8796f008c5f271f4fe91fc74ed675b3d7f5bc4ceb84ad7b01a9f33ba6a2c0
+PASS | multipart unchanged | 1ad4576be3c132195ced39fa347b76dca90c46cd73f5a106935a46ecd5f75ca5
+PASS | long range events unchanged | 2359b8cedfa61afa86f6189b17c533e3e40fef70f1bd822b7a6ad1c33ce95354
+PASS | abstract model unchanged | 3233470c5cba4697b302e298feb670234e53d618eb151ba354838e1913c18063
+
+RESULT: PASS
