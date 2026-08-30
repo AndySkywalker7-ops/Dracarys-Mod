@@ -7,6 +7,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.OutlineBufferSource;
 import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceKey;
@@ -48,6 +49,13 @@ public final class FarDragonPresenceManager {
      * there cannot be a visible gap.
      */
     private static final double FORCED_REAL_RENDER_START = 40.0D;
+
+    /*
+     * From this distance onward, add a dark screen-space outline pass.
+     * This does NOT scale the dragon. It only improves silhouette readability
+     * against fog, sky, snow, water and shader-heavy backgrounds.
+     */
+    private static final double FAR_OUTLINE_START = 90.0D;
 
     private static final Map<UUID, Entry> ENTRIES = new LinkedHashMap<>();
 
@@ -286,6 +294,18 @@ public final class FarDragonPresenceManager {
                             buffers
                     );
 
+                    if (distance >= FAR_OUTLINE_START) {
+                        renderFarOutline(
+                                minecraft,
+                                live,
+                                live.position(),
+                                live.getYRot(),
+                                camera,
+                                event,
+                                poseStack
+                        );
+                    }
+
                     renderedAny = true;
                 }
 
@@ -329,6 +349,18 @@ public final class FarDragonPresenceManager {
                     poseStack,
                     buffers
             );
+
+            if (distance >= FAR_OUTLINE_START) {
+                renderFarOutline(
+                        minecraft,
+                        entry.proxy,
+                        entry.position,
+                        entry.yRot,
+                        camera,
+                        event,
+                        poseStack
+                );
+            }
 
             renderedAny = true;
         }
@@ -381,6 +413,59 @@ public final class FarDragonPresenceManager {
         poseStack.popPose();
     }
 
+    /**
+     * Additional far-distance silhouette pass.
+     *
+     * Uses Minecraft's outline buffer instead of enlarging the model.
+     * The color is deliberately dark/neutral so every dragon variant remains
+     * readable against bright fog and sky without replacing its real texture.
+     */
+    @SuppressWarnings({"rawtypes", "unchecked"})
+    private static void renderFarOutline(
+            Minecraft minecraft,
+            DracarysDragonEntity dragon,
+            Vec3 position,
+            float yRot,
+            Vec3 camera,
+            RenderLevelStageEvent event,
+            PoseStack poseStack
+    ) {
+        poseStack.pushPose();
+
+        poseStack.translate(
+                position.x - camera.x,
+                position.y - camera.y,
+                position.z - camera.z
+        );
+
+        EntityRenderer renderer =
+                minecraft.getEntityRenderDispatcher().getRenderer(dragon);
+
+        OutlineBufferSource outline =
+                minecraft.renderBuffers().outlineBufferSource();
+
+        // Neutral charcoal outline. Alpha is intentionally high because this
+        // pass only exists at long range.
+        outline.setColor(18, 22, 28, 235);
+
+        int packedLight = renderer.getPackedLightCoords(
+                dragon,
+                event.getPartialTick()
+        );
+
+        renderer.render(
+                dragon,
+                yRot,
+                event.getPartialTick(),
+                poseStack,
+                outline,
+                packedLight
+        );
+
+        outline.endOutlineBatch();
+        poseStack.popPose();
+    }
+
     public static void renderDebugHud(RenderGuiEvent.Post event) {
         Minecraft minecraft = Minecraft.getInstance();
         if (minecraft.level == null || minecraft.player == null) return;
@@ -398,7 +483,7 @@ public final class FarDragonPresenceManager {
         gui.fill(x - 4, y - 4, x + 330, y + 170, 0xA0000000);
 
         draw(gui, minecraft,
-                "DRACARYS LOD DEBUG - STEP 4.0.6A3",
+                "DRACARYS LOD DEBUG - STEP 4.0.7",
                 x, y, 0xFFFFC857);
         y += lineHeight;
 
@@ -488,6 +573,14 @@ public final class FarDragonPresenceManager {
                 String.format(
                         "Manual bridge starts: %.0f blocks",
                         FORCED_REAL_RENDER_START
+                ),
+                x, y, 0xFFAAAAAA);
+        y += lineHeight;
+
+        draw(gui, minecraft,
+                String.format(
+                        "Far outline starts: %.0f blocks",
+                        FAR_OUTLINE_START
                 ),
                 x, y, 0xFFAAAAAA);
         y += lineHeight;

@@ -1,0 +1,11 @@
+Step 4.0.7 static validation
+balanced braces: True
+balanced parens: True
+outline import: True
+outline threshold 90: True
+outline setColor: True
+outline batch end: True
+manual bridge still 40: True
+no renderScale modification: True
+no EntityDimensions modification: True
+RESULT: PASS
