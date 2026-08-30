@@ -43,11 +43,11 @@ public final class FarDragonPresenceManager {
     private static final int FULL_SNAPSHOT_REFRESH_TICKS = 20;
 
     /*
-     * Start the manual real-entity bridge well BEFORE the observed ~800 block
+     * Start the manual real-entity bridge BEFORE the observed ~65-75 block
      * disappearance. Some overlap with vanilla rendering is intentional so
      * there cannot be a visible gap.
      */
-    private static final double FORCED_REAL_RENDER_START = 560.0D;
+    private static final double FORCED_REAL_RENDER_START = 40.0D;
 
     private static final Map<UUID, Entry> ENTRIES = new LinkedHashMap<>();
 
@@ -266,7 +266,7 @@ public final class FarDragonPresenceManager {
              * PATH A — REAL ENTITY MANUAL BRIDGE
              *
              * Bypasses Minecraft's normal entity pass. This is intentionally
-             * allowed to overlap vanilla rendering from 560 blocks onward so
+             * allowed to overlap vanilla rendering from 40 blocks onward so
              * there is no pop-out gap near the previous ~800 block cutoff.
              */
             if (entry.lastForcedRealEligible) {

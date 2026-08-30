@@ -1,0 +1,10 @@
+Step 4.0.6A4 static validation
+threshold is 40: True
+old threshold removed: True
+direct renderer retained: True
+frustum retained: True
+no renderScale changes: True
+no EntityDimensions changes: True
+balanced braces: True
+balanced parens: True
+RESULT: PASS
