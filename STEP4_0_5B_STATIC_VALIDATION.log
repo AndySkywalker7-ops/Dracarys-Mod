@@ -1,0 +1,4 @@
+Step 4.0.5B static structural validation
+FarDragonPresenceManager.java: braces 27/27, parens 142/142, balanced=True
+FarDragonClientEvents.java: braces 9/9, parens 23/23, balanced=True
+RESULT: PASS
