@@ -1,0 +1,15 @@
+Step 4.0.7C static validation
+FarDragonPresenceManager.java braces: True
+FarDragonPresenceManager.java parens: True
+FarDragonClientEvents.java braces: True
+FarDragonClientEvents.java parens: True
+screen impostor starts at 120: True
+manual 3D bridge preserved: True
+ray occlusion present: True
+GUI Pre hook present: True
+variant color mapping present: True
+screen projection present: True
+silhouette texture exists: True
+no renderScale changes: True
+no EntityDimensions changes: True
+RESULT: PASS

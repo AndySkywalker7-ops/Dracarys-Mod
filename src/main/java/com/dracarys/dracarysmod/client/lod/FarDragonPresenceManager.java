@@ -1,20 +1,27 @@
 package com.dracarys.dracarysmod.client.lod;
 
+import com.dracarys.dracarysmod.DracarysMod;
 import com.dracarys.dracarysmod.dragon.DragonStage;
 import com.dracarys.dracarysmod.entity.DracarysDragonEntity;
 import com.dracarys.dracarysmod.registry.ModEntities;
 import com.mojang.blaze3d.vertex.PoseStack;
+import net.minecraft.client.Camera;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceKey;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.client.event.RenderGuiEvent;
 import net.minecraftforge.client.event.RenderLevelStageEvent;
+import org.joml.Vector3f;
 
 import java.util.Iterator;
 import java.util.LinkedHashMap;
@@ -22,59 +29,75 @@ import java.util.Map;
 import java.util.UUID;
 
 /**
- * Step 4.0.6A3
+ * Step 4.0.7C — Screen-space far dragon impostor.
  *
- * The diagnostics proved that a colossal dragon can remain present in the
- * ClientLevel at ~800 blocks while the normal Minecraft entity pass has already
- * stopped drawing it.
+ * We keep the working 3D manual render bridge, but long-range shader fog can
+ * still wash the dragon into the sky. The screen impostor is rendered AFTER
+ * the world, so its silhouette and dominant color remain readable.
  *
- * This class now contains a second rendering path:
- *
- *  1. Near range: vanilla renders the real entity normally.
- *  2. Far-but-still-tracked range: Dracarys manually renders the LIVE entity
- *     from RenderLevelStageEvent, bypassing LevelRenderer's ordinary entity pass.
- *  3. Untracked range: the cached proxy/LOD takes over.
- *
- * No size, AI, combat, hitbox or gameplay values are changed here.
+ * Important:
+ * - it does NOT change dragon size;
+ * - it does NOT change hitboxes;
+ * - it does NOT replace the real dragon at normal range;
+ * - it is only a far visual aid / LOD;
+ * - it performs a client ray test so the impostor does not show through terrain.
  */
 public final class FarDragonPresenceManager {
     private static final int MAX_ENTRIES = 32;
     private static final long ENTRY_TTL_MS = 10L * 60L * 1000L;
     private static final int FULL_SNAPSHOT_REFRESH_TICKS = 20;
 
-    /*
-     * Start the manual real-entity bridge BEFORE the observed ~65-75 block
-     * disappearance. Some overlap with vanilla rendering is intentional so
-     * there cannot be a visible gap.
-     */
     private static final double FORCED_REAL_RENDER_START = 40.0D;
+
+    /**
+     * Start screen-space visibility reinforcement where shader fog becomes
+     * visually destructive in the real tests.
+     */
+    private static final double SCREEN_IMPOSTOR_START = 120.0D;
+
+    /**
+     * Do not raycast every frame. 10 client ticks = roughly twice per second.
+     */
+    private static final int OCCLUSION_REFRESH_TICKS = 10;
+
+    private static final ResourceLocation FAR_SILHOUETTE =
+            DracarysMod.id("textures/gui/far_dragon_silhouette.png");
 
     private static final Map<UUID, Entry> ENTRIES = new LinkedHashMap<>();
 
     private static long renderStageCalls;
-    private static long hudFrames;
     private static long forcedRealRenderAttempts;
     private static long lodRenderAttempts;
+    private static long impostorFrames;
 
     private FarDragonPresenceManager() {}
 
     public static void observe(DracarysDragonEntity dragon, Level level) {
         Minecraft minecraft = Minecraft.getInstance();
-        if (!level.isClientSide || minecraft.level != level || minecraft.player == null) return;
+
+        if (!level.isClientSide
+                || minecraft.level != level
+                || minecraft.player == null) {
+            return;
+        }
 
         if (!dragon.isAlive() || dragon.isDeadOrDying()) {
             forget(dragon.getUUID());
             return;
         }
 
-        if (dragon.getStage().ordinal() < DragonStage.JUVENILE.ordinal()) return;
+        if (dragon.getStage().ordinal() < DragonStage.JUVENILE.ordinal()) {
+            return;
+        }
 
         Entry entry = ENTRIES.get(dragon.getUUID());
 
         if (entry == null || !entry.dimension.equals(level.dimension())) {
             CompoundTag tag = dragon.saveWithoutId(new CompoundTag());
 
-            DracarysDragonEntity proxy = new DracarysDragonEntity(ModEntities.DRAGON.get(), level);
+            DracarysDragonEntity proxy =
+                    new DracarysDragonEntity(ModEntities.DRAGON.get(), level);
+
             proxy.load(tag);
             proxy.moveTo(
                     dragon.getX(),
@@ -114,6 +137,8 @@ public final class FarDragonPresenceManager {
         }
 
         long now = System.currentTimeMillis();
+        long gameTime = minecraft.level.getGameTime();
+
         Iterator<Entry> iterator = ENTRIES.values().iterator();
 
         while (iterator.hasNext()) {
@@ -158,7 +183,20 @@ public final class FarDragonPresenceManager {
 
                 if (now - entry.lastSeenLiveMs > ENTRY_TTL_MS) {
                     iterator.remove();
+                    continue;
                 }
+            }
+
+            double distance =
+                    minecraft.player.position().distanceTo(entry.position);
+
+            if (distance >= SCREEN_IMPOSTOR_START
+                    && gameTime - entry.lastOcclusionCheckTick
+                    >= OCCLUSION_REFRESH_TICKS) {
+
+                entry.lastOcclusionCheckTick = gameTime;
+                entry.lineOfSightClear =
+                        computeLineOfSight(minecraft, entry);
             }
         }
     }
@@ -219,15 +257,12 @@ public final class FarDragonPresenceManager {
     }
 
     /**
-     * This custom world pass deliberately calls the dragon renderer directly.
-     *
-     * That is the key difference from Step 4.0.6A2: this does not ask
-     * LevelRenderer/EntityRenderDispatcher whether the entity should be rendered.
-     * If the real entity is still in ClientLevel and is far enough away, we draw
-     * it ourselves.
+     * Working manual 3D bridge from Step 4.0.6A4.
      */
     public static void render(RenderLevelStageEvent event) {
-        if (event.getStage() != RenderLevelStageEvent.Stage.AFTER_PARTICLES) return;
+        if (event.getStage() != RenderLevelStageEvent.Stage.AFTER_PARTICLES) {
+            return;
+        }
 
         renderStageCalls++;
 
@@ -248,11 +283,15 @@ public final class FarDragonPresenceManager {
         boolean renderedAny = false;
 
         for (Entry entry : ENTRIES.values()) {
-            if (!minecraft.level.dimension().equals(entry.dimension)) continue;
+            if (!minecraft.level.dimension().equals(entry.dimension)) {
+                continue;
+            }
 
             DracarysDragonEntity live = getLiveEntity(minecraft, entry);
 
-            double distance = Math.sqrt(entry.position.distanceToSqr(camera));
+            double distance =
+                    Math.sqrt(entry.position.distanceToSqr(camera));
+
             boolean inRange = distance <= entry.maxDistance;
 
             entry.lastDistance = distance;
@@ -262,15 +301,10 @@ public final class FarDragonPresenceManager {
                             && distance >= FORCED_REAL_RENDER_START
                             && inRange;
 
-            /*
-             * PATH A — REAL ENTITY MANUAL BRIDGE
-             *
-             * Bypasses Minecraft's normal entity pass. This is intentionally
-             * allowed to overlap vanilla rendering from 40 blocks onward so
-             * there is no pop-out gap near the previous ~800 block cutoff.
-             */
             if (entry.lastForcedRealEligible) {
-                if (event.getFrustum().isVisible(live.getBoundingBoxForCulling())) {
+                if (event.getFrustum().isVisible(
+                        live.getBoundingBoxForCulling())) {
+
                     entry.forcedRealAttempts++;
                     forcedRealRenderAttempts++;
                     entry.lastForcedRealRenderDistance = distance;
@@ -289,28 +323,19 @@ public final class FarDragonPresenceManager {
                     renderedAny = true;
                 }
 
-                /*
-                 * While the live entity exists, never also draw its cached LOD.
-                 */
                 continue;
             }
 
-            /*
-             * If live exists but we are still in normal near range, vanilla owns
-             * rendering and we do nothing.
-             */
             if (live != null) {
                 continue;
             }
 
-            /*
-             * PATH B — UNTRACKED FAR LOD
-             */
             entry.lastLodEligible = inRange;
 
             if (!inRange) continue;
 
-            if (!event.getFrustum().isVisible(entry.proxy.getBoundingBoxForCulling())) {
+            if (!event.getFrustum().isVisible(
+                    entry.proxy.getBoundingBoxForCulling())) {
                 continue;
             }
 
@@ -365,10 +390,6 @@ public final class FarDragonPresenceManager {
                 event.getPartialTick()
         );
 
-        /*
-         * Calling renderer.render directly is intentional:
-         * no shouldRender() or generic entity-distance decision is consulted.
-         */
         renderer.render(
                 dragon,
                 yRot,
@@ -381,11 +402,128 @@ public final class FarDragonPresenceManager {
         poseStack.popPose();
     }
 
+    /**
+     * Step 4.0.7C screen-space LOD.
+     *
+     * Rendered in RenderGuiEvent.Pre, which occurs after the 3D world is already
+     * present on screen. Therefore shader sky/fog can no longer erase this
+     * silhouette.
+     */
+    public static void renderScreenPresence(RenderGuiEvent.Pre event) {
+        Minecraft minecraft = Minecraft.getInstance();
+
+        if (minecraft.level == null
+                || minecraft.player == null
+                || ENTRIES.isEmpty()) {
+            return;
+        }
+
+        GuiGraphics gui = event.getGuiGraphics();
+        Camera camera = minecraft.gameRenderer.getMainCamera();
+
+        Vec3 cameraPos = camera.getPosition();
+
+        for (Entry entry : ENTRIES.values()) {
+            if (!minecraft.level.dimension().equals(entry.dimension)) {
+                continue;
+            }
+
+            double distance =
+                    minecraft.player.position().distanceTo(entry.position);
+
+            if (distance < SCREEN_IMPOSTOR_START
+                    || distance > entry.maxDistance
+                    || !entry.lineOfSightClear) {
+                continue;
+            }
+
+            Vec3 target =
+                    entry.position.add(
+                            0.0D,
+                            visualAnchorHeight(entry.proxy),
+                            0.0D
+                    );
+
+            ScreenPoint screen =
+                    projectToScreen(
+                            minecraft,
+                            gui,
+                            camera,
+                            cameraPos,
+                            target
+                    );
+
+            if (screen == null) continue;
+
+            int width =
+                    projectedWidth(
+                            minecraft,
+                            gui,
+                            entry.proxy,
+                            screen.depth
+                    );
+
+            if (width < 12) continue;
+
+            int height = Math.max(6, width / 2);
+
+            int x = (int) Math.round(screen.x - width / 2.0D);
+            int y = (int) Math.round(screen.y - height / 2.0D);
+
+            if (x > gui.guiWidth() + width
+                    || y > gui.guiHeight() + height
+                    || x + width < -width
+                    || y + height < -height) {
+                continue;
+            }
+
+            float[] rgb = variantColor(entry.proxy);
+
+            /*
+             * First pass = dark silhouette border.
+             * Second pass = dominant dragon color.
+             *
+             * Both are intentionally opaque enough to survive bright sky.
+             */
+            gui.setColor(0.055F, 0.065F, 0.085F, 0.96F);
+            gui.blit(
+                    FAR_SILHOUETTE,
+                    x - 2,
+                    y - 1,
+                    0.0F,
+                    0.0F,
+                    width + 4,
+                    height + 2,
+                    128,
+                    64
+            );
+
+            gui.setColor(rgb[0], rgb[1], rgb[2], 0.94F);
+            gui.blit(
+                    FAR_SILHOUETTE,
+                    x,
+                    y,
+                    0.0F,
+                    0.0F,
+                    width,
+                    height,
+                    128,
+                    64
+            );
+
+            gui.setColor(1.0F, 1.0F, 1.0F, 1.0F);
+
+            entry.impostorFrames++;
+            impostorFrames++;
+        }
+    }
+
     public static void renderDebugHud(RenderGuiEvent.Post event) {
         Minecraft minecraft = Minecraft.getInstance();
-        if (minecraft.level == null || minecraft.player == null) return;
 
-        hudFrames++;
+        if (minecraft.level == null || minecraft.player == null) {
+            return;
+        }
 
         GuiGraphics gui = event.getGuiGraphics();
 
@@ -395,114 +533,397 @@ public final class FarDragonPresenceManager {
 
         Entry nearest = nearestEntry(minecraft);
 
-        gui.fill(x - 4, y - 4, x + 330, y + 170, 0xA0000000);
+        gui.fill(
+                x - 4,
+                y - 4,
+                x + 335,
+                y + 180,
+                0xA0000000
+        );
 
-        draw(gui, minecraft,
-                "DRACARYS LOD DEBUG - STEP 4.0.7B",
-                x, y, 0xFFFFC857);
+        draw(
+                gui,
+                minecraft,
+                "DRACARYS LOD DEBUG - STEP 4.0.7C",
+                x,
+                y,
+                0xFFFFC857
+        );
         y += lineHeight;
 
-        draw(gui, minecraft,
+        draw(
+                gui,
+                minecraft,
                 "Cache entries: " + ENTRIES.size(),
-                x, y,
-                ENTRIES.isEmpty() ? 0xFFFF5555 : 0xFF55FF55);
+                x,
+                y,
+                ENTRIES.isEmpty() ? 0xFFFF5555 : 0xFF55FF55
+        );
         y += lineHeight;
 
-        draw(gui, minecraft,
+        draw(
+                gui,
+                minecraft,
                 "Render-stage calls: " + renderStageCalls,
-                x, y, 0xFFFFFFFF);
+                x,
+                y,
+                0xFFFFFFFF
+        );
         y += lineHeight;
 
-        draw(gui, minecraft,
-                "Forced-real total attempts: " + forcedRealRenderAttempts,
-                x, y,
-                forcedRealRenderAttempts > 0 ? 0xFF55FFFF : 0xFFFFAA00);
+        draw(
+                gui,
+                minecraft,
+                "Forced-real attempts: " + forcedRealRenderAttempts,
+                x,
+                y,
+                forcedRealRenderAttempts > 0
+                        ? 0xFF55FFFF
+                        : 0xFFFFAA00
+        );
         y += lineHeight;
 
-        draw(gui, minecraft,
-                "LOD total attempts: " + lodRenderAttempts,
-                x, y,
-                lodRenderAttempts > 0 ? 0xFF55FFFF : 0xFFAAAAAA);
+        draw(
+                gui,
+                minecraft,
+                "Screen-impostor frames: " + impostorFrames,
+                x,
+                y,
+                impostorFrames > 0
+                        ? 0xFF55FFFF
+                        : 0xFFFFAA00
+        );
         y += lineHeight;
 
         if (nearest == null) {
-            draw(gui, minecraft,
+            draw(
+                    gui,
+                    minecraft,
                     "Nearest cached dragon: NONE",
-                    x, y, 0xFFFF5555);
+                    x,
+                    y,
+                    0xFFFF5555
+            );
             return;
         }
 
-        DracarysDragonEntity live = getLiveEntity(minecraft, nearest);
-        double distance =
-                minecraft.player.position().distanceTo(nearest.position);
+        DracarysDragonEntity live =
+                getLiveEntity(minecraft, nearest);
 
-        boolean inRange = distance <= nearest.maxDistance;
+        double distance =
+                minecraft.player.position()
+                        .distanceTo(nearest.position);
+
+        boolean inRange =
+                distance <= nearest.maxDistance;
+
         boolean forcedReal =
                 live != null
                         && distance >= FORCED_REAL_RENDER_START
                         && inRange;
 
-        boolean lodActive = live == null && inRange;
+        boolean screenImpostor =
+                distance >= SCREEN_IMPOSTOR_START
+                        && inRange
+                        && nearest.lineOfSightClear;
 
-        draw(gui, minecraft,
-                "Dragon: " + shortUuid(nearest.uuid)
-                        + "  Stage: " + nearest.proxy.getStage().name(),
-                x, y, 0xFFFFFFFF);
+        draw(
+                gui,
+                minecraft,
+                "Stage: " + nearest.proxy.getStage().name()
+                        + "  Real tracked: " + yesNo(live != null),
+                x,
+                y,
+                live != null ? 0xFF55FF55 : 0xFFFF5555
+        );
         y += lineHeight;
 
-        draw(gui, minecraft,
-                "Real entity tracked: " + yesNo(live != null),
-                x, y,
-                live != null ? 0xFF55FF55 : 0xFFFF5555);
+        draw(
+                gui,
+                minecraft,
+                "Forced real active: " + yesNo(forcedReal),
+                x,
+                y,
+                forcedReal ? 0xFF55FFFF : 0xFFFFAA00
+        );
         y += lineHeight;
 
-        draw(gui, minecraft,
-                "Forced real render active: " + yesNo(forcedReal),
-                x, y,
-                forcedReal ? 0xFF55FFFF : 0xFFFFAA00);
+        draw(
+                gui,
+                minecraft,
+                "Screen impostor active: " + yesNo(screenImpostor),
+                x,
+                y,
+                screenImpostor ? 0xFF55FFFF : 0xFFFFAA00
+        );
         y += lineHeight;
 
-        draw(gui, minecraft,
-                "Forced real attempts: " + nearest.forcedRealAttempts,
-                x, y,
-                nearest.forcedRealAttempts > 0 ? 0xFF55FFFF : 0xFFFFAA00);
+        draw(
+                gui,
+                minecraft,
+                "Line of sight clear: "
+                        + yesNo(nearest.lineOfSightClear),
+                x,
+                y,
+                nearest.lineOfSightClear
+                        ? 0xFF55FF55
+                        : 0xFFFF5555
+        );
         y += lineHeight;
 
-        draw(gui, minecraft,
-                "LOD active: " + yesNo(lodActive),
-                x, y,
-                lodActive ? 0xFF55FFFF : 0xFFAAAAAA);
-        y += lineHeight;
-
-        draw(gui, minecraft,
+        draw(
+                gui,
+                minecraft,
                 String.format(
                         "Distance: %.1f / %.1f blocks",
                         distance,
                         nearest.maxDistance
                 ),
-                x, y,
-                inRange ? 0xFFFFFFFF : 0xFFFF5555);
+                x,
+                y,
+                inRange ? 0xFFFFFFFF : 0xFFFF5555
+        );
         y += lineHeight;
 
-        draw(gui, minecraft,
+        draw(
+                gui,
+                minecraft,
                 String.format(
-                        "Manual bridge starts: %.0f blocks",
-                        FORCED_REAL_RENDER_START
+                        "Impostor starts: %.0f blocks",
+                        SCREEN_IMPOSTOR_START
                 ),
-                x, y, 0xFFAAAAAA);
+                x,
+                y,
+                0xFFAAAAAA
+        );
         y += lineHeight;
 
-        draw(gui, minecraft,
-                String.format(
-                        "Last forced-render distance: %.1f",
-                        nearest.lastForcedRealRenderDistance
-                ),
-                x, y, 0xFFAAAAAA);
-        y += lineHeight;
+        draw(
+                gui,
+                minecraft,
+                "This dragon impostor frames: "
+                        + nearest.impostorFrames,
+                x,
+                y,
+                nearest.impostorFrames > 0
+                        ? 0xFF55FFFF
+                        : 0xFFAAAAAA
+        );
+    }
 
-        draw(gui, minecraft,
-                "Tracking lost: " + ageText(nearest.trackingLostMs),
-                x, y, 0xFFAAAAAA);
+    private static boolean computeLineOfSight(
+            Minecraft minecraft,
+            Entry entry
+    ) {
+        if (minecraft.level == null || minecraft.player == null) {
+            return false;
+        }
+
+        Vec3 start =
+                minecraft.gameRenderer.getMainCamera().getPosition();
+
+        Vec3 end =
+                entry.position.add(
+                        0.0D,
+                        visualAnchorHeight(entry.proxy),
+                        0.0D
+                );
+
+        BlockHitResult hit =
+                minecraft.level.clip(
+                        new ClipContext(
+                                start,
+                                end,
+                                ClipContext.Block.COLLIDER,
+                                ClipContext.Fluid.NONE,
+                                minecraft.player
+                        )
+                );
+
+        if (hit.getType() == HitResult.Type.MISS) {
+            return true;
+        }
+
+        double hitDistance = start.distanceTo(hit.getLocation());
+        double dragonDistance = start.distanceTo(end);
+
+        /*
+         * Allow the ray to hit terrain immediately beneath/behind the dragon
+         * without considering the dragon itself occluded.
+         */
+        return hitDistance >= dragonDistance - 6.0D;
+    }
+
+    private static ScreenPoint projectToScreen(
+            Minecraft minecraft,
+            GuiGraphics gui,
+            Camera camera,
+            Vec3 cameraPos,
+            Vec3 target
+    ) {
+        double dx = target.x - cameraPos.x;
+        double dy = target.y - cameraPos.y;
+        double dz = target.z - cameraPos.z;
+
+        Vector3f forward = camera.getLookVector();
+        Vector3f up = camera.getUpVector();
+        Vector3f left = camera.getLeftVector();
+
+        double depth =
+                dx * forward.x()
+                        + dy * forward.y()
+                        + dz * forward.z();
+
+        if (depth <= 1.0D) {
+            return null;
+        }
+
+        double horizontal =
+                -(dx * left.x()
+                        + dy * left.y()
+                        + dz * left.z());
+
+        double vertical =
+                dx * up.x()
+                        + dy * up.y()
+                        + dz * up.z();
+
+        double fovDegrees =
+                minecraft.options.fov().get();
+
+        double focal =
+                gui.guiHeight()
+                        / (2.0D
+                        * Math.tan(
+                                Math.toRadians(fovDegrees) / 2.0D
+                        ));
+
+        double screenX =
+                gui.guiWidth() / 2.0D
+                        + horizontal / depth * focal;
+
+        double screenY =
+                gui.guiHeight() / 2.0D
+                        - vertical / depth * focal;
+
+        return new ScreenPoint(
+                screenX,
+                screenY,
+                depth
+        );
+    }
+
+    private static int projectedWidth(
+            Minecraft minecraft,
+            GuiGraphics gui,
+            DracarysDragonEntity dragon,
+            double depth
+    ) {
+        double nominalWorldWidth =
+                nominalWorldWidth(dragon);
+
+        double fovDegrees =
+                minecraft.options.fov().get();
+
+        double focal =
+                gui.guiHeight()
+                        / (2.0D
+                        * Math.tan(
+                                Math.toRadians(fovDegrees) / 2.0D
+                        ));
+
+        int projected =
+                (int) Math.round(
+                        nominalWorldWidth / depth * focal
+                );
+
+        return Math.max(
+                16,
+                Math.min(260, projected)
+        );
+    }
+
+    private static double nominalWorldWidth(
+            DracarysDragonEntity dragon
+    ) {
+        double stageWidth = switch (dragon.getStage()) {
+            case BABY -> 7.0D;
+            case JUVENILE -> 16.0D;
+            case ADOLESCENT -> 24.0D;
+            case ADULT -> 38.0D;
+            case ANCIENT -> 52.0D;
+            case COLOSSAL -> 76.0D;
+        };
+
+        double sizeFactor = switch (dragon.getSizeTier()) {
+            case SMALL -> 0.85D;
+            case MEDIUM -> 1.00D;
+            case LARGE -> 1.18D;
+            case GIANT -> 1.42D;
+        };
+
+        return stageWidth * sizeFactor;
+    }
+
+    private static double visualAnchorHeight(
+            DracarysDragonEntity dragon
+    ) {
+        double stageHeight = switch (dragon.getStage()) {
+            case BABY -> 1.5D;
+            case JUVENILE -> 3.0D;
+            case ADOLESCENT -> 4.5D;
+            case ADULT -> 7.0D;
+            case ANCIENT -> 10.0D;
+            case COLOSSAL -> 15.0D;
+        };
+
+        double sizeFactor = switch (dragon.getSizeTier()) {
+            case SMALL -> 0.85D;
+            case MEDIUM -> 1.00D;
+            case LARGE -> 1.18D;
+            case GIANT -> 1.42D;
+        };
+
+        return stageHeight * sizeFactor;
+    }
+
+    private static float[] variantColor(
+            DracarysDragonEntity dragon
+    ) {
+        return switch (dragon.getVariant().id()) {
+            case "black" ->
+                    new float[]{0.18F, 0.20F, 0.24F};
+            case "white" ->
+                    new float[]{0.82F, 0.84F, 0.88F};
+            case "gray" ->
+                    new float[]{0.46F, 0.49F, 0.54F};
+            case "red" ->
+                    new float[]{0.70F, 0.14F, 0.11F};
+            case "crimson" ->
+                    new float[]{0.53F, 0.08F, 0.12F};
+            case "orange" ->
+                    new float[]{0.82F, 0.35F, 0.08F};
+            case "gold" ->
+                    new float[]{0.78F, 0.56F, 0.13F};
+            case "green" ->
+                    new float[]{0.25F, 0.55F, 0.20F};
+            case "dark_green" ->
+                    new float[]{0.12F, 0.34F, 0.22F};
+            case "blue" ->
+                    new float[]{0.13F, 0.32F, 0.72F};
+            case "dark_blue" ->
+                    new float[]{0.08F, 0.17F, 0.42F};
+            case "turquoise" ->
+                    new float[]{0.10F, 0.58F, 0.62F};
+            case "purple" ->
+                    new float[]{0.47F, 0.20F, 0.61F};
+            case "silver" ->
+                    new float[]{0.60F, 0.64F, 0.70F};
+            case "brown" ->
+                    new float[]{0.39F, 0.24F, 0.16F};
+            default ->
+                    new float[]{0.55F, 0.55F, 0.55F};
+        };
     }
 
     private static void draw(
@@ -513,23 +934,36 @@ public final class FarDragonPresenceManager {
             int y,
             int color
     ) {
-        gui.drawString(minecraft.font, text, x, y, color, true);
+        gui.drawString(
+                minecraft.font,
+                text,
+                x,
+                y,
+                color,
+                true
+        );
     }
 
-    private static Entry nearestEntry(Minecraft minecraft) {
-        if (minecraft.player == null || ENTRIES.isEmpty()) return null;
+    private static Entry nearestEntry(
+            Minecraft minecraft
+    ) {
+        if (minecraft.player == null || ENTRIES.isEmpty()) {
+            return null;
+        }
 
         Entry nearest = null;
         double nearestSqr = Double.MAX_VALUE;
 
         for (Entry entry : ENTRIES.values()) {
             if (minecraft.level == null
-                    || !minecraft.level.dimension().equals(entry.dimension)) {
+                    || !minecraft.level.dimension()
+                    .equals(entry.dimension)) {
                 continue;
             }
 
             double distanceSqr =
-                    minecraft.player.position().distanceToSqr(entry.position);
+                    minecraft.player.position()
+                            .distanceToSqr(entry.position);
 
             if (distanceSqr < nearestSqr) {
                 nearestSqr = distanceSqr;
@@ -540,26 +974,13 @@ public final class FarDragonPresenceManager {
         return nearest;
     }
 
-    private static String shortUuid(UUID uuid) {
-        return uuid.toString().substring(0, 8);
-    }
-
     private static String yesNo(boolean value) {
         return value ? "YES" : "NO";
     }
 
-    private static String ageText(long timestampMs) {
-        if (timestampMs <= 0L) return "never";
-
-        long age = Math.max(
-                0L,
-                System.currentTimeMillis() - timestampMs
-        );
-
-        return String.format("%.1fs ago", age / 1000.0D);
-    }
-
-    private static double maxDistanceFor(DragonStage stage) {
+    private static double maxDistanceFor(
+            DragonStage stage
+    ) {
         return switch (stage) {
             case BABY -> 384.0D;
             case JUVENILE -> 800.0D;
@@ -572,12 +993,29 @@ public final class FarDragonPresenceManager {
 
     private static void trimToLimit() {
         while (ENTRIES.size() > MAX_ENTRIES) {
-            Iterator<UUID> iterator = ENTRIES.keySet().iterator();
+            Iterator<UUID> iterator =
+                    ENTRIES.keySet().iterator();
 
             if (!iterator.hasNext()) return;
 
             iterator.next();
             iterator.remove();
+        }
+    }
+
+    private static final class ScreenPoint {
+        private final double x;
+        private final double y;
+        private final double depth;
+
+        private ScreenPoint(
+                double x,
+                double y,
+                double depth
+        ) {
+            this.x = x;
+            this.y = y;
+            this.depth = depth;
         }
     }
 
@@ -608,6 +1046,10 @@ public final class FarDragonPresenceManager {
 
         private long lodAttempts;
         private double lastLodRenderDistance;
+
+        private long lastOcclusionCheckTick;
+        private boolean lineOfSightClear = true;
+        private long impostorFrames;
 
         private Entry(
                 UUID uuid,
