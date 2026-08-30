@@ -2,7 +2,6 @@ package com.dracarys.dracarysmod.client;
 
 import com.dracarys.dracarysmod.DracarysMod;
 import com.dracarys.dracarysmod.client.model.anatomy.BalancedDragonModel;
-import com.dracarys.dracarysmod.client.model.lod.FarBalancedDragonModel;
 import com.dracarys.dracarysmod.client.renderer.DracarysDragonRenderer;
 import com.dracarys.dracarysmod.registry.ModEntities;
 import net.minecraftforge.api.distmarker.Dist;
@@ -18,24 +17,15 @@ import net.minecraftforge.fml.common.Mod;
 public final class ClientModEvents {
 
     @SubscribeEvent
-    public static void layers(
-            EntityRenderersEvent.RegisterLayerDefinitions event
-    ) {
+    public static void layers(EntityRenderersEvent.RegisterLayerDefinitions event) {
         event.registerLayerDefinition(
                 BalancedDragonModel.LAYER,
                 BalancedDragonModel::createBodyLayer
         );
-
-        event.registerLayerDefinition(
-                FarBalancedDragonModel.LAYER,
-                FarBalancedDragonModel::createBodyLayer
-        );
     }
 
     @SubscribeEvent
-    public static void renderers(
-            EntityRenderersEvent.RegisterRenderers event
-    ) {
+    public static void renderers(EntityRenderersEvent.RegisterRenderers event) {
         event.registerEntityRenderer(
                 ModEntities.DRAGON.get(),
                 DracarysDragonRenderer::new

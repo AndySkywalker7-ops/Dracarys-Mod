@@ -1,0 +1,20 @@
+Step 4.0.8 removes/deactivates all previous visual experiments:
+
+src/main/java/com/dracarys/dracarysmod/client/lod/FarDragonClientEvents.java
+src/main/java/com/dracarys/dracarysmod/client/lod/FarDragonLodProfile.java
+src/main/java/com/dracarys/dracarysmod/client/lod/FarDragonPresenceManager.java
+src/main/java/com/dracarys/dracarysmod/client/lod/FarDragonWorldRenderer.java
+src/main/java/com/dracarys/dracarysmod/client/model/lod/FarBalancedDragonModel.java
+src/main/java/com/dracarys/dracarysmod/client/renderer/layer/FarOpaquePresenceLayer.java
+src/main/resources/assets/dracarysmod/textures/entity/dragon/far_lod_neutral.png
+src/main/resources/assets/dracarysmod/textures/gui/far_dragon_silhouette.png
+
+Removed concepts:
+- 2D screen impostor
+- alternate FAR model
+- VERY_FAR model
+- proxy dragon cache
+- opaque reinforcement layer
+- outline duplicate pass
+- fog bypass
+- special neutral FAR texture

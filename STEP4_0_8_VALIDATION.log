@@ -1,0 +1,27 @@
+Dracarys Step 4.0.8 validation
+
+Dracarys static validation: 424 checks recorded, 0 error(s), 0 warning(s)
+PASS
+
+[Architecture scan]
+No obsolete FAR/impostor/fog/outline implementation references found.
+
+[GUI dragon rendering scan]
+No GUI-space dragon rendering found. Debug HUD is text only.
+
+[Renderer registration scan]
+src/main/java/com/dracarys/dracarysmod/client/ClientModEvents.java:29:        event.registerEntityRenderer(
+src/main/java/com/dracarys/dracarysmod/client/ClientModEvents.java:21:        event.registerLayerDefinition(
+
+[Fallback render-stage use]
+src/main/java/com/dracarys/dracarysmod/client/render/CleanLongRangeDragonRenderEvents.java:17:import net.minecraftforge.client.event.RenderLevelStageEvent;
+src/main/java/com/dracarys/dracarysmod/client/render/CleanLongRangeDragonRenderEvents.java:75:    public static void onRenderStage(RenderLevelStageEvent event) {
+src/main/java/com/dracarys/dracarysmod/client/render/CleanLongRangeDragonRenderEvents.java:76:        if (event.getStage() == RenderLevelStageEvent.Stage.AFTER_SKY) {
+src/main/java/com/dracarys/dracarysmod/client/render/CleanLongRangeDragonRenderEvents.java:81:        if (event.getStage() != RenderLevelStageEvent.Stage.AFTER_ENTITIES) {
+src/main/java/com/dracarys/dracarysmod/client/render/CleanLongRangeDragonRenderEvents.java:151:            RenderLevelStageEvent event,
+
+[Tracking range]
+11:    public static final RegistryObject<EntityType<DracarysDragonEntity>> DRAGON=ENTITIES.register("dracarys_dragon",()->EntityType.Builder.of(DracarysDragonEntity::new, MobCategory.CREATURE).sized(2.4f,2.0f).clientTrackingRange(40).updateInterval(2).build("dracarys_dragon"));
+
+[Gradle build]
+NOT RUN: Gradle 8.8 is not installed in this environment; outbound network is unavailable, so Forge/Gradle dependencies cannot be fetched.
