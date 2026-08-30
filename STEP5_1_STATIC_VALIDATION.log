@@ -1,0 +1,71 @@
+STEP 5.1 — BALANCED v2 Anatomy Refinement static validation
+Checks: 64
+Passed: 64
+Failed: 0
+
+PASS | compatibility bone "body"
+PASS | compatibility bone "neck_01"
+PASS | compatibility bone "neck_02"
+PASS | compatibility bone "neck_03"
+PASS | compatibility bone "head"
+PASS | compatibility bone "jaw"
+PASS | compatibility bone "left_wing_root"
+PASS | compatibility bone "right_wing_root"
+PASS | compatibility bone "upper_arm"
+PASS | compatibility bone "forearm"
+PASS | compatibility bone "left_foreleg"
+PASS | compatibility bone "right_foreleg"
+PASS | compatibility bone "left_hindleg"
+PASS | compatibility bone "right_hindleg"
+PASS | compatibility bone "lower_leg"
+PASS | compatibility bone "tail_01"
+PASS | compatibility bone "tail_02"
+PASS | compatibility bone "tail_03"
+PASS | compatibility bone "tail_04"
+PASS | wing anatomy "shoulder_cap"
+PASS | wing anatomy "elbow_joint"
+PASS | wing anatomy "wrist_joint"
+PASS | wing anatomy "hand"
+PASS | wing anatomy "finger_1"
+PASS | wing anatomy "finger_2"
+PASS | wing anatomy "finger_3"
+PASS | wing anatomy "finger_4"
+PASS | wing anatomy "finger_membrane_1"
+PASS | wing anatomy "finger_membrane_2"
+PASS | wing anatomy "finger_membrane_3"
+PASS | wing anatomy "finger_membrane_4"
+PASS | four wing digit lengths
+PASS | four membrane fan lengths
+PASS | tapered membrane helper
+PASS | span preserved via long digits
+PASS | front foot lowered to ground
+PASS | three central toes
+PASS | outer toe
+PASS | rear pad
+PASS | front grounding target approx 24.8 model Y
+PASS | hind grounding target approx 24.3 model Y
+PASS | torso anatomy "thorax"
+PASS | torso anatomy "sternum"
+PASS | torso anatomy "abdomen"
+PASS | torso anatomy "waist_transition"
+PASS | torso anatomy "pelvis"
+PASS | torso anatomy "tail_base_transition"
+PASS | neck tapering sizes
+PASS | tail tapering
+PASS | head separated muzzle
+PASS | tapered horns
+PASS | no forbidden RenderSystem
+PASS | no forbidden clientTrackingRange
+PASS | no forbidden FarDragon
+PASS | no forbidden OutlineBufferSource
+PASS | no forbidden RenderGuiEvent
+PASS | no forbidden EntityDimensions
+PASS | balanced braces
+PASS | balanced parentheses
+PASS | immutable unchanged DracarysDragonRenderer.java
+PASS | immutable unchanged DracarysDragonEntity.java
+PASS | immutable unchanged DragonMultipartLayout.java
+PASS | immutable unchanged CleanLongRangeDragonRenderEvents.java
+PASS | immutable unchanged AbstractDracarysDragonModel.java
+
+RESULT: PASS

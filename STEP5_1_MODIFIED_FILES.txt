@@ -1,0 +1,12 @@
+STEP 5.1 modified source files
+==============================
+
+MODIFIED:
+src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java
+
+UNCHANGED / HASH-VERIFIED:
+src/main/java/com/dracarys/dracarysmod/client/renderer/DracarysDragonRenderer.java
+src/main/java/com/dracarys/dracarysmod/entity/DracarysDragonEntity.java
+src/main/java/com/dracarys/dracarysmod/entity/DragonMultipartLayout.java
+src/main/java/com/dracarys/dracarysmod/client/render/CleanLongRangeDragonRenderEvents.java
+src/main/java/com/dracarys/dracarysmod/client/model/AbstractDracarysDragonModel.java
