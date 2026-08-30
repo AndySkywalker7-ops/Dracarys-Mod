@@ -3,10 +3,12 @@ package com.dracarys.dracarysmod.client.lod;
 import com.dracarys.dracarysmod.dragon.DragonStage;
 import com.dracarys.dracarysmod.entity.DracarysDragonEntity;
 import com.dracarys.dracarysmod.registry.ModEntities;
+import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.OutlineBufferSource;
 import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceKey;
@@ -45,6 +47,20 @@ public final class FarDragonPresenceManager {
     private static final double FORCED_REAL_RENDER_START =
             40.0D;
 
+    /*
+     * HARD FIX: from this distance onward, Dracarys explicitly suppresses the
+     * vanilla fog uniforms only while drawing the dragon, then immediately
+     * restores them. This keeps the dragon readable against pure sky.
+     */
+    private static final double SKY_VISIBILITY_START =
+            80.0D;
+
+    private static final float FOG_BYPASS_START =
+            1_000_000.0F;
+
+    private static final float FOG_BYPASS_END =
+            1_000_001.0F;
+
     private static final Map<UUID, Entry> ENTRIES =
             new LinkedHashMap<>();
 
@@ -52,6 +68,8 @@ public final class FarDragonPresenceManager {
     private static long manualFullAttempts;
     private static long far3dAttempts;
     private static long veryFar3dAttempts;
+    private static long fogBypassFrames;
+    private static long contrastOutlineFrames;
 
     private FarDragonPresenceManager() {}
 
@@ -300,7 +318,7 @@ public final class FarDragonPresenceManager {
             RenderLevelStageEvent event
     ) {
         if (event.getStage()
-                != RenderLevelStageEvent.Stage.AFTER_PARTICLES) {
+                != RenderLevelStageEvent.Stage.AFTER_LEVEL) {
             return;
         }
 
@@ -402,16 +420,31 @@ public final class FarDragonPresenceManager {
                 manualFullAttempts++;
                 entry.manualFullAttempts++;
 
-                renderFullEntityDirect(
-                        minecraft,
-                        live,
-                        live.position(),
-                        live.getYRot(),
-                        camera,
-                        event,
-                        poseStack,
-                        buffers
-                );
+                if (distance >= SKY_VISIBILITY_START) {
+                    renderFullEntitySkyVisible(
+                            minecraft,
+                            live,
+                            live.position(),
+                            live.getYRot(),
+                            camera,
+                            event,
+                            poseStack,
+                            buffers
+                    );
+                    fogBypassFrames++;
+                    contrastOutlineFrames++;
+                } else {
+                    renderFullEntityDirect(
+                            minecraft,
+                            live,
+                            live.position(),
+                            live.getYRot(),
+                            camera,
+                            event,
+                            poseStack,
+                            buffers
+                    );
+                }
 
                 renderedAny = true;
                 continue;
@@ -447,17 +480,50 @@ public final class FarDragonPresenceManager {
                     entry.veryFar3dAttempts++;
                 }
 
-                FarDragonWorldRenderer.render(
-                        minecraft,
-                        visualDragon,
-                        visualPosition,
-                        visualYRot,
-                        camera,
-                        event.getPartialTick(),
-                        distance,
-                        poseStack,
-                        buffers
-                );
+                if (distance >= SKY_VISIBILITY_START) {
+                    withDragonFogSuppressed(
+                            buffers,
+                            () -> {
+                                FarDragonWorldRenderer.render(
+                                        minecraft,
+                                        visualDragon,
+                                        visualPosition,
+                                        visualYRot,
+                                        camera,
+                                        event.getPartialTick(),
+                                        distance,
+                                        poseStack,
+                                        buffers
+                                );
+
+                                FarDragonWorldRenderer.renderContrastOutline(
+                                        minecraft,
+                                        visualDragon,
+                                        visualPosition,
+                                        visualYRot,
+                                        camera,
+                                        event.getPartialTick(),
+                                        distance,
+                                        poseStack
+                                );
+                            }
+                    );
+
+                    fogBypassFrames++;
+                    contrastOutlineFrames++;
+                } else {
+                    FarDragonWorldRenderer.render(
+                            minecraft,
+                            visualDragon,
+                            visualPosition,
+                            visualYRot,
+                            camera,
+                            event.getPartialTick(),
+                            distance,
+                            poseStack,
+                            buffers
+                    );
+                }
 
                 renderedAny = true;
             }
@@ -465,6 +531,158 @@ public final class FarDragonPresenceManager {
 
         if (renderedAny) {
             buffers.endBatch();
+        }
+    }
+
+    /**
+     * Render the full real dragon with fog suppressed and a strong dark 3D
+     * outline. This is intentionally assertive: the dragon must remain readable
+     * against open sky.
+     */
+    @SuppressWarnings({
+            "rawtypes",
+            "unchecked"
+    })
+    private static void renderFullEntitySkyVisible(
+            Minecraft minecraft,
+            DracarysDragonEntity dragon,
+            Vec3 position,
+            float yRot,
+            Vec3 camera,
+            RenderLevelStageEvent event,
+            PoseStack poseStack,
+            MultiBufferSource.BufferSource buffers
+    ) {
+        withDragonFogSuppressed(
+                buffers,
+                () -> {
+                    renderFullEntityDirect(
+                            minecraft,
+                            dragon,
+                            position,
+                            yRot,
+                            camera,
+                            event,
+                            poseStack,
+                            buffers
+                    );
+
+                    renderFullEntityContrastOutline(
+                            minecraft,
+                            dragon,
+                            position,
+                            yRot,
+                            camera,
+                            event,
+                            poseStack
+                    );
+                }
+        );
+    }
+
+    /**
+     * Strong charcoal contour around the exact full model.
+     * It remains 3D, respects depth, and does not enlarge the dragon.
+     */
+    @SuppressWarnings({
+            "rawtypes",
+            "unchecked"
+    })
+    private static void renderFullEntityContrastOutline(
+            Minecraft minecraft,
+            DracarysDragonEntity dragon,
+            Vec3 position,
+            float yRot,
+            Vec3 camera,
+            RenderLevelStageEvent event,
+            PoseStack poseStack
+    ) {
+        poseStack.pushPose();
+
+        poseStack.translate(
+                position.x - camera.x,
+                position.y - camera.y,
+                position.z - camera.z
+        );
+
+        EntityRenderer renderer =
+                minecraft
+                        .getEntityRenderDispatcher()
+                        .getRenderer(dragon);
+
+        OutlineBufferSource outline =
+                minecraft.renderBuffers()
+                        .outlineBufferSource();
+
+        /*
+         * Almost-black blue/charcoal. Very strong on purpose: the user asked
+         * for unmistakable sky readability rather than a subtle effect.
+         */
+        outline.setColor(
+                8,
+                12,
+                18,
+                255
+        );
+
+        int packedLight =
+                renderer.getPackedLightCoords(
+                        dragon,
+                        event.getPartialTick()
+                );
+
+        renderer.render(
+                dragon,
+                yRot,
+                event.getPartialTick(),
+                poseStack,
+                outline,
+                packedLight
+        );
+
+        outline.endOutlineBatch();
+
+        poseStack.popPose();
+    }
+
+    /**
+     * Temporarily pushes fog far beyond any practical dragon distance. The
+     * original fog state is restored immediately after the dragon buffers are
+     * flushed, so terrain/weather/shaders outside this render remain unchanged.
+     */
+    private static void withDragonFogSuppressed(
+            MultiBufferSource.BufferSource buffers,
+            Runnable renderAction
+    ) {
+        float previousFogStart =
+                RenderSystem.getShaderFogStart();
+
+        float previousFogEnd =
+                RenderSystem.getShaderFogEnd();
+
+        try {
+            RenderSystem.setShaderFogStart(
+                    FOG_BYPASS_START
+            );
+
+            RenderSystem.setShaderFogEnd(
+                    FOG_BYPASS_END
+            );
+
+            renderAction.run();
+
+            /*
+             * Critical: flush while the fog-bypass uniforms are still active.
+             */
+            buffers.endBatch();
+        } finally {
+            RenderSystem.setShaderFogStart(
+                    previousFogStart
+            );
+
+            RenderSystem.setShaderFogEnd(
+                    previousFogEnd
+            );
         }
     }
 
@@ -538,14 +756,14 @@ public final class FarDragonPresenceManager {
                 x - 4,
                 y - 4,
                 x + 345,
-                y + 165,
+                y + 195,
                 0xA0000000
         );
 
         draw(
                 gui,
                 minecraft,
-                "DRACARYS LOD DEBUG - STEP 4.0.7D",
+                "DRACARYS LOD DEBUG - STEP 4.0.7E",
                 x,
                 y,
                 0xFFFFC857
@@ -599,6 +817,32 @@ public final class FarDragonPresenceManager {
                 veryFar3dAttempts > 0
                         ? 0xFF55FFFF
                         : 0xFFAAAAAA
+        );
+        y += lineHeight;
+
+        draw(
+                gui,
+                minecraft,
+                "Sky-visibility fog bypass: "
+                        + fogBypassFrames,
+                x,
+                y,
+                fogBypassFrames > 0
+                        ? 0xFF55FFFF
+                        : 0xFFFFAA00
+        );
+        y += lineHeight;
+
+        draw(
+                gui,
+                minecraft,
+                "3D contrast outline frames: "
+                        + contrastOutlineFrames,
+                x,
+                y,
+                contrastOutlineFrames > 0
+                        ? 0xFF55FFFF
+                        : 0xFFFFAA00
         );
         y += lineHeight;
 

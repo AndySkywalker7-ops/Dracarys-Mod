@@ -1,0 +1,18 @@
+Step 4.0.7E static validation
+FarDragonPresenceManager.java braces: True
+FarDragonPresenceManager.java parens: True
+FarDragonWorldRenderer.java braces: True
+FarDragonWorldRenderer.java parens: True
+AFTER_LEVEL stage: True
+fog start getter: True
+fog end getter: True
+fog bypass set: True
+fog restoration: True
+flush before restore: True
+full model contrast outline: True
+far contrast outline: True
+outline source: True
+hard visibility starts at 80: True
+HUD Step 4.0.7E: True
+no size changes: True
+RESULT: PASS
