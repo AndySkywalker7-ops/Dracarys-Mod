@@ -13,7 +13,9 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
 /**
- * Client-only hooks for long-range Dracarys rendering.
+ * Client-only hooks for true world-space 3D dragon LOD.
+ *
+ * The old screen-space impostor hook is intentionally gone.
  */
 @Mod.EventBusSubscriber(
         modid = DracarysMod.MOD_ID,
@@ -21,13 +23,16 @@ import net.minecraftforge.fml.common.Mod;
         value = Dist.CLIENT
 )
 public final class FarDragonClientEvents {
+
     private FarDragonClientEvents() {}
 
     @SubscribeEvent
     public static void onEntityJoin(
             EntityJoinLevelEvent event
     ) {
-        if (!event.getLevel().isClientSide) return;
+        if (!event.getLevel().isClientSide) {
+            return;
+        }
 
         if (event.getEntity()
                 instanceof DracarysDragonEntity dragon) {
@@ -42,7 +47,9 @@ public final class FarDragonClientEvents {
     public static void onEntityLeave(
             EntityLeaveLevelEvent event
     ) {
-        if (!event.getLevel().isClientSide) return;
+        if (!event.getLevel().isClientSide) {
+            return;
+        }
 
         if (event.getEntity()
                 instanceof DracarysDragonEntity dragon) {
@@ -57,36 +64,29 @@ public final class FarDragonClientEvents {
     public static void onClientTick(
             TickEvent.ClientTickEvent event
     ) {
-        if (event.phase != TickEvent.Phase.END) return;
+        if (event.phase
+                != TickEvent.Phase.END) {
+            return;
+        }
 
-        FarDragonPresenceManager.clientTick();
+        FarDragonPresenceManager
+                .clientTick();
     }
 
     @SubscribeEvent
     public static void onRenderLevel(
             RenderLevelStageEvent event
     ) {
-        FarDragonPresenceManager.render(event);
+        FarDragonPresenceManager
+                .render(event);
     }
 
-    /**
-     * Render the anti-fog impostor before normal HUD elements.
-     */
-    @SubscribeEvent
-    public static void onRenderGuiPre(
-            RenderGuiEvent.Pre event
-    ) {
-        FarDragonPresenceManager.renderScreenPresence(event);
-    }
-
-    /**
-     * Temporary diagnostics remain visible on top of the HUD.
-     */
     @SubscribeEvent
     public static void onRenderGuiPost(
             RenderGuiEvent.Post event
     ) {
-        FarDragonPresenceManager.renderDebugHud(event);
+        FarDragonPresenceManager
+                .renderDebugHud(event);
     }
 
     @SubscribeEvent

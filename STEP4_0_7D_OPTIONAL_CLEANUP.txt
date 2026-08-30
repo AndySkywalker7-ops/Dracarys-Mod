@@ -1,0 +1,11 @@
+Step 4.0.7D cleanup note
+
+After the 3D LOD is confirmed working, delete these old experimental files if
+they are still present in your repository:
+
+src/main/java/com/dracarys/dracarysmod/client/renderer/layer/FarOpaquePresenceLayer.java
+
+src/main/resources/assets/dracarysmod/textures/gui/far_dragon_silhouette.png
+
+They are no longer referenced by Step 4.0.7D. Leaving them temporarily does not
+activate the old behavior.

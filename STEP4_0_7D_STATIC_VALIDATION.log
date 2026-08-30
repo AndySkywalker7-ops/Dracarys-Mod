@@ -1,0 +1,27 @@
+Step 4.0.7D static structural validation
+ClientModEvents.java braces: True
+ClientModEvents.java parens: True
+FarDragonLodProfile.java braces: True
+FarDragonLodProfile.java parens: True
+FarDragonPresenceManager.java braces: True
+FarDragonPresenceManager.java parens: True
+FarDragonClientEvents.java braces: True
+FarDragonClientEvents.java parens: True
+FarDragonWorldRenderer.java braces: True
+FarDragonWorldRenderer.java parens: True
+DracarysDragonRenderer.java braces: True
+DracarysDragonRenderer.java parens: True
+FarBalancedDragonModel.java braces: True
+FarBalancedDragonModel.java parens: True
+far model layer exists: True
+layer registration exists: True
+world renderer exists: True
+LOD profile exists: True
+FAR_3D path exists: True
+VERY_FAR_3D path exists: True
+manual bridge remains 40: True
+screen GUI Pre removed: True
+screen impostor removed: True
+neutral texture exists: True
+no EntityDimensions changes: True
+RESULT: PASS
