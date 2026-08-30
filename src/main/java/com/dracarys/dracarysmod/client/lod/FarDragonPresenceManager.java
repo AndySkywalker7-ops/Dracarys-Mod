@@ -5,6 +5,7 @@ import com.dracarys.dracarysmod.entity.DracarysDragonEntity;
 import com.dracarys.dracarysmod.registry.ModEntities;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.renderer.LightTexture;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.EntityRenderer;
@@ -13,6 +14,7 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.client.event.RenderGuiEvent;
 import net.minecraftforge.client.event.RenderLevelStageEvent;
 
 import java.util.Iterator;
@@ -21,11 +23,15 @@ import java.util.Map;
 import java.util.UUID;
 
 /**
- * Reliable client-side bridge between vanilla entity tracking and far-dragon rendering.
+ * Client-side bridge between vanilla entity tracking and far-dragon rendering.
  *
- * Step 4.0.5B changes the architecture from "capture only when the entity leaves"
- * to "observe while the entity is alive and already tracked". This means a valid
- * visual snapshot exists before vanilla removes the entity from the client.
+ * Step 4.0.6A adds explicit diagnostics so in-game testing can distinguish:
+ *  - snapshot/cache creation failure
+ *  - vanilla tracking loss
+ *  - LOD eligibility/range failure
+ *  - render hook/renderer failure
+ *
+ * This is intentionally a temporary diagnostic build.
  */
 public final class FarDragonPresenceManager {
     private static final int MAX_ENTRIES = 32;
@@ -34,12 +40,11 @@ public final class FarDragonPresenceManager {
 
     private static final Map<UUID, Entry> ENTRIES = new LinkedHashMap<>();
 
+    private static long renderStageCalls;
+    private static long hudFrames;
+
     private FarDragonPresenceManager() {}
 
-    /**
-     * Starts or refreshes tracking for a real client-side dragon.
-     * Safe to call from EntityJoinLevelEvent and immediately before EntityLeaveLevelEvent.
-     */
     public static void observe(DracarysDragonEntity dragon, Level level) {
         Minecraft minecraft = Minecraft.getInstance();
         if (!level.isClientSide || minecraft.level != level || minecraft.player == null) return;
@@ -54,6 +59,7 @@ public final class FarDragonPresenceManager {
         Entry entry = ENTRIES.get(dragon.getUUID());
         if (entry == null || !entry.dimension.equals(level.dimension())) {
             CompoundTag tag = dragon.saveWithoutId(new CompoundTag());
+
             DracarysDragonEntity proxy = new DracarysDragonEntity(ModEntities.DRAGON.get(), level);
             proxy.load(tag);
             proxy.moveTo(dragon.getX(), dragon.getY(), dragon.getZ(), dragon.getYRot(), dragon.getXRot());
@@ -71,6 +77,7 @@ public final class FarDragonPresenceManager {
                     System.currentTimeMillis(),
                     maxDistanceFor(dragon.getStage())
             );
+
             ENTRIES.put(dragon.getUUID(), entry);
             trimToLimit();
         } else {
@@ -78,11 +85,6 @@ public final class FarDragonPresenceManager {
         }
     }
 
-    /**
-     * Called every client tick. Existing entries are refreshed by entity id while
-     * vanilla still tracks the real dragon. Once getEntity(id) returns null, the
-     * cached proxy simply remains at the last known position and becomes the LOD.
-     */
     public static void clientTick() {
         Minecraft minecraft = Minecraft.getInstance();
         if (minecraft.level == null || minecraft.player == null) {
@@ -102,16 +104,32 @@ public final class FarDragonPresenceManager {
             }
 
             Entity current = minecraft.level.getEntity(entry.entityId);
-            if (current instanceof DracarysDragonEntity live
+            boolean realPresent = current instanceof DracarysDragonEntity live
                     && live.getUUID().equals(entry.uuid)
                     && live.isAlive()
-                    && !live.isDeadOrDying()) {
+                    && !live.isDeadOrDying();
+
+            if (realPresent) {
+                DracarysDragonEntity live = (DracarysDragonEntity) current;
+
+                if (!entry.realPresentLastTick) {
+                    entry.trackingRestoredMs = now;
+                }
+                entry.realPresentLastTick = true;
+
                 entry.ticksSinceFullRefresh++;
                 boolean fullRefresh = entry.ticksSinceFullRefresh >= FULL_SNAPSHOT_REFRESH_TICKS;
                 updateFromLive(entry, live, fullRefresh);
                 if (fullRefresh) entry.ticksSinceFullRefresh = 0;
-            } else if (now - entry.lastSeenLiveMs > ENTRY_TTL_MS) {
-                iterator.remove();
+            } else {
+                if (entry.realPresentLastTick) {
+                    entry.trackingLostMs = now;
+                }
+                entry.realPresentLastTick = false;
+
+                if (now - entry.lastSeenLiveMs > ENTRY_TTL_MS) {
+                    iterator.remove();
+                }
             }
         }
     }
@@ -152,11 +170,9 @@ public final class FarDragonPresenceManager {
         return ENTRIES.size();
     }
 
-    /**
-     * Returns true only while vanilla still has the real entity in the ClientLevel.
-     */
     private static boolean realEntityPresent(Minecraft minecraft, Entry entry) {
         if (minecraft.level == null) return false;
+
         Entity current = minecraft.level.getEntity(entry.entityId);
         return current instanceof DracarysDragonEntity dragon
                 && dragon.getUUID().equals(entry.uuid)
@@ -166,6 +182,8 @@ public final class FarDragonPresenceManager {
 
     public static void render(RenderLevelStageEvent event) {
         if (event.getStage() != RenderLevelStageEvent.Stage.AFTER_PARTICLES) return;
+
+        renderStageCalls++;
 
         Minecraft minecraft = Minecraft.getInstance();
         if (minecraft.level == null || minecraft.player == null) {
@@ -183,15 +201,21 @@ public final class FarDragonPresenceManager {
         for (Entry entry : ENTRIES.values()) {
             if (!minecraft.level.dimension().equals(entry.dimension)) continue;
 
-            // Critical Step 4.0.5B behavior:
-            // while vanilla has the real dragon, never draw the proxy.
-            // The instant vanilla stops tracking it, this becomes false and the proxy renders.
-            if (realEntityPresent(minecraft, entry)) continue;
+            boolean realPresent = realEntityPresent(minecraft, entry);
+            double distance = Math.sqrt(entry.position.distanceToSqr(camera));
+            boolean inRange = distance <= entry.maxDistance;
 
-            double distanceSqr = entry.position.distanceToSqr(camera);
-            if (distanceSqr > entry.maxDistance * entry.maxDistance) continue;
+            entry.lastDistance = distance;
+            entry.lastRealPresent = realPresent;
+            entry.lastLodEligible = !realPresent && inRange;
 
-            // Visual animation only. No AI, collision or world ticking.
+            if (realPresent || !inRange) continue;
+
+            entry.renderAttempts++;
+            entry.lastRenderAttemptMs = System.currentTimeMillis();
+            entry.lastRenderDistance = distance;
+
+            // Visual-only proxy animation. No AI, collision, combat or world ticking.
             entry.proxy.tickCount++;
 
             poseStack.pushPose();
@@ -217,7 +241,138 @@ public final class FarDragonPresenceManager {
             renderedAny = true;
         }
 
-        if (renderedAny) buffers.endBatch();
+        if (renderedAny) {
+            buffers.endBatch();
+        }
+    }
+
+    /**
+     * Temporary on-screen diagnostics for Step 4.0.6A.
+     * Intentionally always visible while a world is open so we can diagnose
+     * tracking loss without guessing.
+     */
+    public static void renderDebugHud(RenderGuiEvent.Post event) {
+        Minecraft minecraft = Minecraft.getInstance();
+        if (minecraft.level == null || minecraft.player == null) return;
+
+        hudFrames++;
+
+        GuiGraphics gui = event.getGuiGraphics();
+
+        int x = 8;
+        int y = 44;
+        int lineHeight = 10;
+
+        Entry nearest = nearestEntry(minecraft);
+
+        int panelWidth = 300;
+        int lines = nearest == null ? 5 : 13;
+        int panelHeight = lines * lineHeight + 10;
+
+        gui.fill(x - 4, y - 4, x + panelWidth, y + panelHeight, 0xA0000000);
+
+        draw(gui, minecraft, "DRACARYS LOD DEBUG - STEP 4.0.6A", x, y, 0xFFFFC857);
+        y += lineHeight;
+
+        draw(gui, minecraft, "Cache entries: " + ENTRIES.size(), x, y,
+                ENTRIES.isEmpty() ? 0xFFFF5555 : 0xFF55FF55);
+        y += lineHeight;
+
+        draw(gui, minecraft, "Render-stage calls: " + renderStageCalls, x, y, 0xFFFFFFFF);
+        y += lineHeight;
+
+        draw(gui, minecraft, "HUD frames: " + hudFrames, x, y, 0xFFAAAAAA);
+        y += lineHeight;
+
+        if (nearest == null) {
+            draw(gui, minecraft, "Nearest cached dragon: NONE", x, y, 0xFFFF5555);
+            return;
+        }
+
+        boolean realPresent = realEntityPresent(minecraft, nearest);
+        double playerDistance = minecraft.player.position().distanceTo(nearest.position);
+        boolean inRange = playerDistance <= nearest.maxDistance;
+        boolean lodActive = !realPresent && inRange;
+
+        draw(gui, minecraft, "Dragon: " + shortUuid(nearest.uuid)
+                + "  Stage: " + nearest.proxy.getStage().name(), x, y, 0xFFFFFFFF);
+        y += lineHeight;
+
+        draw(gui, minecraft, "Real entity tracked: " + yesNo(realPresent), x, y,
+                realPresent ? 0xFF55FF55 : 0xFFFF5555);
+        y += lineHeight;
+
+        draw(gui, minecraft, "LOD cached: YES", x, y, 0xFF55FF55);
+        y += lineHeight;
+
+        draw(gui, minecraft, "LOD eligible/active: " + yesNo(lodActive), x, y,
+                lodActive ? 0xFF55FFFF : 0xFFFFAA00);
+        y += lineHeight;
+
+        draw(gui, minecraft, String.format("Distance: %.1f / %.1f blocks",
+                playerDistance, nearest.maxDistance), x, y,
+                inRange ? 0xFFFFFFFF : 0xFFFF5555);
+        y += lineHeight;
+
+        draw(gui, minecraft, "Render attempts: " + nearest.renderAttempts, x, y,
+                nearest.renderAttempts > 0 ? 0xFF55FFFF : 0xFFFFAA00);
+        y += lineHeight;
+
+        draw(gui, minecraft, String.format("Last render-attempt distance: %.1f",
+                nearest.lastRenderDistance), x, y, 0xFFAAAAAA);
+        y += lineHeight;
+
+        draw(gui, minecraft, "Tracking lost: " + ageText(nearest.trackingLostMs), x, y, 0xFFAAAAAA);
+        y += lineHeight;
+
+        draw(gui, minecraft, String.format("Snapshot XYZ: %.0f %.0f %.0f",
+                nearest.position.x, nearest.position.y, nearest.position.z), x, y, 0xFFAAAAAA);
+    }
+
+    private static void draw(
+            GuiGraphics gui,
+            Minecraft minecraft,
+            String text,
+            int x,
+            int y,
+            int color
+    ) {
+        gui.drawString(minecraft.font, text, x, y, color, true);
+    }
+
+    private static Entry nearestEntry(Minecraft minecraft) {
+        if (minecraft.player == null || ENTRIES.isEmpty()) return null;
+
+        Entry nearest = null;
+        double nearestSqr = Double.MAX_VALUE;
+
+        for (Entry entry : ENTRIES.values()) {
+            if (minecraft.level == null || !minecraft.level.dimension().equals(entry.dimension)) continue;
+
+            double distanceSqr = minecraft.player.position().distanceToSqr(entry.position);
+            if (distanceSqr < nearestSqr) {
+                nearestSqr = distanceSqr;
+                nearest = entry;
+            }
+        }
+
+        return nearest;
+    }
+
+    private static String shortUuid(UUID uuid) {
+        String value = uuid.toString();
+        return value.substring(0, 8);
+    }
+
+    private static String yesNo(boolean value) {
+        return value ? "YES" : "NO";
+    }
+
+    private static String ageText(long timestampMs) {
+        if (timestampMs <= 0L) return "never";
+
+        long age = Math.max(0L, System.currentTimeMillis() - timestampMs);
+        return String.format("%.1fs ago", age / 1000.0D);
     }
 
     private static double maxDistanceFor(DragonStage stage) {
@@ -235,6 +390,7 @@ public final class FarDragonPresenceManager {
         while (ENTRIES.size() > MAX_ENTRIES) {
             Iterator<UUID> iterator = ENTRIES.keySet().iterator();
             if (!iterator.hasNext()) return;
+
             iterator.next();
             iterator.remove();
         }
@@ -252,6 +408,18 @@ public final class FarDragonPresenceManager {
         private long lastSeenLiveMs;
         private double maxDistance;
         private int ticksSinceFullRefresh;
+
+        private boolean realPresentLastTick = true;
+        private long trackingLostMs;
+        private long trackingRestoredMs;
+
+        private boolean lastRealPresent = true;
+        private boolean lastLodEligible;
+        private double lastDistance;
+
+        private long renderAttempts;
+        private long lastRenderAttemptMs;
+        private double lastRenderDistance;
 
         private Entry(
                 UUID uuid,

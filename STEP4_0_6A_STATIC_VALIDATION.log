@@ -1,0 +1,8 @@
+FarDragonPresenceManager.java: {'braces': (40, 40), 'parens': (202, 202)}; balanced=True
+FarDragonClientEvents.java: {'braces': (10, 10), 'parens': (25, 25)}; balanced=True
+RenderGuiEvent.Post: True
+renderDebugHud: True
+renderAttempts: True
+LOD eligible: True
+Real entity tracked: True
+RESULT: PASS

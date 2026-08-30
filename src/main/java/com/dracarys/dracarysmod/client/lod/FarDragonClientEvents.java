@@ -4,6 +4,7 @@ import com.dracarys.dracarysmod.DracarysMod;
 import com.dracarys.dracarysmod.entity.DracarysDragonEntity;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.ClientPlayerNetworkEvent;
+import net.minecraftforge.client.event.RenderGuiEvent;
 import net.minecraftforge.client.event.RenderLevelStageEvent;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.EntityJoinLevelEvent;
@@ -12,18 +13,21 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
 /**
- * Client-only hooks for the Step 4.0.5B reliable far-dragon presence bridge.
+ * Client-only hooks for far-dragon presence plus Step 4.0.6A diagnostics.
  */
-@Mod.EventBusSubscriber(modid = DracarysMod.MOD_ID, bus = Mod.EventBusSubscriber.Bus.FORGE, value = Dist.CLIENT)
+@Mod.EventBusSubscriber(
+        modid = DracarysMod.MOD_ID,
+        bus = Mod.EventBusSubscriber.Bus.FORGE,
+        value = Dist.CLIENT
+)
 public final class FarDragonClientEvents {
     private FarDragonClientEvents() {}
 
     @SubscribeEvent
     public static void onEntityJoin(EntityJoinLevelEvent event) {
         if (!event.getLevel().isClientSide) return;
+
         if (event.getEntity() instanceof DracarysDragonEntity dragon) {
-            // Important: keep the snapshot from the moment the dragon becomes known
-            // to the client instead of deleting it.
             FarDragonPresenceManager.observe(dragon, event.getLevel());
         }
     }
@@ -31,9 +35,9 @@ public final class FarDragonClientEvents {
     @SubscribeEvent
     public static void onEntityLeave(EntityLeaveLevelEvent event) {
         if (!event.getLevel().isClientSide) return;
+
         if (event.getEntity() instanceof DracarysDragonEntity dragon) {
-            // One last refresh before vanilla removes the live entity, when this
-            // event is available. The LOD no longer depends on this event firing.
+            // Best-effort final refresh; LOD does not depend on this event.
             FarDragonPresenceManager.observe(dragon, event.getLevel());
         }
     }
@@ -47,6 +51,11 @@ public final class FarDragonClientEvents {
     @SubscribeEvent
     public static void onRenderLevel(RenderLevelStageEvent event) {
         FarDragonPresenceManager.render(event);
+    }
+
+    @SubscribeEvent
+    public static void onRenderGui(RenderGuiEvent.Post event) {
+        FarDragonPresenceManager.renderDebugHud(event);
     }
 
     @SubscribeEvent
