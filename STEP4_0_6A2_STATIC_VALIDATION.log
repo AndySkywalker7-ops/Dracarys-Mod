@@ -1,0 +1,8 @@
+balanced braces: True
+balanced parens: True
+shouldRender override: True
+Frustum import: True
+frustum visibility: True
+no global noCulling assignment: True
+2400 finite cap: True
+RESULT: PASS
