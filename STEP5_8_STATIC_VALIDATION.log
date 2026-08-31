@@ -1,0 +1,74 @@
+STEP 5.8 TARGETED STATIC VALIDATION
+71/71 PASS
+
+PASS | bone:body
+PASS | bone:neck_01
+PASS | bone:neck_02
+PASS | bone:neck_03
+PASS | bone:head
+PASS | bone:jaw
+PASS | bone:left_foreleg
+PASS | bone:right_foreleg
+PASS | bone:left_hindleg
+PASS | bone:right_hindleg
+PASS | bone:tail_01
+PASS | bone:tail_02
+PASS | bone:tail_03
+PASS | bone:tail_04
+PASS | two wing roots generated
+PASS | 15 neck visual masses
+PASS | 20 tail visual masses
+PASS | 9 thorax slices
+PASS | 8 abdomen slices
+PASS | 8 pelvis slices
+PASS | muscle:pectoral_major
+PASS | muscle:pectoral_lower
+PASS | muscle:serratus
+PASS | muscle:latissimus
+PASS | muscle:trapezius
+PASS | muscle:wing_scapular_mass
+PASS | muscle:wing_deltoid_mass
+PASS | muscle:iliac_mass
+PASS | muscle:gluteal_mass
+PASS | muscle:tail_base_muscle
+PASS | anterolateral eyes
+PASS | low elongated head
+PASS | independent jaw
+PASS | wing skeleton:humerus_proximal
+PASS | wing skeleton:humerus_mid
+PASS | wing skeleton:humerus_distal
+PASS | wing skeleton:elbow_joint
+PASS | wing skeleton:radius_ulna_proximal
+PASS | wing skeleton:radius_ulna_mid
+PASS | wing skeleton:radius_ulna_distal
+PASS | wing skeleton:wrist_joint
+PASS | wing skeleton:metacarpal_proximal
+PASS | wing skeleton:metacarpal_distal
+PASS | three articulated wing digits
+PASS | wing web:body_web
+PASS | wing web:arm_web
+PASS | wing web:forearm_web
+PASS | wing web:d1_web
+PASS | wing web:d1_d2_web
+PASS | wing web:d2_d3_web
+PASS | wing web:rear_web
+PASS | bone-parented membrane signature
+PASS | membrane intersects bone plane
+PASS | radial dragon web sectors
+PASS | no old sampleProfile bird membrane
+PASS | no old addWebLobe
+PASS | foot:heel_pad
+PASS | foot:central_pad
+PASS | foot:toe_
+PASS | foot:dewclaw
+PASS | forelimb muscle chain
+PASS | hindlimb Z anatomy
+PASS | neutral head forward/down
+PASS | neck pitch animation additive
+PASS | wing idle rear sweep
+PASS | wing idle moderate arch
+PASS | forelegs flexed
+PASS | hindlegs deep Z
+PASS | Balanced braces balanced
+PASS | Abstract braces balanced
+PASS | blueprint document present

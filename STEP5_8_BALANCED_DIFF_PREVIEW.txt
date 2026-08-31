@@ -1,0 +1,260 @@
+--- /mnt/data/DracarysMod-Step5.7-Black-Reference-Anatomy-PATCH/src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java	2026-08-31 03:53:00.048989643 +0000
++++ /mnt/data/step580_work/src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java	2026-08-31 04:19:15.110592323 +0000
+@@ -12,7 +12,7 @@
+ import net.minecraft.client.model.geom.builders.PartDefinition;
+ 
+ /**
+- * BALANCED — Step 5.7 black-reference anatomical rebuild.
++ * BALANCED — Step 5.8 blueprint-locked high-fidelity anatomical reconstruction.
+  *
+  * <p>This is intentionally a sculptural rebuild instead of an incremental pass.
+  * Cuboids are used as overlapping anatomical masses: rib cage, pectorals,
+@@ -60,69 +60,81 @@
+     /* ====================================================================== */
+ 
+     private static PartDefinition createTorso(PartDefinition root) {
++        /*
++         * Step 5.8 blueprint lock:
++         * X = lateral, Y = down, Z = tailward.
++         * Torso reference length = 100 blueprint units ~= 64 model units.
++         * The body spline runs from the low cervical root around Z=-20
++         * through a deep thorax to a narrower waist and then a broad pelvis.
++         */
+         PartDefinition body = root.addOrReplaceChild(
+-                "body", CubeListBuilder.create(), PartPose.offset(0.0F, -11.0F, 1.0F)
++                "body", CubeListBuilder.create(), PartPose.offset(0.0F, -10.4F, 0.0F)
+         );
+ 
+         PartDefinition thorax = body.addOrReplaceChild(
+                 "thorax", CubeListBuilder.create(),
+-                PartPose.offsetAndRotation(0.0F, -0.8F, -7.5F, -0.10F, 0.0F, 0.0F)
++                PartPose.offsetAndRotation(0.0F, -0.4F, -8.0F, -0.045F, 0.0F, 0.0F)
+         );
+ 
+-        // Seven rib-cage slices: widest/deepest around the shoulder girdle.
+-        float[] chestW = {10.6F, 12.4F, 14.1F, 15.0F, 14.4F, 13.0F, 11.5F};
+-        float[] chestH = { 7.0F,  8.0F,  9.0F,  9.5F,  9.0F,  8.0F,  7.0F};
+-        float[] chestZ = {-9.0F, -5.0F, -1.0F, 3.2F, 7.4F, 11.5F, 15.3F};
+-        float[] chestY = {-0.7F, -0.5F, -0.2F, 0.1F, 0.5F, 0.9F, 1.3F};
++        // Nine slices form a deep, rounded rib cage instead of one long rectangular chest.
++        float[] chestW = {11.8F, 13.5F, 15.4F, 16.2F, 16.0F, 15.3F, 14.0F, 12.8F, 11.8F};
++        float[] chestH = { 7.6F,  8.8F, 10.2F, 11.0F, 11.4F, 11.1F, 10.2F,  9.0F,  8.0F};
++        float[] chestZ = {-10.5F, -7.0F, -3.5F, 0.0F, 3.5F, 7.0F, 10.5F, 14.0F, 17.5F};
++        float[] chestY = { -0.6F, -0.5F, -0.35F, -0.15F, 0.0F, 0.20F, 0.45F, 0.70F, 0.95F};
++        float[] chestR = { -0.060F,-0.050F,-0.038F,-0.020F,0.000F,0.014F,0.026F,0.036F,0.045F};
+         for (int i = 0; i < chestW.length; i++) {
+-            addEllipsoidMass(thorax, "rib_slice_" + (i + 1), chestW[i], chestH[i], 6.8F,
+-                    0.0F, chestY[i], chestZ[i], -0.055F + i * 0.017F,
+-                    (i * 32) % 224, 0);
++            addEllipsoidMass(thorax, "rib_slice_" + (i + 1), chestW[i], chestH[i], 6.4F,
++                    0.0F, chestY[i], chestZ[i], chestR[i], (i * 26) % 224, 0);
+         }
+ 
+-        // Ventral sternum/keel and paired pectoral masses create depth rather than a boxy belly.
+-        addEllipsoidMass(thorax, "sternum_keel", 9.0F, 4.6F, 16.0F,
+-                0.0F, 7.3F, 2.8F, 0.12F, 0, 28);
+-        addEllipsoidMass(thorax, "upper_back_mass", 10.8F, 3.8F, 17.0F,
+-                0.0F, -7.3F, 3.3F, -0.08F, 64, 28);
++        // Dorsal and ventral keels break the rectangular silhouette and sell a real thoracic cage.
++        addEllipsoidMass(thorax, "sternum_keel", 9.8F, 5.0F, 18.0F,
++                0.0F, 8.3F, 2.5F, 0.085F, 8, 32);
++        addEllipsoidMass(thorax, "dorsal_ridge_mass", 11.2F, 4.5F, 19.0F,
++                0.0F, -8.8F, 3.5F, -0.055F, 68, 32);
+ 
+         for (boolean left : new boolean[]{true, false}) {
+             float side = left ? 1.0F : -1.0F;
+-            String p = left ? "left" : "right";
+-            addSideMass(thorax, p + "_pectoral_major", left, 9.6F, 7.8F, 11.0F,
+-                    side * 8.5F, 3.6F, -2.5F, 0.08F, side * -0.12F, side * -0.15F, 0, 52);
+-            addSideMass(thorax, p + "_serratus", left, 7.6F, 5.6F, 13.0F,
+-                    side * 11.5F, 0.0F, 6.5F, -0.02F, side * 0.08F, side * -0.12F, 44, 52);
+-            addSideMass(thorax, p + "_latissimus", left, 8.2F, 5.0F, 14.0F,
+-                    side * 10.7F, -3.2F, 9.0F, -0.05F, side * 0.09F, side * -0.10F, 86, 52);
+-            addSideMass(thorax, p + "_trapezius", left, 7.2F, 4.8F, 10.0F,
+-                    side * 6.6F, -6.5F, -4.0F, -0.15F, side * -0.08F, side * -0.12F, 128, 52);
++            String q = left ? "left" : "right";
++
++            addSideMass(thorax, q + "_pectoral_major", left, 10.8F, 9.0F, 12.5F,
++                    side * 8.9F, 4.0F, -3.2F, 0.08F, side * -0.11F, side * -0.16F, 0, 56);
++            addSideMass(thorax, q + "_pectoral_lower", left, 8.4F, 6.4F, 12.0F,
++                    side * 7.3F, 7.0F, 1.0F, 0.10F, side * -0.07F, side * -0.10F, 44, 56);
++            addSideMass(thorax, q + "_serratus", left, 8.6F, 6.3F, 14.0F,
++                    side * 12.0F, 0.5F, 5.7F, -0.01F, side * 0.07F, side * -0.13F, 86, 56);
++            addSideMass(thorax, q + "_latissimus", left, 9.2F, 5.8F, 15.5F,
++                    side * 11.5F, -3.5F, 8.2F, -0.05F, side * 0.08F, side * -0.11F, 130, 56);
++            addSideMass(thorax, q + "_trapezius", left, 8.5F, 5.5F, 11.5F,
++                    side * 7.4F, -7.0F, -4.2F, -0.13F, side * -0.07F, side * -0.13F, 174, 56);
+         }
+ 
++        // Waist is unmistakably narrower than thorax and pelvis in top view.
+         PartDefinition abdomen = body.addOrReplaceChild(
+                 "abdomen", CubeListBuilder.create(),
+-                PartPose.offsetAndRotation(0.0F, 0.7F, 9.5F, 0.045F, 0.0F, 0.0F)
++                PartPose.offsetAndRotation(0.0F, 1.0F, 13.0F, 0.030F, 0.0F, 0.0F)
+         );
+-        float[] abW = {9.8F, 9.0F, 8.2F, 7.5F, 7.2F, 7.6F};
+-        float[] abH = {6.2F, 5.8F, 5.3F, 4.9F, 4.7F, 4.9F};
++        float[] abW = {10.2F, 9.4F, 8.6F, 7.9F, 7.3F, 7.0F, 7.4F, 8.0F};
++        float[] abH = { 6.7F, 6.2F, 5.8F, 5.4F, 5.0F, 4.8F, 4.9F, 5.2F};
+         for (int i = 0; i < abW.length; i++) {
+-            addEllipsoidMass(abdomen, "abdomen_slice_" + (i + 1), abW[i], abH[i], 7.0F,
+-                    0.0F, i * 0.22F, i * 4.6F, 0.02F - i * 0.007F,
+-                    (i * 36) % 220, 76);
++            addEllipsoidMass(abdomen, "abdomen_slice_" + (i + 1), abW[i], abH[i], 6.5F,
++                    0.0F, i * 0.18F, i * 4.1F, 0.018F - i * 0.004F,
++                    (i * 30) % 224, 84);
+         }
+-        addEllipsoidMass(abdomen, "ventral_abdominal_mass", 6.5F, 3.1F, 24.0F,
+-                0.0F, 4.9F, 10.8F, 0.035F, 0, 100);
++        addEllipsoidMass(abdomen, "ventral_abdominal_mass", 6.9F, 3.3F, 27.0F,
++                0.0F, 5.1F, 13.0F, 0.020F, 6, 110);
+ 
++        // Pelvis widens again around the hip sockets and then narrows into the tail root.
+         PartDefinition pelvis = body.addOrReplaceChild(
+                 "pelvis", CubeListBuilder.create(),
+-                PartPose.offsetAndRotation(0.0F, 1.3F, 29.0F, -0.035F, 0.0F, 0.0F)
++                PartPose.offsetAndRotation(0.0F, 1.6F, 34.0F, -0.025F, 0.0F, 0.0F)
+         );
+-        float[] pelW = {8.0F, 9.2F, 10.5F, 11.3F, 10.9F, 9.8F, 8.4F};
+-        float[] pelH = {5.2F, 5.9F, 6.8F, 7.3F, 7.0F, 6.3F, 5.5F};
++        float[] pelW = {8.5F, 9.6F, 10.8F, 12.0F, 12.5F, 12.0F, 10.9F, 9.5F};
++        float[] pelH = {5.5F, 6.2F, 7.0F, 7.8F, 8.1F, 7.8F, 7.0F, 6.0F};
+         for (int i = 0; i < pelW.length; i++) {
+-            addEllipsoidMass(pelvis, "pelvis_slice_" + (i + 1), pelW[i], pelH[i], 6.8F,
+-                    0.0F, 0.15F + i * 0.10F, -4.0F + i * 4.5F, -0.025F + i * 0.012F,
+-                    (i * 32) % 224, 118);
++            addEllipsoidMass(pelvis, "pelvis_slice_" + (i + 1), pelW[i], pelH[i], 6.4F,
++                    0.0F, 0.1F + i * 0.08F, -4.5F + i * 4.0F, -0.024F + i * 0.010F,
++                    (i * 28) % 224, 124);
+         }
+ 
+         addGirdleMuscles(body);
+@@ -132,29 +144,29 @@
+     private static void addGirdleMuscles(PartDefinition body) {
+         for (boolean left : new boolean[]{true, false}) {
+             float side = left ? 1.0F : -1.0F;
+-            String p = left ? "left" : "right";
++            String q = left ? "left" : "right";
+ 
+-            // Flight muscles: broad dorsal/side masses that bury the wing root inside the torso.
+-            addSideMass(body, p + "_wing_scapular_mass", left, 11.0F, 8.0F, 15.0F,
+-                    side * 9.7F, -5.4F, -4.0F, -0.12F, side * -0.13F, side * -0.18F, 0, 144);
+-            addSideMass(body, p + "_wing_deltoid_mass", left, 9.0F, 7.1F, 12.0F,
+-                    side * 12.4F, -3.0F, -0.6F, -0.05F, side * -0.10F, side * -0.16F, 46, 144);
+-            addSideMass(body, p + "_wing_posterior_mass", left, 8.2F, 5.8F, 11.0F,
+-                    side * 11.7F, -2.4F, 6.8F, 0.02F, side * 0.08F, side * -0.12F, 86, 144);
+-
+-            // Terrestrial shoulder is lower/forward and visually independent from the wing root.
+-            addSideMass(body, p + "_front_shoulder_mass", left, 10.0F, 9.2F, 11.5F,
+-                    side * 8.8F, 2.2F, -9.0F, 0.06F, side * -0.05F, side * -0.08F, 126, 144);
+-            addSideMass(body, p + "_front_chest_mass", left, 8.0F, 6.8F, 10.0F,
+-                    side * 7.6F, 5.2F, -5.6F, 0.09F, side * -0.04F, side * -0.07F, 168, 144);
+-
+-            // Hip/gluteal volumes are deliberately large to sell a powerful reptilian hindquarter.
+-            addSideMass(body, p + "_iliac_mass", left, 11.5F, 9.8F, 13.0F,
+-                    side * 8.8F, 1.6F, 31.0F, -0.05F, side * 0.06F, side * 0.06F, 0, 170);
+-            addSideMass(body, p + "_gluteal_mass", left, 10.2F, 8.8F, 12.0F,
+-                    side * 9.4F, 0.4F, 36.0F, 0.04F, side * 0.07F, side * 0.05F, 46, 170);
+-            addSideMass(body, p + "_tail_base_muscle", left, 7.5F, 5.6F, 11.0F,
+-                    side * 6.2F, 0.5F, 40.5F, 0.07F, side * 0.06F, side * 0.03F, 90, 170);
++            // Wing girdle is visibly buried in the dorsal thorax rather than pasted onto the side.
++            addSideMass(body, q + "_wing_scapular_mass", left, 12.8F, 9.0F, 16.5F,
++                    side * 10.3F, -5.6F, -5.0F, -0.11F, side * -0.12F, side * -0.17F, 4, 152);
++            addSideMass(body, q + "_wing_deltoid_mass", left, 10.5F, 8.0F, 13.8F,
++                    side * 13.4F, -3.2F, -1.2F, -0.05F, side * -0.10F, side * -0.15F, 50, 152);
++            addSideMass(body, q + "_wing_posterior_mass", left, 9.6F, 6.8F, 13.0F,
++                    side * 12.6F, -2.3F, 6.5F, 0.01F, side * 0.07F, side * -0.11F, 96, 152);
++
++            // Terrestrial shoulder remains lower and more anterior than the wing girdle.
++            addSideMass(body, q + "_front_shoulder_mass", left, 11.2F, 10.5F, 12.5F,
++                    side * 9.2F, 2.8F, -10.5F, 0.06F, side * -0.05F, side * -0.09F, 140, 152);
++            addSideMass(body, q + "_front_chest_mass", left, 8.8F, 7.6F, 11.0F,
++                    side * 7.9F, 6.0F, -6.2F, 0.09F, side * -0.04F, side * -0.07F, 184, 152);
++
++            // Heavy iliac/gluteal masses give the hindquarters a reptilian load-bearing silhouette.
++            addSideMass(body, q + "_iliac_mass", left, 12.6F, 10.8F, 14.0F,
++                    side * 9.5F, 1.6F, 34.0F, -0.05F, side * 0.05F, side * 0.06F, 6, 180);
++            addSideMass(body, q + "_gluteal_mass", left, 11.4F, 10.0F, 13.0F,
++                    side * 10.0F, 0.8F, 39.0F, 0.03F, side * 0.06F, side * 0.05F, 52, 180);
++            addSideMass(body, q + "_tail_base_muscle", left, 8.5F, 6.5F, 12.0F,
++                    side * 6.8F, 0.6F, 44.0F, 0.06F, side * 0.05F, side * 0.03F, 100, 180);
+         }
+     }
+ 
+@@ -165,7 +177,7 @@
+             int texX, int texY
+     ) {
+         /*
+-         * Step 5.7: a "mass" is no longer one giant rectangular prism.
++         * Step 5.8: a "mass" is a blueprint-locked sculptural volume, not one giant rectangular prism.
+          * Five overlapping contour volumes approximate a rounded muscular/organic
+          * cross-section while keeping the model strictly voxel-based.
+          */
+@@ -262,26 +274,37 @@
+     /* ====================================================================== */
+ 
+     private static void createNeckAndHead(PartDefinition body) {
++        /*
++         * Blueprint landmarks:
++         * neck base  ~= (0,-2.2,-16)
++         * neck mid   ~= (0,-0.8,-38)
++         * upper neck ~= (0, 0.6,-58)
++         * skull      ~= (0, 1.2,-76)
++         * nose tip   ~= (0, 2.0,-101)
++         *
++         * The chain deliberately projects forward and only gently rises/falls;
++         * idle animation supplies a low S, never the old skyward giraffe pose.
++         */
+         PartDefinition neck01 = body.addOrReplaceChild(
+-                "neck_01", CubeListBuilder.create(), PartPose.offset(0.0F, -2.8F, -14.5F)
++                "neck_01", CubeListBuilder.create(), PartPose.offset(0.0F, -2.2F, -16.0F)
+         );
+-        addNeckChain(neck01, 1, 4, 7.8F, 6.6F, 0.90F, -0.13F, 0, 194);
+-        addNeckSpines(neck01, 8.5F, new float[]{-1.0F, -6.0F, -11.0F, -16.0F});
++        addNeckChain(neck01, 1, 5, 8.5F, 7.2F, 0.925F, -0.045F, 0, 194);
++        addNeckSpines(neck01, 8.8F, new float[]{-1.0F, -5.5F, -10.0F, -14.5F, -19.0F});
+ 
+         PartDefinition neck02 = neck01.addOrReplaceChild(
+-                "neck_02", CubeListBuilder.create(), PartPose.offset(0.0F, -1.8F, -19.5F)
++                "neck_02", CubeListBuilder.create(), PartPose.offset(0.0F, 0.9F, -21.0F)
+         );
+-        addNeckChain(neck02, 5, 4, 5.9F, 5.0F, 0.89F, -0.02F, 72, 194);
+-        addNeckSpines(neck02, 6.7F, new float[]{-1.0F, -6.0F, -11.0F});
++        addNeckChain(neck02, 6, 5, 6.2F, 5.3F, 0.920F, 0.015F, 76, 194);
++        addNeckSpines(neck02, 6.8F, new float[]{-1.0F, -5.5F, -10.0F, -14.5F});
+ 
+         PartDefinition neck03 = neck02.addOrReplaceChild(
+-                "neck_03", CubeListBuilder.create(), PartPose.offset(0.0F, 1.2F, -19.5F)
++                "neck_03", CubeListBuilder.create(), PartPose.offset(0.0F, 1.2F, -20.0F)
+         );
+-        addNeckChain(neck03, 9, 4, 4.2F, 3.6F, 0.88F, 0.10F, 144, 194);
+-        addNeckSpines(neck03, 5.1F, new float[]{-1.0F, -6.0F, -11.0F});
++        addNeckChain(neck03, 11, 5, 4.5F, 3.9F, 0.915F, 0.035F, 150, 194);
++        addNeckSpines(neck03, 5.2F, new float[]{-1.0F, -5.5F, -10.0F, -14.5F});
+ 
+         PartDefinition head = neck03.addOrReplaceChild(
+-                "head", CubeListBuilder.create(), PartPose.offset(0.0F, 2.0F, -17.2F)
++                "head", CubeListBuilder.create(), PartPose.offset(0.0F, 0.8F, -18.8F)
+         );
+         createHead(head);
+     }
+@@ -295,187 +318,214 @@
+             float f = (float) Math.pow(taper, i);
+             float w = startW * f;
+             float h = startH * f;
+-            float z = -i * 5.2F;
+-            float y = -i * 0.35F;
+-            float rot = baseRot + i * 0.025F;
+-            addEllipsoidMass(parent, "neck_mass_" + (startIndex + i), w, h, 7.2F,
+-                    0.0F, y, z, rot, (texX + i * 26) % 224, texY);
++            float z = -i * 4.75F;
++            float y = i * 0.10F;
++            float rot = baseRot + i * 0.012F;
++            addEllipsoidMass(parent, "neck_mass_" + (startIndex + i), w, h, 6.4F,
++                    0.0F, y, z, rot, (texX + i * 24) % 224, texY);
+         }
+     }
+ 
+     private static void addNeckSpines(PartDefinition parent, float maxHeight, float[] zPositions) {
+         for (int i = 0; i < zPositions.length; i++) {
+-            float h = maxHeight * (1.0F - i * 0.13F);

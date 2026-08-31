@@ -1,0 +1,1656 @@
+# ================================================================
+# STEP 5.8 — DRACARYS BALANCED
+# GEOMETRY BLUEPRINT LOCK + HIGH-FIDELITY VOXEL RECONSTRUCTION
+# ================================================================
+
+Actúa como desarrollador sénior especializado en:
+
+- Minecraft Forge 1.20.1
+- Java
+- ModelPart
+- HierarchicalModel
+- GeckoLib 4 / rigging jerárquico
+- modelado voxel / low-poly de alta fidelidad
+- anatomía comparada
+- biomecánica animal
+- escultura 3D mediante cuboides
+- reconstrucción de modelos desde referencias visuales
+- diseño de criaturas reptilianas y dragones
+
+Trabajas sobre:
+
+DRACARYS MOD
+
+Modelo:
+
+BALANCED DRAGON
+
+Esta etapa NO es un refinement.
+
+Esta etapa NO consiste en:
+
+- mover algunos cubos;
+- aumentar alas 10%;
+- agregar más detalles superficialmente;
+- cambiar unos cuantos offsets;
+- improvisar proporciones.
+
+Esta etapa consiste en:
+
+1. BLOQUEAR UN BLUEPRINT GEOMÉTRICO EXACTO.
+2. CONSTRUIR EL MODELO A PARTIR DE ESE BLUEPRINT.
+3. REPRODUCIR LO MÁS FIELMENTE POSIBLE EL DRAGÓN DE REFERENCIA
+   DENTRO DE LAS LIMITACIONES VISUALES DE MINECRAFT.
+
+===============================================================
+OBJETIVO ABSOLUTO
+===============================================================
+
+Quiero conseguir:
+
+"EL DRAGÓN DE REFERENCIA TRASLADADO A MINECRAFT"
+
+NO:
+
+"un dragón de Minecraft inspirado en la referencia".
+
+La diferencia es crítica.
+
+La referencia debe gobernar:
+
+- silueta;
+- proporciones;
+- postura;
+- masas corporales;
+- musculatura;
+- cabeza;
+- cuello;
+- pecho;
+- abdomen;
+- pelvis;
+- extremidades;
+- pies;
+- cola;
+- alas;
+- distribución de membrana;
+- espinas;
+- centro de gravedad.
+
+===============================================================
+REFERENCIAS VISUALES
+===============================================================
+
+Utiliza TODAS las imágenes proporcionadas como evidencia.
+
+PRIORIDAD DE REFERENCIA:
+
+1. CONCEPTO VISUAL FINAL APROBADO
+2. DRAGÓN NEGRO DE REFERENCIA
+3. SILUETA LATERAL APROBADA
+4. DRACARYS DRAGON — MODELO BASE V1
+5. CAPTURAS ACTUALES DE MINECRAFT
+
+Las capturas actuales NO son objetivo.
+
+Sirven únicamente para identificar errores.
+
+===============================================================
+ACLARACIÓN ANATÓMICA DEFINITIVA
+===============================================================
+
+Aunque alguna referencia pueda representar una anatomía tipo wyvern,
+DRACARYS BALANCED CONSERVARÁ:
+
+2 PATAS DELANTERAS
++
+2 PATAS TRASERAS
++
+2 ALAS INDEPENDIENTES
+
+TOTAL:
+
+4 PATAS
++
+2 ALAS
+
+NO WYVERN.
+
+NO eliminar patas delanteras.
+
+NO convertir alas en brazos terrestres.
+
+Debes copiar de la referencia:
+
+- silueta;
+- musculatura;
+- proporciones;
+- pose;
+- cabeza;
+- cuello;
+- cola;
+- estructura alar;
+- lenguaje corporal;
+
+pero conservar:
+
+4 PATAS + 2 ALAS.
+
+===============================================================
+FILOSOFÍA DE MODELADO
+===============================================================
+
+Minecraft utiliza cuboides.
+
+Eso NO significa que el modelo deba verse cúbico.
+
+Quiero:
+
+VOXELS COMO MEDIO
+
+NO:
+
+CUBOS COMO FORMA FINAL.
+
+Cada volumen anatómico debe construirse mediante:
+
+- múltiples cuboides;
+- overlap;
+- tapering;
+- rotaciones;
+- offsets;
+- cambios de anchura;
+- cambios de altura;
+- masas secundarias;
+- piezas de transición.
+
+El jugador debe reconocer primero:
+
+DRAGÓN
+
+y después pensar:
+
+"está hecho con voxels".
+
+NO al revés.
+
+===============================================================
+REGLA CRÍTICA — NO EMPEZAR POR EL CÓDIGO
+===============================================================
+
+NO modifiques BalancedDragonModel inmediatamente.
+
+ANTES DE PROGRAMAR:
+
+debes construir un BLUEPRINT NUMÉRICO COMPLETO.
+
+Ese blueprint será la autoridad geométrica del modelo.
+
+===============================================================
+FASE A — BLUEPRINT GEOMÉTRICO
+===============================================================
+
+Define una unidad maestra:
+
+TORSO_LENGTH = 100 unidades
+
+Todas las demás dimensiones deben expresarse relativamente a esta.
+
+Debes generar una tabla maestra con:
+
+PART
+LENGTH
+WIDTH
+HEIGHT
+RELATIVE POSITION X/Y/Z
+PIVOT
+DEFAULT ROTATION X/Y/Z
+
+para TODAS las regiones principales.
+
+===============================================================
+PROPORCIONES GLOBALES INICIALES
+===============================================================
+
+Utiliza aproximadamente estos rangos como punto de partida,
+pero AJÚSTALOS mirando las referencias.
+
+TORSO LENGTH:
+100
+
+HEAD LENGTH:
+28–34
+
+NECK LENGTH:
+70–85
+
+PELVIS LENGTH:
+28–35
+
+TAIL LENGTH:
+135–160
+
+CHEST MAX WIDTH:
+42–50
+
+CHEST MAX HEIGHT:
+44–52
+
+WAIST WIDTH:
+24–30
+
+PELVIS WIDTH:
+34–42
+
+FULL WINGSPAN:
+380–470
+
+WING ROOT → TIP:
+145–185 por lado
+
+MAXIMUM WING CHORD:
+85–115
+
+BODY GROUND CLEARANCE:
+relativamente bajo
+
+Estas medidas NO son definitivas.
+
+Debes calibrarlas visualmente contra las referencias
+ANTES de construir la geometría.
+
+===============================================================
+FASE A.1 — LANDMARKS OBLIGATORIOS
+===============================================================
+
+Define coordenadas modelo para estos landmarks:
+
+NOSE TIP
+SKULL CENTER
+LEFT EYE
+RIGHT EYE
+
+NECK BASE
+NECK MID
+NECK UPPER
+
+CHEST CENTER
+LEFT SHOULDER
+RIGHT SHOULDER
+
+LEFT WING ROOT
+RIGHT WING ROOT
+
+ABDOMEN CENTER
+PELVIS CENTER
+
+LEFT FRONT HIP/SHOULDER
+RIGHT FRONT HIP/SHOULDER
+
+LEFT REAR HIP
+RIGHT REAR HIP
+
+TAIL BASE
+TAIL MID
+TAIL TIP
+
+LEFT FRONT FOOT CENTER
+RIGHT FRONT FOOT CENTER
+LEFT REAR FOOT CENTER
+RIGHT REAR FOOT CENTER
+
+LEFT WING ELBOW
+RIGHT WING ELBOW
+
+LEFT WING WRIST
+RIGHT WING WRIST
+
+LEFT WING DIGIT 1 TIP
+LEFT WING DIGIT 2 TIP
+LEFT WING DIGIT 3 TIP
+
+RIGHT equivalents.
+
+===============================================================
+FASE A.2 — SILUETA LATERAL
+===============================================================
+
+La vista lateral será una de las autoridades principales.
+
+Utiliza la silueta lateral proporcionada.
+
+Cuando el modelo se renderice completamente negro,
+debe reproducir aproximadamente esa forma.
+
+Quiero:
+
+                      WING
+               ____________________
+           ___/                    \___
+        __/
+      _/
+ HEAD
+    \____
+         \__
+            NECK
+               \__
+                  CHEST
+                /     \
+          FRONT LEG    \
+                         ABDOMEN
+                            \
+                           PELVIS
+                          /      \
+                    HIND LEG      \____________ TAIL
+
+
+La criatura debe sentirse:
+
+LARGA
+BAJA
+ORGÁNICA
+MUSCULOSA
+REPTILIANA.
+
+===============================================================
+LÍNEA CENTRAL DEL CUERPO
+===============================================================
+
+NO quiero:
+
+HEAD ============================= TAIL
+
+Quiero una spline visual aproximada:
+
+HEAD
+  \
+   \__
+      \___ NECK
+           \
+            CHEST
+              \__
+                 ABDOMEN
+                    \_
+                    PELVIS
+                         \______
+                                TAIL
+
+La columna completa debe describir una curva suave.
+
+===============================================================
+POSE BASE
+===============================================================
+
+El dragón actual frecuentemente parece mirar hacia arriba.
+
+ESO DEBE TERMINAR.
+
+La cabeza en idle debe:
+
+- proyectarse hacia delante;
+- quedar casi horizontal;
+- inclinarse ligeramente hacia abajo si es necesario;
+- transmitir actitud depredadora.
+
+NO:
+
+HEAD ↗
+
+QUIERO:
+
+HEAD →
+
+o incluso:
+
+HEAD ↘ ligeramente.
+
+===============================================================
+CENTRO DE GRAVEDAD
+===============================================================
+
+La criatura debe parecer pesada.
+
+El torso debe quedar relativamente bajo.
+
+Las patas deben estar flexionadas.
+
+NO quiero postura de:
+
+caballo
+jirafa
+dinosaurio erguido.
+
+Quiero:
+
+GRAN REPTIL CUADRÚPEDO.
+
+===============================================================
+CABEZA — BLUEPRINT
+===============================================================
+
+La cabeza debe copiar el lenguaje visual del dragón negro.
+
+Debe existir:
+
+occipital skull
+temporal skull
+main cranium
+orbital masses
+brow ridges
+cheek masses
+jaw muscles
+snout root
+snout middle
+nose
+lower jaw
+main horns
+secondary horns
+cranial spikes
+
+===============================================================
+FORMA DEL CRÁNEO
+===============================================================
+
+VISTA SUPERIOR:
+
+             NOSE
+              ██
+            █████
+          ████████
+       O ██████████ O
+        ████████████
+         ██████████
+          CRANIUM
+
+El hocico:
+
+- estrecho delante;
+- progresivamente más ancho atrás.
+
+El cráneo:
+
+- ancho atrás;
+- bajo verticalmente;
+- agresivo.
+
+===============================================================
+OJOS
+===============================================================
+
+Los ojos DEBEN SER ANTEROLATERALES.
+
+NO frontales.
+
+Vista superior:
+
+              NOSE
+               |
+          _____|_____
+        /             \
+       | O           O |
+       |               |
+        \____SKULL____/
+
+Los ojos deben:
+
+- estar hacia los costados;
+- quedar protegidos por brow ridges;
+- tener ligera orientación frontal.
+
+===============================================================
+CUELLO — BLUEPRINT
+===============================================================
+
+Utiliza:
+
+12–16 MASAS VISUALES
+
+sobre los bones compatibles:
+
+neck_01
+neck_02
+neck_03
+
+No agregues un bone principal por cada masa si no es necesario.
+
+Cada masa:
+
+- ligeramente solapada;
+- ligeramente rotada;
+- ligeramente diferente en dimensiones.
+
+===============================================================
+TAPER DEL CUELLO
+===============================================================
+
+Base:
+
+1.00
+
+progresión aproximada:
+
+1.00
+0.96
+0.91
+0.86
+0.81
+0.76
+0.71
+0.66
+0.61
+0.57
+0.53
+0.49
+
+La transición cuello → cráneo debe ser suave.
+
+===============================================================
+CURVA DEL CUELLO
+===============================================================
+
+El cuello debe usar:
+
+xRot
++
+ligero yRot
++
+ligero zRot
+
+NO solamente xRot.
+
+Debe existir asimetría orgánica mínima.
+
+===============================================================
+TORSO — BLUEPRINT
+===============================================================
+
+La caja torácica debe ser la mayor masa corporal.
+
+Quiero:
+
+THORAX
+↓
+WAIST
+↓
+PELVIS
+
+claramente diferenciados.
+
+===============================================================
+THORAX
+===============================================================
+
+Construir mediante al menos:
+
+6–10 slices/masas volumétricas.
+
+Cada slice debe tener:
+
+- anchura propia;
+- altura propia;
+- offset vertical;
+- overlap.
+
+Ejemplo:
+
+slice_01 width 36
+slice_02 width 42
+slice_03 width 47
+slice_04 width 49
+slice_05 width 46
+slice_06 width 40
+
+NO usar valores literalmente sin validar contra referencia.
+
+===============================================================
+MUSCULATURA TORÁCICA
+===============================================================
+
+Añade masas independientes para:
+
+LEFT PECTORAL
+RIGHT PECTORAL
+
+LEFT LATISSIMUS
+RIGHT LATISSIMUS
+
+LEFT SERRATUS
+RIGHT SERRATUS
+
+LEFT TRAPEZIUS
+RIGHT TRAPEZIUS
+
+LEFT FRONT SHOULDER
+RIGHT FRONT SHOULDER
+
+LEFT WING SCAPULAR MASS
+RIGHT WING SCAPULAR MASS
+
+LEFT WING DELTOID MASS
+RIGHT WING DELTOID MASS
+
+===============================================================
+MÉTODO MUSCULAR
+===============================================================
+
+Un músculo NO debe ser una caja.
+
+Usa:
+
+core mass
++
+outer bulge
++
+inner transition
++
+dorsal/ventral contour
+
+Ejemplo:
+
+        █████
+      █████████
+    █████████████
+      █████████
+        █████
+
+No:
+
+████████████
+
+===============================================================
+ABDOMEN
+===============================================================
+
+Debe ser notablemente más estrecho.
+
+CHEST:
+
+████████████████
+
+ABDOMEN:
+
+    ████████
+
+PELVIS:
+
+   ███████████
+
+Esto debe notarse claramente en vista superior.
+
+===============================================================
+PELVIS
+===============================================================
+
+Construir:
+
+iliac masses
+gluteal masses
+hip sockets
+rear dorsal mass
+tail-root muscles
+
+Debe sentirse fuerte y tridimensional.
+
+===============================================================
+PATAS DELANTERAS
+===============================================================
+
+Anatomía:
+
+SCAPULAR REGION
+       \
+      SHOULDER
+         \
+         HUMERUS
+            \
+            ELBOW
+              /
+        RADIUS/ULNA
+             \
+             WRIST
+               \
+           METACARPUS
+             / | \
+           TOES
+
+===============================================================
+POSTURA DE PATAS DELANTERAS
+===============================================================
+
+NO:
+
+|
+|
+|
+|
+
+Quiero:
+
+ \
+  \
+   /
+    \
+     \__
+
+Cada articulación debe introducir cambio angular.
+
+===============================================================
+MÚSCULOS DELANTEROS
+===============================================================
+
+Construir visualmente:
+
+deltoid
+triceps
+biceps-region
+forearm flexor
+forearm extensor
+
+===============================================================
+PATAS TRASERAS
+===============================================================
+
+La referencia reptiliana manda.
+
+Anatomía:
+
+HIP
+ \
+  THIGH
+     \
+      KNEE
+       /
+     SHIN
+        \
+        HOCK
+          \
+          TARSUS
+             \
+             FOOT
+
+Debe formar una Z/S muy evidente.
+
+===============================================================
+MUSCULATURA TRASERA
+===============================================================
+
+HIP / GLUTEUS:
+muy grande.
+
+THIGH:
+una de las masas más grandes del dragón.
+
+SHIN:
+más estrecho.
+
+CALF/HIND MUSCLE:
+visible.
+
+===============================================================
+PIES
+===============================================================
+
+NO usar una caja rectangular grande como pie.
+
+Cada pie debe construirse mediante:
+
+heel_pad
+central_pad
+
+toe_01 proximal
+toe_01 distal
+claw_01
+
+toe_02 proximal
+toe_02 distal
+claw_02
+
+toe_03 proximal
+toe_03 distal
+claw_03
+
+opcional:
+
+dewclaw.
+
+===============================================================
+SILUETA DEL PIE
+===============================================================
+
+          claw
+           |
+        toe_2
+      /       \
+  toe_1       toe_3
+      \       /
+       \_____/
+        PAD
+
+===============================================================
+GROUNDING
+===============================================================
+
+Calcula geométricamente:
+
+front_left_lowest
+front_right_lowest
+rear_left_lowest
+rear_right_lowest
+
+Todos deben aproximarse al mismo ground plane.
+
+No corregir desplazando la entidad completa.
+
+Corregir:
+
+- articulaciones;
+- longitudes;
+- offsets;
+- pies.
+
+===============================================================
+COLA
+===============================================================
+
+Utiliza:
+
+18–24 MASAS VISUALES.
+
+Conservar:
+
+tail_01
+tail_02
+tail_03
+tail_04
+
+como bones compatibles.
+
+Agregar hijos visuales según necesidad.
+
+===============================================================
+TAPER DE COLA
+===============================================================
+
+Usa taper aproximadamente:
+
+1.00
+0.96
+0.92
+0.88
+0.83
+0.78
+0.73
+0.68
+0.62
+0.56
+0.50
+0.44
+0.38
+0.32
+0.27
+0.22
+0.17
+0.12
+0.08
+0.05
+
+===============================================================
+CURVA DE COLA
+===============================================================
+
+Debe tener:
+
+curva vertical
++
+curva horizontal ligera.
+
+NO una barra perfectamente recta.
+
+===============================================================
+ALAS — PRIORIDAD ABSOLUTA
+===============================================================
+
+NO reutilices la geometría alar actual si no cumple la referencia.
+
+AUTORIZADO:
+
+RECONSTRUIR LAS ALAS COMPLETAMENTE.
+
+===============================================================
+PRINCIPIO ALAR
+===============================================================
+
+NO QUIERO ALAS DE PÁJARO.
+
+Las alas deben ser:
+
+CHIROPTERAN / DRACONIC
+
+es decir:
+
+membrana
++
+dedos estructurales largos.
+
+No:
+
+gran superficie ovalada con puntas pequeñas.
+
+===============================================================
+ESQUELETO ALAR
+===============================================================
+
+Cada ala:
+
+SCAPULA
+   \
+ WING SHOULDER
+      \
+      HUMERUS
+         \
+         ELBOW
+             \
+          RADIUS/ULNA
+               \
+               WRIST
+                 \
+                 HAND
+                / | \
+              D1  D2  D3
+
+===============================================================
+PROPORCIÓN DE HUESOS
+===============================================================
+
+Usa aproximadamente:
+
+HUMERUS:
+18–23 % del semi-span
+
+FOREARM:
+24–29 %
+
+HAND + DIGIT REGION:
+48–58 %
+
+La región distal debe dominar.
+
+===============================================================
+WINGSPAN
+===============================================================
+
+FULL WINGSPAN:
+
+3.8–4.7 × torso length
+
+La criatura debe verse gigantescamente alada.
+
+===============================================================
+WING CHORD
+===============================================================
+
+El chord NO debe ser constante.
+
+Máximo:
+
+0.85–1.15 × torso length
+
+pero solamente alrededor de la región interior/media.
+
+Debe estrecharse hacia la punta.
+
+===============================================================
+PLANFORM SUPERIOR — REFERENCIA PRINCIPAL
+===============================================================
+
+NO quiero:
+
+|████████████████████|
+
+NO quiero:
+
+ala de pájaro ovalada.
+
+Quiero:
+
+BODY
+   \
+    \ HUMERUS
+      \
+       \____ FOREARM
+             \
+             WRIST
+              |\
+              | \_______________ D1
+              |        \________ D2
+              |             \___ D3
+               \
+                \__________________
+                       BODY WEB
+
+Debe existir una forma claramente poligonal/triangular,
+tipo murciélago/dragón.
+
+===============================================================
+DEDOS ALARES
+===============================================================
+
+3 dedos principales como mínimo.
+
+Cada uno:
+
+proximal
+middle
+distal
+
+Longitudes relativas:
+
+D1 = 1.00
+D2 = 0.82–0.88
+D3 = 0.62–0.70
+
+===============================================================
+DIVERGENCIA DE DEDOS
+===============================================================
+
+NO paralelos.
+
+Desde muñeca:
+
+D1:
+casi longitudinal
+
+D2:
+divergencia media
+
+D3:
+divergencia alta hacia borde posterior.
+
+===============================================================
+MEMBRANA ALAR
+===============================================================
+
+Ésta es una regla crítica.
+
+NO generar la membrana como una gran banda continua
+con perfil de ala de ave.
+
+Construir SECTORES:
+
+BODY WEB
+ARM WEB
+FOREARM WEB
+D1-D2 WEB
+D2-D3 WEB
+REAR WEB
+
+Cada sector debe tener:
+
+- distinta forma;
+- distinta longitud;
+- distinta concavidad;
+- distinta orientación.
+
+===============================================================
+BORDE POSTERIOR
+===============================================================
+
+Debe verse como:
+
+\_________
+          \____
+               \________
+                        \___
+                            \
+
+NO:
+
+____________________________
+
+Las concavidades entre dedos deben ser visibles.
+
+===============================================================
+HUESOS EMBEBIDOS
+===============================================================
+
+Los huesos deben quedar geométricamente DENTRO del volumen de membrana.
+
+Si bone center Y = 0:
+
+membrane debe cruzar aproximadamente:
+
+Y = -0.5
+a
+Y = +0.5
+
+o equivalente según escala.
+
+No quiero huesos flotando encima.
+
+===============================================================
+ESPESOR
+===============================================================
+
+MEMBRANA:
+
+muy fina.
+
+HUMERUS:
+
+muy grueso.
+
+FOREARM:
+
+medio.
+
+DIGITS:
+
+finos.
+
+===============================================================
+MUSCULATURA ALAR
+===============================================================
+
+Construir masas:
+
+scapular
+deltoid
+lat insertion
+humeral muscle
+posterior wing shoulder
+
+La raíz debe parecer capaz de mover un ala gigantesca.
+
+===============================================================
+POSE IDLE DE ALAS
+===============================================================
+
+La pose debe inspirarse fuertemente en el dragón negro.
+
+NO completamente horizontal.
+
+NO completamente vertical.
+
+NO alas como avión.
+
+Quiero:
+
+alas elevadas
++
+arqueadas
++
+parcialmente abiertas.
+
+VISTA FRONTAL:
+
+       /\                 /\
+      /  \               /  \
+     /    \             /    \
+    /      \           /      \
+          BODY
+
+VISTA LATERAL:
+
+           _________
+         _/
+       _/
+BODY _/
+     \
+      \ distal wing
+
+===============================================================
+POSE DEL CUERPO
+===============================================================
+
+Quiero:
+
+HEAD →
+NECK ligeramente curvo
+CHEST pesado
+legs flexionadas
+TAIL equilibrando.
+
+NO:
+
+HEAD ↑
+
+===============================================================
+ESPINAS
+===============================================================
+
+Añadir una progresión:
+
+head
+→ neck
+→ shoulders
+→ torso
+→ tail
+
+No todas iguales.
+
+Grandes:
+
+cabeza/cuello.
+
+Medianas:
+
+hombros/torso.
+
+Pequeñas:
+
+cola.
+
+===============================================================
+VOLUMETRÍA
+===============================================================
+
+Evalúa todas las partes desde:
+
+SIDE
+FRONT
+TOP
+3/4 FRONT
+3/4 REAR
+
+Cada masa importante debe proyectar volumen en las tres dimensiones.
+
+Si una pieza únicamente mejora la vista lateral
+pero desde arriba sigue siendo una barra:
+
+FALLÓ.
+
+===============================================================
+PRESUPUESTO DE COMPLEJIDAD
+===============================================================
+
+AUTORIZADO aumentar significativamente la geometría.
+
+Objetivo orientativo:
+
+ModelParts:
+200–400
+
+Cubes / strips:
+400–900
+
+NO son límites obligatorios.
+
+La prioridad es:
+
+FORMA.
+
+Después optimizaremos.
+
+===============================================================
+NO OPTIMIZAR TODAVÍA
+===============================================================
+
+NO sacrificar geometría para reducir piezas.
+
+Primero:
+
+MODELO CORRECTO.
+
+Después:
+
+OPTIMIZACIÓN.
+
+===============================================================
+FASE B — IMPLEMENTACIÓN
+===============================================================
+
+SOLO después de definir el blueprint completo:
+
+modifica:
+
+BalancedDragonModel.java
+
+y helpers estrictamente visuales necesarios.
+
+===============================================================
+BONES COMPATIBLES OBLIGATORIOS
+===============================================================
+
+Mantener:
+
+body
+
+neck_01
+neck_02
+neck_03
+
+head
+jaw
+
+left_wing
+right_wing
+
+left_front_leg
+right_front_leg
+
+left_hind_leg
+right_hind_leg
+
+tail_01
+tail_02
+tail_03
+tail_04
+
+Puedes agregar hijos.
+
+NO renombrar/eliminar estos.
+
+===============================================================
+NO TOCAR
+===============================================================
+
+NO modificar:
+
+DracarysDragonRenderer
+
+CleanLongRangeDragonRenderEvents
+
+DracarysDragonEntity
+
+DragonStage
+
+DragonSizeTier
+
+renderScale()
+
+tracking
+
+long-range renderer
+
+fallback renderer
+
+AI
+
+combat
+
+taming
+
+worldgen
+
+navigation
+
+spawn.
+
+===============================================================
+MULTIPART HITBOXES
+===============================================================
+
+NO realizar recalibración definitiva todavía.
+
+Primero aprobar geometría.
+
+Mantener arquitectura actual intacta.
+
+Después habrá un:
+
+MULTIPART FINAL CALIBRATION PASS.
+
+===============================================================
+FASE C — VALIDACIÓN GEOMÉTRICA
+===============================================================
+
+Antes de declarar éxito:
+
+genera o documenta los bounding landmarks del modelo
+y valida las siguientes proporciones.
+
+===============================================================
+TEST 1 — SILUETA LATERAL
+===============================================================
+
+Render imaginario completamente negro.
+
+Debe parecer claramente la silueta de referencia.
+
+Si parece:
+
+barra + alas + patas
+
+FALLÓ.
+
+===============================================================
+TEST 2 — VISTA SUPERIOR
+===============================================================
+
+Debe mostrar:
+
+- cuello fino;
+- pecho ancho;
+- cintura;
+- pelvis;
+- cola tapered;
+- alas dracónicas;
+- dedos divergentes;
+- membrana con concavidades.
+
+Si parece:
+
+avión
+pájaro
+rectángulo gigante
+
+FALLÓ.
+
+===============================================================
+TEST 3 — VISTA FRONTAL
+===============================================================
+
+Debe mostrar:
+
+cabeza baja/agresiva
+ojos anterolaterales
+pecho profundo
+patas debajo
+alas naciendo arriba
+
+===============================================================
+TEST 4 — POSE
+===============================================================
+
+La mirada debe ser:
+
+hacia delante.
+
+NO hacia arriba.
+
+===============================================================
+TEST 5 — PATAS
+===============================================================
+
+Traseras:
+
+Z/S visible.
+
+Delanteras:
+
+flexión natural.
+
+===============================================================
+TEST 6 — PIES
+===============================================================
+
+Deben distinguirse individualmente:
+
+pad
+toe
+toe
+toe
+claws.
+
+===============================================================
+TEST 7 — ALAS
+===============================================================
+
+Debe distinguirse:
+
+root
+humerus
+elbow
+forearm
+wrist
+D1
+D2
+D3
+membrane.
+
+Los huesos deben estar dentro de la membrana.
+
+===============================================================
+TEST 8 — MUSCULATURA
+===============================================================
+
+Sin textura deben distinguirse:
+
+chest
+shoulder
+wing root
+thigh
+hip
+tail root.
+
+===============================================================
+COMPARACIÓN VISUAL OBLIGATORIA
+===============================================================
+
+Antes de finalizar:
+
+compara mentalmente/model-space:
+
+MODELO ACTUAL
+vs
+REFERENCIA
+
+en:
+
+SIDE
+TOP
+FRONT
+3/4 FRONT
+
+La similitud debe venir de GEOMETRÍA,
+no de textura.
+
+===============================================================
+REGLA DE CAMBIO RADICAL
+===============================================================
+
+Si el resultado parece:
+
+STEP 5.7 + 10 %
+
+FALLASTE.
+
+Quiero:
+
+STEP 5.7
+→
+MODELO RECONSTRUIDO.
+
+No tengas miedo de reemplazar la mayor parte de la geometría.
+
+===============================================================
+ENTREGABLES
+===============================================================
+
+Entrega:
+
+1. STEP5_8_GEOMETRY_BLUEPRINT.md
+
+Incluyendo:
+
+- proporciones;
+- landmarks;
+- dimensiones;
+- pivots;
+- ángulos base.
+
+2. BalancedDragonModel.java reconstruido.
+
+3. Helpers visuales necesarios.
+
+4. STEP5_8_ANATOMY_IMPLEMENTATION.md
+
+5. STEP5_8_MODIFIED_FILES.txt
+
+6. STEP5_8_STATIC_VALIDATION.log
+
+7. Build attempt.
+
+8. Patch ZIP.
+
+9. SHA-256.
+
+===============================================================
+COMMIT
+===============================================================
+
+Commit sugerido:
+
+Lock blueprint and rebuild final Balanced anatomy
+
+===============================================================
+CRITERIO FINAL DE ÉXITO
+===============================================================
+
+NO preguntes:
+
+"¿mejoró?"
+
+Pregunta:
+
+"¿Es el dragón de referencia convertido a Minecraft?"
+
+Quiero reconocer inmediatamente:
+
+- su perfil;
+- su pose;
+- su cabeza;
+- su cuello;
+- su musculatura;
+- su caja torácica;
+- sus patas;
+- su cola;
+- SUS ALAS.
+
+La silueta debe funcionar incluso completamente negra.
+
+Las alas deben parecer alas de DRAGÓN.
+
+Las patas deben parecer extremidades de REPTIL.
+
+El pecho debe parecer una estructura MUSCULAR.
+
+La cabeza debe mirar HACIA DELANTE.
+
+===============================================================
+ÚLTIMA INSTRUCCIÓN
+===============================================================
+
+NO HAGAS CAMBIOS TÍMIDOS.
+
+NO CONSERVES GEOMETRÍA MALA POR COMPATIBILIDAD VISUAL.
+
+LA COMPATIBILIDAD DE BONES SE CONSERVA.
+
+LA GEOMETRÍA SE PUEDE RECONSTRUIR COMPLETAMENTE.
+
+PRIORIDAD:
+
+1. SILUETA
+2. PROPORCIÓN
+3. ANATOMÍA
+4. VOLUMEN
+5. ALAS
+6. POSE
+7. DETALLE
+8. OPTIMIZACIÓN
+
+El objetivo final es:
+
+EL DRAGÓN DE REFERENCIA
+TRADUCIDO A MINECRAFT
+CON LA MAYOR FIDELIDAD GEOMÉTRICA POSIBLE.

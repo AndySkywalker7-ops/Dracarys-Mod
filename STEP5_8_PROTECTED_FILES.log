@@ -1,0 +1,14 @@
+STEP 5.8 PROTECTED-SCOPE CHECK
+
+This patch does NOT include or modify the following protected systems:
+- DracarysDragonRenderer.java
+- CleanLongRangeDragonRenderEvents.java
+- DracarysDragonEntity.java
+- DragonMultipartLayout.java
+- DragonStage.java
+- DragonSizeTier.java
+- renderScale / long-range tracking / fallback rendering
+- AI / combat / taming / worldgen / navigation / spawn code
+
+Only the BALANCED visual model geometry and its shared visual pose/animation class are included.
+Final multipart hitbox recalibration remains intentionally deferred until geometry is approved in-game.

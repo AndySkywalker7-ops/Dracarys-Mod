@@ -1,0 +1,156 @@
+--- /mnt/data/DracarysMod-Step5.7-Black-Reference-Anatomy-PATCH/src/main/java/com/dracarys/dracarysmod/client/model/AbstractDracarysDragonModel.java	2026-08-31 03:53:00.055953728 +0000
++++ /mnt/data/step580_work/src/main/java/com/dracarys/dracarysmod/client/model/AbstractDracarysDragonModel.java	2026-08-31 04:19:38.299607210 +0000
+@@ -84,13 +84,19 @@
+         float yaw = Mth.clamp(netHeadYaw, -65.0F, 65.0F) * Mth.DEG_TO_RAD;
+         float pitch = Mth.clamp(headPitch, -45.0F, 45.0F) * Mth.DEG_TO_RAD;
+ 
+-        neck01.yRot = yaw * 0.18F;
+-        neck02.yRot = yaw * 0.25F;
+-        neck03.yRot = yaw * 0.25F;
+-        head.yRot = yaw * 0.32F;
+-        neck02.xRot = pitch * 0.10F;
+-        neck03.xRot = pitch * 0.20F;
+-        head.xRot = pitch * 0.45F;
++        neck01.yRot += yaw * 0.16F;
++        neck02.yRot += yaw * 0.22F;
++        neck03.yRot += yaw * 0.24F;
++        head.yRot += yaw * 0.38F;
++
++        /*
++         * Preserve the blueprint-locked neutral S-curve. Previous passes used
++         * assignment here, which silently erased neck02/neck03/head base pitch
++         * every frame and contributed to the unnatural skyward/rigid pose.
++         */
++        neck02.xRot += pitch * 0.08F;
++        neck03.xRot += pitch * 0.14F;
++        head.xRot += pitch * 0.30F;
+ 
+         float breathing = Mth.sin(ageInTicks * 0.08F) * 0.025F;
+         body.xRot += breathing;
+@@ -185,69 +191,76 @@
+ 
+     private void resetAnimatedPose() {
+         /*
+-         * Step 5.7 black-reference neutral pose.
++         * Step 5.8 blueprint-locked neutral pose.
+          *
+-         * Core goals:
+-         * - head projects forward instead of looking at the sky;
+-         * - neck keeps a low S-curve;
+-         * - thorax sits almost level;
+-         * - fore/hind limbs remain visibly flexed;
+-         * - wings rise as membrane arches, like a western dragon/bat,
+-         *   instead of lying flat like enormous bird wings.
++         * BODY: low and nearly level.
++         * HEAD: forward with a tiny predatory downward bias.
++         * NECK: low S-curve, never a skyward arch.
++         * WINGS: high enough to read as dragon wings but swept rearward so
++         *         they do not become horizontal bird/airplane slabs.
++         * LEGS: deep reptilian flexion with a visible hind-limb Z.
+          */
+-        body.xRot = -0.030F;
++        body.xRot = -0.015F;
+         body.yRot = 0.0F;
+         body.zRot = 0.0F;
+ 
+-        // Low predatory S-curve. Positive X rotation brings the forward chain down.
+-        neck01.xRot = 0.155F;
++        neck01.xRot = 0.045F;
+         neck01.yRot = 0.0F;
+-        neck02.xRot = -0.105F;
++        neck01.zRot = 0.0F;
++
++        neck02.xRot = -0.070F;
+         neck02.yRot = 0.0F;
+-        neck03.xRot = -0.025F;
++        neck02.zRot = 0.0F;
++
++        neck03.xRot = 0.030F;
+         neck03.yRot = 0.0F;
+-        head.xRot = 0.020F;
++        neck03.zRot = 0.0F;
++
++        head.xRot = -0.025F;
+         head.yRot = 0.0F;
+-        jaw.xRot = 0.015F;
++        head.zRot = 0.0F;
++        jaw.xRot = 0.012F;
+ 
+         /*
+-         * High-arched dragon idle wings.
+-         * Strong Z rotation raises the span; modest Y sweep keeps the tips back.
+-         * Humerus/forearm add a broken bat-like leading edge rather than one plane.
++         * Dragon/bat idle planform:
++         * root gives moderate elevation, Y sweep sends the span rearward,
++         * upper arm creates the shoulder break, forearm reverses slightly.
++         * The membrane sectors are parented to these bones and therefore
++         * follow this architecture instead of remaining a flat root plane.
+          */
+-        leftWingRoot.xRot = -0.055F;
+-        leftWingRoot.yRot = -0.155F;
+-        leftWingRoot.zRot = -0.56F;
+-        leftUpperArm.xRot = -0.025F;
+-        leftUpperArm.yRot = -0.075F;
+-        leftUpperArm.zRot = 0.17F;
+-        leftForearm.xRot = 0.020F;
+-        leftForearm.yRot = -0.115F;
+-        leftForearm.zRot = -0.13F;
+-
+-        rightWingRoot.xRot = -0.055F;
+-        rightWingRoot.yRot = 0.155F;
+-        rightWingRoot.zRot = 0.56F;
+-        rightUpperArm.xRot = -0.025F;
+-        rightUpperArm.yRot = 0.075F;
+-        rightUpperArm.zRot = -0.17F;
+-        rightForearm.xRot = 0.020F;
+-        rightForearm.yRot = 0.115F;
+-        rightForearm.zRot = 0.13F;
+-
+-        // Reptilian forelimb S: shoulder forward/down, elbow back, wrist forward.
+-        leftForeleg.xRot = 0.42F;
+-        rightForeleg.xRot = 0.42F;
+-        leftForeLower.xRot = -0.76F;
+-        rightForeLower.xRot = -0.76F;
+-
+-        // Strong digitigrade hindlimb Z, matching the crouched reference stance.
+-        leftHindleg.xRot = 0.70F;
+-        rightHindleg.xRot = 0.70F;
+-        leftHindLower.xRot = -1.16F;
+-        rightHindLower.xRot = -1.16F;
++        leftWingRoot.xRot = -0.065F;
++        leftWingRoot.yRot = -0.325F;
++        leftWingRoot.zRot = -0.305F;
++        leftUpperArm.xRot = -0.018F;
++        leftUpperArm.yRot = -0.105F;
++        leftUpperArm.zRot = 0.145F;
++        leftForearm.xRot = 0.018F;
++        leftForearm.yRot = -0.185F;
++        leftForearm.zRot = -0.085F;
++
++        rightWingRoot.xRot = -0.065F;
++        rightWingRoot.yRot = 0.325F;
++        rightWingRoot.zRot = 0.305F;
++        rightUpperArm.xRot = -0.018F;
++        rightUpperArm.yRot = 0.105F;
++        rightUpperArm.zRot = -0.145F;
++        rightForearm.xRot = 0.018F;
++        rightForearm.yRot = 0.185F;
++        rightForearm.zRot = 0.085F;
++
++        // Low, flexed forelimb chain.
++        leftForeleg.xRot = 0.50F;
++        rightForeleg.xRot = 0.50F;
++        leftForeLower.xRot = -0.86F;
++        rightForeLower.xRot = -0.86F;
++
++        // Strong reptilian/digitigrade Z.
++        leftHindleg.xRot = 0.82F;
++        rightHindleg.xRot = 0.82F;
++        leftHindLower.xRot = -1.22F;
++        rightHindLower.xRot = -1.22F;
+ 
+-        // Base tail bends are added again by animateTail each frame.
++        // Base bends are restored by animateTail each frame.
+         tail01.yRot = 0.0F;
+         tail02.yRot = 0.0F;
+         tail03.yRot = 0.0F;

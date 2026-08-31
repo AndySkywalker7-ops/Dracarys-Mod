@@ -1,0 +1,4 @@
+STEP 5.8 JAVAC SYNTAX-LIKE SUMMARY
+Syntax-like diagnostics: 0
+PASS — no syntax-like diagnostics before expected unresolved Minecraft/Forge symbols.
+Note: full type resolution is impossible in this isolated patch because Minecraft/Forge dependencies are not present.

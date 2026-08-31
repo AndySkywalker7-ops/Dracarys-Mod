@@ -1,0 +1,623 @@
+/mnt/data/step580_work/src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java:3: error: cannot find symbol
+import com.dracarys.dracarysmod.DracarysMod;
+                               ^
+  symbol:   class DracarysMod
+  location: package com.dracarys.dracarysmod
+/mnt/data/step580_work/src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java:5: error: package com.dracarys.dracarysmod.entity does not exist
+import com.dracarys.dracarysmod.entity.DracarysDragonEntity;
+                                      ^
+/mnt/data/step580_work/src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java:6: error: package net.minecraft.client.model.geom does not exist
+import net.minecraft.client.model.geom.ModelLayerLocation;
+                                      ^
+/mnt/data/step580_work/src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java:7: error: package net.minecraft.client.model.geom does not exist
+import net.minecraft.client.model.geom.ModelPart;
+                                      ^
+/mnt/data/step580_work/src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java:8: error: package net.minecraft.client.model.geom does not exist
+import net.minecraft.client.model.geom.PartPose;
+                                      ^
+/mnt/data/step580_work/src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java:9: error: package net.minecraft.client.model.geom.builders does not exist
+import net.minecraft.client.model.geom.builders.CubeListBuilder;
+                                               ^
+/mnt/data/step580_work/src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java:10: error: package net.minecraft.client.model.geom.builders does not exist
+import net.minecraft.client.model.geom.builders.LayerDefinition;
+                                               ^
+/mnt/data/step580_work/src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java:11: error: package net.minecraft.client.model.geom.builders does not exist
+import net.minecraft.client.model.geom.builders.MeshDefinition;
+                                               ^
+/mnt/data/step580_work/src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java:12: error: package net.minecraft.client.model.geom.builders does not exist
+import net.minecraft.client.model.geom.builders.PartDefinition;
+                                               ^
+/mnt/data/step580_work/src/main/java/com/dracarys/dracarysmod/client/model/AbstractDracarysDragonModel.java:3: error: package com.dracarys.dracarysmod.entity does not exist
+import com.dracarys.dracarysmod.entity.DracarysDragonEntity;
+                                      ^
+/mnt/data/step580_work/src/main/java/com/dracarys/dracarysmod/client/model/AbstractDracarysDragonModel.java:4: error: package com.mojang.blaze3d.vertex does not exist
+import com.mojang.blaze3d.vertex.PoseStack;
+                                ^
+/mnt/data/step580_work/src/main/java/com/dracarys/dracarysmod/client/model/AbstractDracarysDragonModel.java:5: error: package com.mojang.blaze3d.vertex does not exist
+import com.mojang.blaze3d.vertex.VertexConsumer;
+                                ^
+/mnt/data/step580_work/src/main/java/com/dracarys/dracarysmod/client/model/AbstractDracarysDragonModel.java:6: error: package net.minecraft.client.model does not exist
+import net.minecraft.client.model.HierarchicalModel;
+                                 ^
+/mnt/data/step580_work/src/main/java/com/dracarys/dracarysmod/client/model/AbstractDracarysDragonModel.java:7: error: package net.minecraft.client.model.geom does not exist
+import net.minecraft.client.model.geom.ModelPart;
+                                      ^
+/mnt/data/step580_work/src/main/java/com/dracarys/dracarysmod/client/model/AbstractDracarysDragonModel.java:8: error: package net.minecraft.util does not exist
+import net.minecraft.util.Mth;
+                         ^
+/mnt/data/step580_work/src/main/java/com/dracarys/dracarysmod/client/model/AbstractDracarysDragonModel.java:16: error: cannot find symbol
+public abstract class AbstractDracarysDragonModel<T extends DracarysDragonEntity> extends HierarchicalModel<T> {
+                                                                                          ^
+  symbol: class HierarchicalModel
+/mnt/data/step580_work/src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java:27: error: cannot find symbol
+public final class BalancedDragonModel<T extends DracarysDragonEntity>
+                                                 ^
+  symbol: class DracarysDragonEntity
+/mnt/data/step580_work/src/main/java/com/dracarys/dracarysmod/client/model/AbstractDracarysDragonModel.java:16: error: cannot find symbol
+public abstract class AbstractDracarysDragonModel<T extends DracarysDragonEntity> extends HierarchicalModel<T> {
+                                                            ^
+  symbol: class DracarysDragonEntity
+/mnt/data/step580_work/src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java:30: error: cannot find symbol
+    public static final ModelLayerLocation LAYER = new ModelLayerLocation(
+                        ^
+  symbol:   class ModelLayerLocation
+  location: class BalancedDragonModel<T>
+  where T is a type-variable:
+    T declared in class BalancedDragonModel
+/mnt/data/step580_work/src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java:36: error: cannot find symbol
+    public BalancedDragonModel(ModelPart root) {
+                               ^
+  symbol:   class ModelPart
+  location: class BalancedDragonModel<T>
+  where T is a type-variable:
+    T declared in class BalancedDragonModel
+/mnt/data/step580_work/src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java:40: error: cannot find symbol
+    public static LayerDefinition createBodyLayer() {
+                  ^
+  symbol:   class LayerDefinition
+  location: class BalancedDragonModel<T>
+  where T is a type-variable:
+    T declared in class BalancedDragonModel
+/mnt/data/step580_work/src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java:62: error: cannot find symbol
+    private static PartDefinition createTorso(PartDefinition root) {
+                                              ^
+  symbol:   class PartDefinition
+  location: class BalancedDragonModel<T>
+  where T is a type-variable:
+    T declared in class BalancedDragonModel
+/mnt/data/step580_work/src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java:62: error: cannot find symbol
+    private static PartDefinition createTorso(PartDefinition root) {
+                   ^
+  symbol:   class PartDefinition
+  location: class BalancedDragonModel<T>
+  where T is a type-variable:
+    T declared in class BalancedDragonModel
+/mnt/data/step580_work/src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java:144: error: cannot find symbol
+    private static void addGirdleMuscles(PartDefinition body) {
+                                         ^
+  symbol:   class PartDefinition
+  location: class BalancedDragonModel<T>
+  where T is a type-variable:
+    T declared in class BalancedDragonModel
+/mnt/data/step580_work/src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java:174: error: cannot find symbol
+            PartDefinition parent, String name,
+            ^
+  symbol:   class PartDefinition
+  location: class BalancedDragonModel<T>
+  where T is a type-variable:
+    T declared in class BalancedDragonModel
+/mnt/data/step580_work/src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java:226: error: cannot find symbol
+            PartDefinition parent, String name, boolean left,
+            ^
+  symbol:   class PartDefinition
+  location: class BalancedDragonModel<T>
+  where T is a type-variable:
+    T declared in class BalancedDragonModel
+/mnt/data/step580_work/src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java:276: error: cannot find symbol
+    private static void createNeckAndHead(PartDefinition body) {
+                                          ^
+  symbol:   class PartDefinition
+  location: class BalancedDragonModel<T>
+  where T is a type-variable:
+    T declared in class BalancedDragonModel
+/mnt/data/step580_work/src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java:313: error: cannot find symbol
+            PartDefinition parent, int startIndex, int count,
+            ^
+  symbol:   class PartDefinition
+  location: class BalancedDragonModel<T>
+  where T is a type-variable:
+    T declared in class BalancedDragonModel
+/mnt/data/step580_work/src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java:329: error: cannot find symbol
+    private static void addNeckSpines(PartDefinition parent, float maxHeight, float[] zPositions) {
+                                      ^
+  symbol:   class PartDefinition
+  location: class BalancedDragonModel<T>
+  where T is a type-variable:
+    T declared in class BalancedDragonModel
+/mnt/data/step580_work/src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java:341: error: cannot find symbol
+    private static void createHead(PartDefinition head) {
+                                   ^
+  symbol:   class PartDefinition
+  location: class BalancedDragonModel<T>
+  where T is a type-variable:
+    T declared in class BalancedDragonModel
+/mnt/data/step580_work/src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java:422: error: cannot find symbol
+    private static void createHorn(PartDefinition head, boolean left, boolean primary) {
+                                   ^
+  symbol:   class PartDefinition
+  location: class BalancedDragonModel<T>
+  where T is a type-variable:
+    T declared in class BalancedDragonModel
+/mnt/data/step580_work/src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java:452: error: cannot find symbol
+    private static void createWing(PartDefinition body, boolean left) {
+                                   ^
+  symbol:   class PartDefinition
+  location: class BalancedDragonModel<T>
+  where T is a type-variable:
+    T declared in class BalancedDragonModel
+/mnt/data/step580_work/src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java:533: error: cannot find symbol
+            PartDefinition parent, String name, boolean left,
+            ^
+  symbol:   class PartDefinition
+  location: class BalancedDragonModel<T>
+  where T is a type-variable:
+    T declared in class BalancedDragonModel
+/mnt/data/step580_work/src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java:548: error: cannot find symbol
+    private static void createWingDigits(PartDefinition hand, boolean left) {
+                                         ^
+  symbol:   class PartDefinition
+  location: class BalancedDragonModel<T>
+  where T is a type-variable:
+    T declared in class BalancedDragonModel
+/mnt/data/step580_work/src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java:597: error: cannot find symbol
+            PartDefinition wingRoot,
+            ^
+  symbol:   class PartDefinition
+  location: class BalancedDragonModel<T>
+  where T is a type-variable:
+    T declared in class BalancedDragonModel
+/mnt/data/step580_work/src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java:598: error: cannot find symbol
+            PartDefinition upperArm,
+            ^
+  symbol:   class PartDefinition
+  location: class BalancedDragonModel<T>
+  where T is a type-variable:
+    T declared in class BalancedDragonModel
+/mnt/data/step580_work/src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java:599: error: cannot find symbol
+            PartDefinition forearm,
+            ^
+  symbol:   class PartDefinition
+  location: class BalancedDragonModel<T>
+  where T is a type-variable:
+    T declared in class BalancedDragonModel
+/mnt/data/step580_work/src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java:600: error: cannot find symbol
+            PartDefinition hand,
+            ^
+  symbol:   class PartDefinition
+  location: class BalancedDragonModel<T>
+  where T is a type-variable:
+    T declared in class BalancedDragonModel
+/mnt/data/step580_work/src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java:645: error: cannot find symbol
+            PartDefinition parent, String name, boolean left,
+            ^
+  symbol:   class PartDefinition
+  location: class BalancedDragonModel<T>
+  where T is a type-variable:
+    T declared in class BalancedDragonModel
+/mnt/data/step580_work/src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java:674: error: cannot find symbol
+            PartDefinition parent, String name, boolean left,
+            ^
+  symbol:   class PartDefinition
+  location: class BalancedDragonModel<T>
+  where T is a type-variable:
+    T declared in class BalancedDragonModel
+/mnt/data/step580_work/src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java:708: error: cannot find symbol
+    private static void createForeleg(PartDefinition body, boolean left) {
+                                      ^
+  symbol:   class PartDefinition
+  location: class BalancedDragonModel<T>
+  where T is a type-variable:
+    T declared in class BalancedDragonModel
+/mnt/data/step580_work/src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java:743: error: cannot find symbol
+    private static void createHindleg(PartDefinition body, boolean left) {
+                                      ^
+  symbol:   class PartDefinition
+  location: class BalancedDragonModel<T>
+  where T is a type-variable:
+    T declared in class BalancedDragonModel
+/mnt/data/step580_work/src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java:786: error: cannot find symbol
+    private static void createFoot(PartDefinition parent, boolean left, boolean hind) {
+                                   ^
+  symbol:   class PartDefinition
+  location: class BalancedDragonModel<T>
+  where T is a type-variable:
+    T declared in class BalancedDragonModel
+/mnt/data/step580_work/src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java:852: error: cannot find symbol
+    private static void createTail(PartDefinition body) {
+                                   ^
+  symbol:   class PartDefinition
+  location: class BalancedDragonModel<T>
+  where T is a type-variable:
+    T declared in class BalancedDragonModel
+/mnt/data/step580_work/src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java:888: error: cannot find symbol
+            PartDefinition parent, int startIndex, int count,
+            ^
+  symbol:   class PartDefinition
+  location: class BalancedDragonModel<T>
+  where T is a type-variable:
+    T declared in class BalancedDragonModel
+/mnt/data/step580_work/src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java:900: error: cannot find symbol
+    private static void addTailSpine(PartDefinition parent, String name, float height, float z, int texX, int texY) {
+                                     ^
+  symbol:   class PartDefinition
+  location: class BalancedDragonModel<T>
+  where T is a type-variable:
+    T declared in class BalancedDragonModel
+/mnt/data/step580_work/src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java:913: error: cannot find symbol
+    private static void createDorsalCrest(PartDefinition body) {
+                                          ^
+  symbol:   class PartDefinition
+  location: class BalancedDragonModel<T>
+  where T is a type-variable:
+    T declared in class BalancedDragonModel
+/mnt/data/step580_work/src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java:928: error: cannot find symbol
+    private static CubeListBuilder builder(int texX, int texY, boolean left) {
+                   ^
+  symbol:   class CubeListBuilder
+  location: class BalancedDragonModel<T>
+  where T is a type-variable:
+    T declared in class BalancedDragonModel
+/mnt/data/step580_work/src/main/java/com/dracarys/dracarysmod/client/model/AbstractDracarysDragonModel.java:17: error: cannot find symbol
+    protected final ModelPart root;
+                    ^
+  symbol:   class ModelPart
+  location: class AbstractDracarysDragonModel<T>
+  where T is a type-variable:
+    T declared in class AbstractDracarysDragonModel
+/mnt/data/step580_work/src/main/java/com/dracarys/dracarysmod/client/model/AbstractDracarysDragonModel.java:18: error: cannot find symbol
+    protected final ModelPart body;
+                    ^
+  symbol:   class ModelPart
+  location: class AbstractDracarysDragonModel<T>
+  where T is a type-variable:
+    T declared in class AbstractDracarysDragonModel
+/mnt/data/step580_work/src/main/java/com/dracarys/dracarysmod/client/model/AbstractDracarysDragonModel.java:19: error: cannot find symbol
+    protected final ModelPart neck01;
+                    ^
+  symbol:   class ModelPart
+  location: class AbstractDracarysDragonModel<T>
+  where T is a type-variable:
+    T declared in class AbstractDracarysDragonModel
+/mnt/data/step580_work/src/main/java/com/dracarys/dracarysmod/client/model/AbstractDracarysDragonModel.java:20: error: cannot find symbol
+    protected final ModelPart neck02;
+                    ^
+  symbol:   class ModelPart
+  location: class AbstractDracarysDragonModel<T>
+  where T is a type-variable:
+    T declared in class AbstractDracarysDragonModel
+/mnt/data/step580_work/src/main/java/com/dracarys/dracarysmod/client/model/AbstractDracarysDragonModel.java:21: error: cannot find symbol
+    protected final ModelPart neck03;
+                    ^
+  symbol:   class ModelPart
+  location: class AbstractDracarysDragonModel<T>
+  where T is a type-variable:
+    T declared in class AbstractDracarysDragonModel
+/mnt/data/step580_work/src/main/java/com/dracarys/dracarysmod/client/model/AbstractDracarysDragonModel.java:22: error: cannot find symbol
+    protected final ModelPart head;
+                    ^
+  symbol:   class ModelPart
+  location: class AbstractDracarysDragonModel<T>
+  where T is a type-variable:
+    T declared in class AbstractDracarysDragonModel
+/mnt/data/step580_work/src/main/java/com/dracarys/dracarysmod/client/model/AbstractDracarysDragonModel.java:23: error: cannot find symbol
+    protected final ModelPart jaw;
+                    ^
+  symbol:   class ModelPart
+  location: class AbstractDracarysDragonModel<T>
+  where T is a type-variable:
+    T declared in class AbstractDracarysDragonModel
+/mnt/data/step580_work/src/main/java/com/dracarys/dracarysmod/client/model/AbstractDracarysDragonModel.java:24: error: cannot find symbol
+    protected final ModelPart leftWingRoot;
+                    ^
+  symbol:   class ModelPart
+  location: class AbstractDracarysDragonModel<T>
+  where T is a type-variable:
+    T declared in class AbstractDracarysDragonModel
+/mnt/data/step580_work/src/main/java/com/dracarys/dracarysmod/client/model/AbstractDracarysDragonModel.java:25: error: cannot find symbol
+    protected final ModelPart leftUpperArm;
+                    ^
+  symbol:   class ModelPart
+  location: class AbstractDracarysDragonModel<T>
+  where T is a type-variable:
+    T declared in class AbstractDracarysDragonModel
+/mnt/data/step580_work/src/main/java/com/dracarys/dracarysmod/client/model/AbstractDracarysDragonModel.java:26: error: cannot find symbol
+    protected final ModelPart leftForearm;
+                    ^
+  symbol:   class ModelPart
+  location: class AbstractDracarysDragonModel<T>
+  where T is a type-variable:
+    T declared in class AbstractDracarysDragonModel
+/mnt/data/step580_work/src/main/java/com/dracarys/dracarysmod/client/model/AbstractDracarysDragonModel.java:27: error: cannot find symbol
+    protected final ModelPart rightWingRoot;
+                    ^
+  symbol:   class ModelPart
+  location: class AbstractDracarysDragonModel<T>
+  where T is a type-variable:
+    T declared in class AbstractDracarysDragonModel
+/mnt/data/step580_work/src/main/java/com/dracarys/dracarysmod/client/model/AbstractDracarysDragonModel.java:28: error: cannot find symbol
+    protected final ModelPart rightUpperArm;
+                    ^
+  symbol:   class ModelPart
+  location: class AbstractDracarysDragonModel<T>
+  where T is a type-variable:
+    T declared in class AbstractDracarysDragonModel
+/mnt/data/step580_work/src/main/java/com/dracarys/dracarysmod/client/model/AbstractDracarysDragonModel.java:29: error: cannot find symbol
+    protected final ModelPart rightForearm;
+                    ^
+  symbol:   class ModelPart
+  location: class AbstractDracarysDragonModel<T>
+  where T is a type-variable:
+    T declared in class AbstractDracarysDragonModel
+/mnt/data/step580_work/src/main/java/com/dracarys/dracarysmod/client/model/AbstractDracarysDragonModel.java:30: error: cannot find symbol
+    protected final ModelPart leftForeleg;
+                    ^
+  symbol:   class ModelPart
+  location: class AbstractDracarysDragonModel<T>
+  where T is a type-variable:
+    T declared in class AbstractDracarysDragonModel
+/mnt/data/step580_work/src/main/java/com/dracarys/dracarysmod/client/model/AbstractDracarysDragonModel.java:31: error: cannot find symbol
+    protected final ModelPart leftForeLower;
+                    ^
+  symbol:   class ModelPart
+  location: class AbstractDracarysDragonModel<T>
+  where T is a type-variable:
+    T declared in class AbstractDracarysDragonModel
+/mnt/data/step580_work/src/main/java/com/dracarys/dracarysmod/client/model/AbstractDracarysDragonModel.java:32: error: cannot find symbol
+    protected final ModelPart rightForeleg;
+                    ^
+  symbol:   class ModelPart
+  location: class AbstractDracarysDragonModel<T>
+  where T is a type-variable:
+    T declared in class AbstractDracarysDragonModel
+/mnt/data/step580_work/src/main/java/com/dracarys/dracarysmod/client/model/AbstractDracarysDragonModel.java:33: error: cannot find symbol
+    protected final ModelPart rightForeLower;
+                    ^
+  symbol:   class ModelPart
+  location: class AbstractDracarysDragonModel<T>
+  where T is a type-variable:
+    T declared in class AbstractDracarysDragonModel
+/mnt/data/step580_work/src/main/java/com/dracarys/dracarysmod/client/model/AbstractDracarysDragonModel.java:34: error: cannot find symbol
+    protected final ModelPart leftHindleg;
+                    ^
+  symbol:   class ModelPart
+  location: class AbstractDracarysDragonModel<T>
+  where T is a type-variable:
+    T declared in class AbstractDracarysDragonModel
+/mnt/data/step580_work/src/main/java/com/dracarys/dracarysmod/client/model/AbstractDracarysDragonModel.java:35: error: cannot find symbol
+    protected final ModelPart leftHindLower;
+                    ^
+  symbol:   class ModelPart
+  location: class AbstractDracarysDragonModel<T>
+  where T is a type-variable:
+    T declared in class AbstractDracarysDragonModel
+/mnt/data/step580_work/src/main/java/com/dracarys/dracarysmod/client/model/AbstractDracarysDragonModel.java:36: error: cannot find symbol
+    protected final ModelPart rightHindleg;
+                    ^
+  symbol:   class ModelPart
+  location: class AbstractDracarysDragonModel<T>
+  where T is a type-variable:
+    T declared in class AbstractDracarysDragonModel
+/mnt/data/step580_work/src/main/java/com/dracarys/dracarysmod/client/model/AbstractDracarysDragonModel.java:37: error: cannot find symbol
+    protected final ModelPart rightHindLower;
+                    ^
+  symbol:   class ModelPart
+  location: class AbstractDracarysDragonModel<T>
+  where T is a type-variable:
+    T declared in class AbstractDracarysDragonModel
+/mnt/data/step580_work/src/main/java/com/dracarys/dracarysmod/client/model/AbstractDracarysDragonModel.java:38: error: cannot find symbol
+    protected final ModelPart tail01;
+                    ^
+  symbol:   class ModelPart
+  location: class AbstractDracarysDragonModel<T>
+  where T is a type-variable:
+    T declared in class AbstractDracarysDragonModel
+/mnt/data/step580_work/src/main/java/com/dracarys/dracarysmod/client/model/AbstractDracarysDragonModel.java:39: error: cannot find symbol
+    protected final ModelPart tail02;
+                    ^
+  symbol:   class ModelPart
+  location: class AbstractDracarysDragonModel<T>
+  where T is a type-variable:
+    T declared in class AbstractDracarysDragonModel
+/mnt/data/step580_work/src/main/java/com/dracarys/dracarysmod/client/model/AbstractDracarysDragonModel.java:40: error: cannot find symbol
+    protected final ModelPart tail03;
+                    ^
+  symbol:   class ModelPart
+  location: class AbstractDracarysDragonModel<T>
+  where T is a type-variable:
+    T declared in class AbstractDracarysDragonModel
+/mnt/data/step580_work/src/main/java/com/dracarys/dracarysmod/client/model/AbstractDracarysDragonModel.java:41: error: cannot find symbol
+    protected final ModelPart tail04;
+                    ^
+  symbol:   class ModelPart
+  location: class AbstractDracarysDragonModel<T>
+  where T is a type-variable:
+    T declared in class AbstractDracarysDragonModel
+/mnt/data/step580_work/src/main/java/com/dracarys/dracarysmod/client/model/AbstractDracarysDragonModel.java:43: error: cannot find symbol
+    protected AbstractDracarysDragonModel(ModelPart root) {
+                                          ^
+  symbol:   class ModelPart
+  location: class AbstractDracarysDragonModel<T>
+  where T is a type-variable:
+    T declared in class AbstractDracarysDragonModel
+/mnt/data/step580_work/src/main/java/com/dracarys/dracarysmod/client/model/AbstractDracarysDragonModel.java:76: error: cannot find symbol
+    public ModelPart root() {
+           ^
+  symbol:   class ModelPart
+  location: class AbstractDracarysDragonModel<T>
+  where T is a type-variable:
+    T declared in class AbstractDracarysDragonModel
+/mnt/data/step580_work/src/main/java/com/dracarys/dracarysmod/client/model/AbstractDracarysDragonModel.java:271: error: cannot find symbol
+    public void renderToBuffer(PoseStack poseStack, VertexConsumer vertexConsumer, int packedLight, int packedOverlay,
+                               ^
+  symbol:   class PoseStack
+  location: class AbstractDracarysDragonModel<T>
+  where T is a type-variable:
+    T declared in class AbstractDracarysDragonModel
+/mnt/data/step580_work/src/main/java/com/dracarys/dracarysmod/client/model/AbstractDracarysDragonModel.java:271: error: cannot find symbol
+    public void renderToBuffer(PoseStack poseStack, VertexConsumer vertexConsumer, int packedLight, int packedOverlay,
+                                                    ^
+  symbol:   class VertexConsumer
+  location: class AbstractDracarysDragonModel<T>
+  where T is a type-variable:
+    T declared in class AbstractDracarysDragonModel
+/mnt/data/step580_work/src/main/java/com/dracarys/dracarysmod/client/model/AbstractDracarysDragonModel.java:75: error: method does not override or implement a method from a supertype
+    @Override
+    ^
+/mnt/data/step580_work/src/main/java/com/dracarys/dracarysmod/client/model/AbstractDracarysDragonModel.java:80: error: method does not override or implement a method from a supertype
+    @Override
+    ^
+/mnt/data/step580_work/src/main/java/com/dracarys/dracarysmod/client/model/AbstractDracarysDragonModel.java:84: error: cannot find symbol
+        float yaw = Mth.clamp(netHeadYaw, -65.0F, 65.0F) * Mth.DEG_TO_RAD;
+                    ^
+  symbol:   variable Mth
+  location: class AbstractDracarysDragonModel<T>
+  where T is a type-variable:
+    T declared in class AbstractDracarysDragonModel
+/mnt/data/step580_work/src/main/java/com/dracarys/dracarysmod/client/model/AbstractDracarysDragonModel.java:84: error: cannot find symbol
+        float yaw = Mth.clamp(netHeadYaw, -65.0F, 65.0F) * Mth.DEG_TO_RAD;
+                                                           ^
+  symbol:   variable Mth
+  location: class AbstractDracarysDragonModel<T>
+  where T is a type-variable:
+    T declared in class AbstractDracarysDragonModel
+/mnt/data/step580_work/src/main/java/com/dracarys/dracarysmod/client/model/AbstractDracarysDragonModel.java:85: error: cannot find symbol
+        float pitch = Mth.clamp(headPitch, -45.0F, 45.0F) * Mth.DEG_TO_RAD;
+                      ^
+  symbol:   variable Mth
+  location: class AbstractDracarysDragonModel<T>
+  where T is a type-variable:
+    T declared in class AbstractDracarysDragonModel
+/mnt/data/step580_work/src/main/java/com/dracarys/dracarysmod/client/model/AbstractDracarysDragonModel.java:85: error: cannot find symbol
+        float pitch = Mth.clamp(headPitch, -45.0F, 45.0F) * Mth.DEG_TO_RAD;
+                                                            ^
+  symbol:   variable Mth
+  location: class AbstractDracarysDragonModel<T>
+  where T is a type-variable:
+    T declared in class AbstractDracarysDragonModel
+/mnt/data/step580_work/src/main/java/com/dracarys/dracarysmod/client/model/AbstractDracarysDragonModel.java:101: error: cannot find symbol
+        float breathing = Mth.sin(ageInTicks * 0.08F) * 0.025F;
+                          ^
+  symbol:   variable Mth
+  location: class AbstractDracarysDragonModel<T>
+  where T is a type-variable:
+    T declared in class AbstractDracarysDragonModel
+/mnt/data/step580_work/src/main/java/com/dracarys/dracarysmod/client/model/AbstractDracarysDragonModel.java:117: error: cannot find symbol
+        float amount = Mth.clamp(limbSwingAmount, 0.0F, 1.0F);
+                       ^
+  symbol:   variable Mth
+  location: class AbstractDracarysDragonModel<T>
+  where T is a type-variable:
+    T declared in class AbstractDracarysDragonModel
+/mnt/data/step580_work/src/main/java/com/dracarys/dracarysmod/client/model/AbstractDracarysDragonModel.java:118: error: cannot find symbol
+        float fore = Mth.cos(limbSwing * 0.72F) * 0.60F * amount;
+                     ^
+  symbol:   variable Mth
+  location: class AbstractDracarysDragonModel<T>
+  where T is a type-variable:
+    T declared in class AbstractDracarysDragonModel
+/mnt/data/step580_work/src/main/java/com/dracarys/dracarysmod/client/model/AbstractDracarysDragonModel.java:119: error: cannot find symbol
+        float hind = Mth.cos(limbSwing * 0.72F + Mth.PI) * 0.68F * amount;
+                                                 ^
+  symbol:   variable Mth
+  location: class AbstractDracarysDragonModel<T>
+  where T is a type-variable:
+    T declared in class AbstractDracarysDragonModel
+/mnt/data/step580_work/src/main/java/com/dracarys/dracarysmod/client/model/AbstractDracarysDragonModel.java:119: error: cannot find symbol
+        float hind = Mth.cos(limbSwing * 0.72F + Mth.PI) * 0.68F * amount;
+                     ^
+  symbol:   variable Mth
+  location: class AbstractDracarysDragonModel<T>
+  where T is a type-variable:
+    T declared in class AbstractDracarysDragonModel
+/mnt/data/step580_work/src/main/java/com/dracarys/dracarysmod/client/model/AbstractDracarysDragonModel.java:131: error: cannot find symbol
+        float idleWing = 0.035F + Mth.sin(ageInTicks * 0.06F) * 0.018F;
+                                  ^
+  symbol:   variable Mth
+  location: class AbstractDracarysDragonModel<T>
+  where T is a type-variable:
+    T declared in class AbstractDracarysDragonModel
+/mnt/data/step580_work/src/main/java/com/dracarys/dracarysmod/client/model/AbstractDracarysDragonModel.java:141: error: cannot find symbol
+        float flap = Mth.sin(ageInTicks * 0.42F);
+                     ^
+  symbol:   variable Mth
+  location: class AbstractDracarysDragonModel<T>
+  where T is a type-variable:
+    T declared in class AbstractDracarysDragonModel
+/mnt/data/step580_work/src/main/java/com/dracarys/dracarysmod/client/model/AbstractDracarysDragonModel.java:142: error: cannot find symbol
+        float fold = Mth.cos(ageInTicks * 0.42F);
+                     ^
+  symbol:   variable Mth
+  location: class AbstractDracarysDragonModel<T>
+  where T is a type-variable:
+    T declared in class AbstractDracarysDragonModel
+/mnt/data/step580_work/src/main/java/com/dracarys/dracarysmod/client/model/AbstractDracarysDragonModel.java:170: error: cannot find symbol
+        tail01.yRot = 0.018F + Mth.sin(ageInTicks * 0.08F) * 0.08F;
+                               ^
+  symbol:   variable Mth
+  location: class AbstractDracarysDragonModel<T>
+  where T is a type-variable:
+    T declared in class AbstractDracarysDragonModel
+/mnt/data/step580_work/src/main/java/com/dracarys/dracarysmod/client/model/AbstractDracarysDragonModel.java:171: error: cannot find symbol
+        tail02.yRot = 0.016F + Mth.sin(ageInTicks * 0.08F - 0.55F) * 0.11F;
+                               ^
+  symbol:   variable Mth
+  location: class AbstractDracarysDragonModel<T>
+  where T is a type-variable:
+    T declared in class AbstractDracarysDragonModel
+/mnt/data/step580_work/src/main/java/com/dracarys/dracarysmod/client/model/AbstractDracarysDragonModel.java:172: error: cannot find symbol
+        tail03.yRot = -0.012F + Mth.sin(ageInTicks * 0.08F - 1.10F) * 0.14F;
+                                ^
+  symbol:   variable Mth
+  location: class AbstractDracarysDragonModel<T>
+  where T is a type-variable:
+    T declared in class AbstractDracarysDragonModel
+/mnt/data/step580_work/src/main/java/com/dracarys/dracarysmod/client/model/AbstractDracarysDragonModel.java:173: error: cannot find symbol
+        tail04.yRot = -0.016F + Mth.sin(ageInTicks * 0.08F - 1.65F) * 0.18F;
+                                ^
+  symbol:   variable Mth
+  location: class AbstractDracarysDragonModel<T>
+  where T is a type-variable:
+    T declared in class AbstractDracarysDragonModel
+/mnt/data/step580_work/src/main/java/com/dracarys/dracarysmod/client/model/AbstractDracarysDragonModel.java:270: error: method does not override or implement a method from a supertype
+    @Override
+    ^
+/mnt/data/step580_work/src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java:30: error: cannot find symbol
+    public static final ModelLayerLocation LAYER = new ModelLayerLocation(
+                                                       ^
+  symbol:   class ModelLayerLocation
+  location: class BalancedDragonModel<T>
+  where T is a type-variable:
+    T declared in class BalancedDragonModel
+/mnt/data/step580_work/src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java:31: error: cannot find symbol
+            DracarysMod.id("dracarys_dragon_balanced"), "main"
+            ^
+  symbol:   variable DracarysMod
+  location: class BalancedDragonModel<T>
+  where T is a type-variable:
+    T declared in class BalancedDragonModel
+/mnt/data/step580_work/src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java:41: error: cannot find symbol
+        MeshDefinition mesh = new MeshDefinition();
+        ^
+  symbol:   class MeshDefinition
+  location: class BalancedDragonModel<T>
+  where T is a type-variable:
+    T declared in class BalancedDragonModel
+/mnt/data/step580_work/src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java:41: error: cannot find symbol
+        MeshDefinition mesh = new MeshDefinition();
+                                  ^
+  symbol:   class MeshDefinition
+  location: class BalancedDragonModel<T>
+  where T is a type-variable:
+    T declared in class BalancedDragonModel
+100 errors
+only showing the first 100 errors, of 234 total; use -Xmaxerrs if you would like to see more

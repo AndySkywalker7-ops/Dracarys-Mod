@@ -84,13 +84,19 @@ public abstract class AbstractDracarysDragonModel<T extends DracarysDragonEntity
         float yaw = Mth.clamp(netHeadYaw, -65.0F, 65.0F) * Mth.DEG_TO_RAD;
         float pitch = Mth.clamp(headPitch, -45.0F, 45.0F) * Mth.DEG_TO_RAD;
 
-        neck01.yRot = yaw * 0.18F;
-        neck02.yRot = yaw * 0.25F;
-        neck03.yRot = yaw * 0.25F;
-        head.yRot = yaw * 0.32F;
-        neck02.xRot = pitch * 0.10F;
-        neck03.xRot = pitch * 0.20F;
-        head.xRot = pitch * 0.45F;
+        neck01.yRot += yaw * 0.16F;
+        neck02.yRot += yaw * 0.22F;
+        neck03.yRot += yaw * 0.24F;
+        head.yRot += yaw * 0.38F;
+
+        /*
+         * Preserve the blueprint-locked neutral S-curve. Previous passes used
+         * assignment here, which silently erased neck02/neck03/head base pitch
+         * every frame and contributed to the unnatural skyward/rigid pose.
+         */
+        neck02.xRot += pitch * 0.08F;
+        neck03.xRot += pitch * 0.14F;
+        head.xRot += pitch * 0.30F;
 
         float breathing = Mth.sin(ageInTicks * 0.08F) * 0.025F;
         body.xRot += breathing;
@@ -185,60 +191,76 @@ public abstract class AbstractDracarysDragonModel<T extends DracarysDragonEntity
 
     private void resetAnimatedPose() {
         /*
-         * Step 5.6 natural reptilian neutral pose.
-         * The rig deliberately avoids straight axial/limb lines: low thorax,
-         * S-curved neck, bent forelimbs, strong digitigrade hindlimbs and
-         * enormous wings held broad enough to display their true planform.
+         * Step 5.8 blueprint-locked neutral pose.
+         *
+         * BODY: low and nearly level.
+         * HEAD: forward with a tiny predatory downward bias.
+         * NECK: low S-curve, never a skyward arch.
+         * WINGS: high enough to read as dragon wings but swept rearward so
+         *         they do not become horizontal bird/airplane slabs.
+         * LEGS: deep reptilian flexion with a visible hind-limb Z.
          */
-        body.xRot = -0.105F;
+        body.xRot = -0.015F;
         body.yRot = 0.0F;
         body.zRot = 0.0F;
 
-        // Long forward S-curve: powerful base, rising middle, low predatory head.
-        neck01.xRot = -0.43F;
+        neck01.xRot = 0.045F;
         neck01.yRot = 0.0F;
-        neck02.xRot = 0.22F;
+        neck01.zRot = 0.0F;
+
+        neck02.xRot = -0.070F;
         neck02.yRot = 0.0F;
-        neck03.xRot = 0.18F;
+        neck02.zRot = 0.0F;
+
+        neck03.xRot = 0.030F;
         neck03.yRot = 0.0F;
-        head.xRot = 0.075F;
+        neck03.zRot = 0.0F;
+
+        head.xRot = -0.025F;
         head.yRot = 0.0F;
-        jaw.xRot = 0.0F;
+        head.zRot = 0.0F;
+        jaw.xRot = 0.012F;
 
-        // Very broad wings: modest rear sweep, slight elevation, never blade-like in idle.
-        leftWingRoot.xRot = -0.035F;
-        leftWingRoot.yRot = -0.075F;
-        leftWingRoot.zRot = -0.23F;
-        leftUpperArm.xRot = -0.015F;
-        leftUpperArm.yRot = -0.035F;
-        leftUpperArm.zRot = -0.055F;
-        leftForearm.xRot = 0.015F;
-        leftForearm.yRot = -0.055F;
-        leftForearm.zRot = -0.035F;
+        /*
+         * Dragon/bat idle planform:
+         * root gives moderate elevation, Y sweep sends the span rearward,
+         * upper arm creates the shoulder break, forearm reverses slightly.
+         * The membrane sectors are parented to these bones and therefore
+         * follow this architecture instead of remaining a flat root plane.
+         */
+        leftWingRoot.xRot = -0.065F;
+        leftWingRoot.yRot = -0.325F;
+        leftWingRoot.zRot = -0.305F;
+        leftUpperArm.xRot = -0.018F;
+        leftUpperArm.yRot = -0.105F;
+        leftUpperArm.zRot = 0.145F;
+        leftForearm.xRot = 0.018F;
+        leftForearm.yRot = -0.185F;
+        leftForearm.zRot = -0.085F;
 
-        rightWingRoot.xRot = -0.035F;
-        rightWingRoot.yRot = 0.075F;
-        rightWingRoot.zRot = 0.23F;
-        rightUpperArm.xRot = -0.015F;
-        rightUpperArm.yRot = 0.035F;
-        rightUpperArm.zRot = 0.055F;
-        rightForearm.xRot = 0.015F;
-        rightForearm.yRot = 0.055F;
-        rightForearm.zRot = 0.035F;
+        rightWingRoot.xRot = -0.065F;
+        rightWingRoot.yRot = 0.325F;
+        rightWingRoot.zRot = 0.305F;
+        rightUpperArm.xRot = -0.018F;
+        rightUpperArm.yRot = 0.105F;
+        rightUpperArm.zRot = -0.145F;
+        rightForearm.xRot = 0.018F;
+        rightForearm.yRot = 0.185F;
+        rightForearm.zRot = 0.085F;
 
-        // Forelegs form a soft S instead of vertical posts.
-        leftForeleg.xRot = 0.30F;
-        rightForeleg.xRot = 0.30F;
-        leftForeLower.xRot = -0.58F;
-        rightForeLower.xRot = -0.58F;
+        // Low, flexed forelimb chain.
+        leftForeleg.xRot = 0.50F;
+        rightForeleg.xRot = 0.50F;
+        leftForeLower.xRot = -0.86F;
+        rightForeLower.xRot = -0.86F;
 
-        // Hindlimbs form the characteristic reptilian/digitigrade Z.
-        leftHindleg.xRot = 0.58F;
-        rightHindleg.xRot = 0.58F;
-        leftHindLower.xRot = -1.02F;
-        rightHindLower.xRot = -1.02F;
+        // Strong reptilian/digitigrade Z.
+        leftHindleg.xRot = 0.82F;
+        rightHindleg.xRot = 0.82F;
+        leftHindLower.xRot = -1.22F;
+        rightHindLower.xRot = -1.22F;
 
-        // Base tail bends are added again by animateTail each frame.
+        // Base bends are restored by animateTail each frame.
         tail01.yRot = 0.0F;
         tail02.yRot = 0.0F;
         tail03.yRot = 0.0F;

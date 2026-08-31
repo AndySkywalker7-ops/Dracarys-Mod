@@ -1,0 +1,13 @@
+src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java
+src/main/java/com/dracarys/dracarysmod/client/model/AbstractDracarysDragonModel.java
+STEP5_8_GEOMETRY_BLUEPRINT.md
+STEP5_8_ANATOMY_IMPLEMENTATION.md
+STEP5_8_SOURCE_REQUIREMENTS.txt
+STEP5_8_MODIFIED_FILES.txt
+STEP5_8_STATIC_VALIDATION.log
+STEP5_8_JAVAC_ATTEMPT.log
+STEP5_8_JAVAC_SYNTAX_SUMMARY.log
+STEP5_8_BUILD_ATTEMPT.log
+STEP5_8_PROTECTED_FILES.log
+STEP5_8_BALANCED_DIFF_PREVIEW.txt
+STEP5_8_ABSTRACT_DIFF_PREVIEW.txt

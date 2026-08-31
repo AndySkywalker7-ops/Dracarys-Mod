@@ -1,0 +1,15 @@
+STEP 5.8 FULL BUILD ATTEMPT
+
+A full Forge/Gradle build was not executable in the isolated STEP 5.8 patch workspace.
+
+Observed environment:
+- javac is available (JDK 21 runtime in this container).
+- No gradlew / gradlew.bat / gradle-wrapper.jar is present in the mounted Dracarys project artifacts.
+- No standalone Gradle Forge workspace with the current STEP 5.7/5.8 sources is present.
+- Compiling the two Java files directly reaches expected unresolved Minecraft/Forge imports and symbols.
+
+Syntax-like javac scan: PASS (see STEP5_8_JAVAC_SYNTAX_SUMMARY.log).
+Targeted geometry/source validation: 71/71 PASS (see STEP5_8_STATIC_VALIDATION.log).
+
+Required real build:
+Run the existing GitHub Actions / Gradle Forge 1.20.1 build with JDK 17 after applying this patch to the repository.
