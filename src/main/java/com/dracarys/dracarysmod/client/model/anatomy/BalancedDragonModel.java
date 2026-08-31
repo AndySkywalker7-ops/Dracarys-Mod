@@ -701,6 +701,10 @@ public final class BalancedDragonModel<T extends DracarysDragonEntity>
         }
     }
 
+    private static float sideSign(boolean left) {
+        return left ? 1.0F : -1.0F;
+    }
+
     /* ====================================================================== */
     /* FORELEGS — low, flexed reptilian chain with separated muscle masses     */
     /* ====================================================================== */
