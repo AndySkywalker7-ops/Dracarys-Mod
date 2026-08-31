@@ -1,0 +1,6 @@
+SAME | src/main/java/com/dracarys/dracarysmod/client/renderer/DracarysDragonRenderer.java | before=dc838e28ec00b2d004154f000990b3f26ff1506c631399aa5b350c6f6fffec92 | after=dc838e28ec00b2d004154f000990b3f26ff1506c631399aa5b350c6f6fffec92
+SAME | src/main/java/com/dracarys/dracarysmod/client/render/CleanLongRangeDragonRenderEvents.java | before=2359b8cedfa61afa86f6189b17c533e3e40fef70f1bd822b7a6ad1c33ce95354 | after=2359b8cedfa61afa86f6189b17c533e3e40fef70f1bd822b7a6ad1c33ce95354
+SAME | src/main/java/com/dracarys/dracarysmod/entity/DracarysDragonEntity.java | before=02e8796f008c5f271f4fe91fc74ed675b3d7f5bc4ceb84ad7b01a9f33ba6a2c0 | after=02e8796f008c5f271f4fe91fc74ed675b3d7f5bc4ceb84ad7b01a9f33ba6a2c0
+SAME | src/main/java/com/dracarys/dracarysmod/entity/DragonMultipartLayout.java | before=d7100935c9265a0aaa507431978f98d07991686c9869dc399e16ed158ef7b30e | after=d7100935c9265a0aaa507431978f98d07991686c9869dc399e16ed158ef7b30e
+SAME | src/main/java/com/dracarys/dracarysmod/dragon/DragonStage.java | before=b52397060a4f969c095577e835356c418026f8b461320620ee23a965028ad35f | after=b52397060a4f969c095577e835356c418026f8b461320620ee23a965028ad35f
+SAME | src/main/java/com/dracarys/dracarysmod/dragon/DragonSizeTier.java | before=5e22074be9e1d7df7abc65e8260354f5507925bb3988ae4135a69cc04c4a556d | after=5e22074be9e1d7df7abc65e8260354f5507925bb3988ae4135a69cc04c4a556d

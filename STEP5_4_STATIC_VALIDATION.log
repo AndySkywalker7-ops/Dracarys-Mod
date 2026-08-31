@@ -1,0 +1,39 @@
+STEP 5.4 — High-Fidelity Anatomy targeted validation
+36/36 checks PASS
+
+PASS | leg root left_foreleg
+PASS | leg root right_foreleg
+PASS | leg root left_hindleg
+PASS | leg root right_hindleg
+PASS | wing root left_wing_root
+PASS | wing root right_wing_root
+PASS | six-limb architecture documented
+PASS | thorax wider than abdomen
+PASS | pelvis wider than abdomen
+PASS | 7 visible neck masses
+PASS | 12 visual tail masses
+PASS | wing humerus
+PASS | wing elbow
+PASS | wing forearm
+PASS | wing wrist
+PASS | three wing digit loop
+PASS | wing digits divergent
+PASS | continuous membrane
+PASS | membrane strip overlap
+PASS | semi-folded idle wings
+PASS | neck S curve neutral
+PASS | digitigrade hind neutral
+PASS | front elbow break neutral
+PASS | head multi-mass
+PASS | dorsal crest progressive
+PASS | distal foot bridges
+PASS | protected unchanged DracarysDragonRenderer.java | dc838e28ec00b2d004154f000990b3f26ff1506c631399aa5b350c6f6fffec92
+PASS | protected unchanged CleanLongRangeDragonRenderEvents.java | 2359b8cedfa61afa86f6189b17c533e3e40fef70f1bd822b7a6ad1c33ce95354
+PASS | protected unchanged DracarysDragonEntity.java | 02e8796f008c5f271f4fe91fc74ed675b3d7f5bc4ceb84ad7b01a9f33ba6a2c0
+PASS | protected unchanged DragonMultipartLayout.java | d7100935c9265a0aaa507431978f98d07991686c9869dc399e16ed158ef7b30e
+PASS | protected unchanged DragonStage.java | b52397060a4f969c095577e835356c418026f8b461320620ee23a965028ad35f
+PASS | protected unchanged DragonSizeTier.java | 5e22074be9e1d7df7abc65e8260354f5507925bb3988ae4135a69cc04c4a556d
+PASS | front foot near ground plane | 24.74
+PASS | hind foot near ground plane | 24.36
+PASS | Balanced brace balance | 50/50
+PASS | Abstract brace balance | 13/13

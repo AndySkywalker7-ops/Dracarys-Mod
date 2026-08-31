@@ -1,0 +1,2 @@
+STEP 5.4 javac syntax-like diagnostic scan
+PASS — no syntax-like diagnostics found before dependency-resolution failures.
