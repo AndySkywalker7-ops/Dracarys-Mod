@@ -1,0 +1,9 @@
+STEP 5.3 javac syntax summary
+
+javac was invoked on the three modified Java source files without the Minecraft/Forge classpath.
+As expected, compilation stops on missing external packages/classes.
+
+Syntax-like diagnostics detected: 0
+
+This is NOT a successful Forge compilation.
+GitHub Actions / a local ForgeGradle environment is still required for real build validation.

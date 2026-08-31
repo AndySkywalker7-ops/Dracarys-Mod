@@ -1,0 +1,14 @@
+STEP 5.3 protected-file SHA-256 comparison
+
+src/main/java/com/dracarys/dracarysmod/client/renderer/DracarysDragonRenderer.java
+  Step5.2: dc838e28ec00b2d004154f000990b3f26ff1506c631399aa5b350c6f6fffec92
+  Step5.3: dc838e28ec00b2d004154f000990b3f26ff1506c631399aa5b350c6f6fffec92
+  Result: SAME
+src/main/java/com/dracarys/dracarysmod/client/render/CleanLongRangeDragonRenderEvents.java
+  Step5.2: 2359b8cedfa61afa86f6189b17c533e3e40fef70f1bd822b7a6ad1c33ce95354
+  Step5.3: 2359b8cedfa61afa86f6189b17c533e3e40fef70f1bd822b7a6ad1c33ce95354
+  Result: SAME
+src/main/java/com/dracarys/dracarysmod/entity/DracarysDragonEntity.java
+  Step5.2: 02e8796f008c5f271f4fe91fc74ed675b3d7f5bc4ceb84ad7b01a9f33ba6a2c0
+  Step5.3: 02e8796f008c5f271f4fe91fc74ed675b3d7f5bc4ceb84ad7b01a9f33ba6a2c0
+  Result: SAME

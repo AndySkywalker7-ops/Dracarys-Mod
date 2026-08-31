@@ -1,0 +1,11 @@
+STEP 5.3 modified files
+
+MODIFIED
+src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java
+src/main/java/com/dracarys/dracarysmod/client/model/AbstractDracarysDragonModel.java
+src/main/java/com/dracarys/dracarysmod/entity/DragonMultipartLayout.java
+
+UNCHANGED / PROTECTED
+src/main/java/com/dracarys/dracarysmod/client/renderer/DracarysDragonRenderer.java
+src/main/java/com/dracarys/dracarysmod/client/render/CleanLongRangeDragonRenderEvents.java
+src/main/java/com/dracarys/dracarysmod/entity/DracarysDragonEntity.java

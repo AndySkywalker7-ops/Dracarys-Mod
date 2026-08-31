@@ -135,12 +135,20 @@ public abstract class AbstractDracarysDragonModel<T extends DracarysDragonEntity
         float flap = Mth.sin(ageInTicks * 0.42F);
         float fold = Mth.cos(ageInTicks * 0.42F);
 
-        leftWingRoot.zRot = -0.30F - flap * 0.55F;
-        rightWingRoot.zRot = 0.30F + flap * 0.55F;
-        leftUpperArm.zRot = -0.12F - flap * 0.20F;
-        rightUpperArm.zRot = 0.12F + flap * 0.20F;
-        leftForearm.zRot = -0.10F - fold * 0.12F;
-        rightForearm.zRot = 0.10F + fold * 0.12F;
+        // Flight opens the swept-back idle wings toward a broad lifting plane.
+        leftWingRoot.yRot = -0.04F;
+        rightWingRoot.yRot = 0.04F;
+        leftUpperArm.yRot = -0.03F;
+        rightUpperArm.yRot = 0.03F;
+        leftForearm.yRot = -0.05F;
+        rightForearm.yRot = 0.05F;
+
+        leftWingRoot.zRot = -0.24F - flap * 0.52F;
+        rightWingRoot.zRot = 0.24F + flap * 0.52F;
+        leftUpperArm.zRot = -0.08F - flap * 0.18F;
+        rightUpperArm.zRot = 0.08F + flap * 0.18F;
+        leftForearm.zRot = -0.06F - fold * 0.10F;
+        rightForearm.zRot = 0.06F + fold * 0.10F;
 
         leftForeleg.xRot = 0.55F;
         rightForeleg.xRot = 0.55F;
@@ -176,48 +184,59 @@ public abstract class AbstractDracarysDragonModel<T extends DracarysDragonEntity
     }
 
     private void resetAnimatedPose() {
-        body.xRot = 0.0F;
+        /*
+         * Step 5.3 neutral anatomy pose.
+         *
+         * Earlier revisions reset these joints to nearly straight angles each
+         * frame, which visually erased the curved neck and swept wing anatomy
+         * authored in BalancedDragonModel. These are still animation values,
+         * but now they preserve the reference-driven low predatory silhouette.
+         */
+        body.xRot = -0.025F;
         body.yRot = 0.0F;
         body.zRot = 0.0F;
 
-        neck01.xRot = -0.10F;
+        // S-curve: rise from chest, then bring the head forward again.
+        neck01.xRot = -0.23F;
         neck01.yRot = 0.0F;
-        neck02.xRot = -0.04F;
+        neck02.xRot = 0.11F;
         neck02.yRot = 0.0F;
-        neck03.xRot = 0.02F;
+        neck03.xRot = 0.10F;
         neck03.yRot = 0.0F;
-        head.xRot = 0.02F;
+        head.xRot = 0.045F;
         head.yRot = 0.0F;
         jaw.xRot = 0.0F;
 
-        leftWingRoot.xRot = -0.04F;
-        leftWingRoot.yRot = 0.10F;
-        leftWingRoot.zRot = -0.24F;
-        leftUpperArm.xRot = 0.02F;
-        leftUpperArm.yRot = -0.08F;
-        leftUpperArm.zRot = -0.10F;
+        // Ground pose: broad, low wings swept rearward instead of vertical slabs.
+        leftWingRoot.xRot = -0.055F;
+        leftWingRoot.yRot = -0.28F;
+        leftWingRoot.zRot = -0.10F;
+        leftUpperArm.xRot = -0.02F;
+        leftUpperArm.yRot = -0.12F;
+        leftUpperArm.zRot = -0.045F;
         leftForearm.xRot = 0.0F;
-        leftForearm.yRot = -0.10F;
-        leftForearm.zRot = -0.08F;
+        leftForearm.yRot = -0.16F;
+        leftForearm.zRot = -0.035F;
 
-        rightWingRoot.xRot = -0.04F;
-        rightWingRoot.yRot = -0.10F;
-        rightWingRoot.zRot = 0.24F;
-        rightUpperArm.xRot = 0.02F;
-        rightUpperArm.yRot = 0.08F;
-        rightUpperArm.zRot = 0.10F;
+        rightWingRoot.xRot = -0.055F;
+        rightWingRoot.yRot = 0.28F;
+        rightWingRoot.zRot = 0.10F;
+        rightUpperArm.xRot = -0.02F;
+        rightUpperArm.yRot = 0.12F;
+        rightUpperArm.zRot = 0.045F;
         rightForearm.xRot = 0.0F;
-        rightForearm.yRot = 0.10F;
-        rightForearm.zRot = 0.08F;
+        rightForearm.yRot = 0.16F;
+        rightForearm.zRot = 0.035F;
 
-        leftForeleg.xRot = -0.06F;
-        rightForeleg.xRot = -0.06F;
-        leftHindleg.xRot = 0.05F;
-        rightHindleg.xRot = 0.05F;
-        leftForeLower.xRot = 0.12F;
-        rightForeLower.xRot = 0.12F;
-        leftHindLower.xRot = 0.16F;
-        rightHindLower.xRot = 0.16F;
+        // Four grounded terrestrial limbs with visible elbow/knee break.
+        leftForeleg.xRot = 0.035F;
+        rightForeleg.xRot = 0.035F;
+        leftHindleg.xRot = -0.10F;
+        rightHindleg.xRot = -0.10F;
+        leftForeLower.xRot = 0.18F;
+        rightForeLower.xRot = 0.18F;
+        leftHindLower.xRot = 0.28F;
+        rightHindLower.xRot = 0.28F;
 
         tail01.yRot = 0.0F;
         tail02.yRot = 0.0F;

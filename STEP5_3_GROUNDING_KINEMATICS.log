@@ -1,0 +1,20 @@
+STEP 5.3 approximate neutral-pose kinematic sanity
+Model ground plane: Y=24.0 px
+
+front_leg_root: centerY=-12.631, centerZ=-8.262, cumulativeXRot=0.010
+front_lower_leg: centerY=-0.649, centerZ=-6.342, cumulativeXRot=0.190
+front_wrist: centerY=10.296, centerZ=-6.070, cumulativeXRot=-0.030
+front_foot: centerY=23.724, centerZ=-8.674, cumulativeXRot=0.040
+Front foot cube spans approx Y=22.22..25.22 before toe/claw detail.
+
+hind_leg_root: centerY=-12.588, centerZ=17.445, cumulativeXRot=-0.125
+hind_lower_leg: centerY=-0.208, centerZ=19.719, cumulativeXRot=0.155
+hind_ankle: centerY=10.957, centerZ=18.225, cumulativeXRot=-0.205
+hind_foot: centerY=24.053, centerZ=12.438, cumulativeXRot=-0.085
+Hind foot cube spans approx Y=22.55..25.55 before toe/claw detail.
+
+neck_01: pivotY=-18.349, pivotZ=-12.921, cumulativeXRot=-0.255
+neck_02: pivotY=-24.262, pivotZ=-26.881, cumulativeXRot=-0.145
+neck_03: pivotY=-27.554, pivotZ=-39.740, cumulativeXRot=-0.045
+head: pivotY=-28.072, pivotZ=-49.026, cumulativeXRot=-0.000
+Neck rises from chest then returns toward a nearly level head, forming the intended S-curve.

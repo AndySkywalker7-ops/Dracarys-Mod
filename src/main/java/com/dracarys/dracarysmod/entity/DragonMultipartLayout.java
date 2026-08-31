@@ -3,9 +3,9 @@ package com.dracarys.dracarysmod.entity;
 import net.minecraft.util.Mth;
 
 /**
- * Step 4.0.9B — model-space multipart calibration for Anatomy 01 BALANCED.
+ * Step 5.3 — model-space multipart calibration for Anatomy 01 BALANCED.
  *
- * <p>The BALANCED mesh is authored in Minecraft model pixels (16 px = 1 block)
+ * <p>The BALANCED reference-fidelity mesh is authored in Minecraft model pixels (16 px = 1 block)
  * and then multiplied by {@link DracarysDragonEntity#renderScale()} in the
  * renderer. The multipart hitboxes therefore use the same model-space landmarks
  * instead of the much smaller physical EntityDimensions.</p>
@@ -29,38 +29,43 @@ public final class DragonMultipartLayout {
     public static final double MAX_QUERY_RADIUS = 112.0D;
 
     // Static anatomical zones, measured directly against BalancedDragonModel.
+    /*
+     * Step 5.3 model-space landmarks. These are deliberately broad interaction
+     * zones around the new continuous anatomy; the multipart architecture and
+     * damage forwarding are unchanged.
+     */
     public static final PartSpec BODY = new PartSpec(
-            0.0D, -19.0D, 0.0D,
-            13.0D, 12.0D, 24.0D
+            0.0D, -13.5D, 4.0D,
+            12.5D, 11.5D, 28.0D
     );
 
     public static final PartSpec NECK = new PartSpec(
-            0.0D, -20.5D, -39.0D,
-            8.0D, 9.0D, 20.0D
+            0.0D, -19.0D, -37.0D,
+            7.5D, 9.0D, 24.0D
     );
 
     public static final PartSpec HEAD = new PartSpec(
-            0.0D, -22.0D, -69.0D,
-            10.0D, 11.0D, 20.0D
+            0.0D, -21.0D, -68.0D,
+            9.0D, 9.5D, 19.0D
     );
 
     public static final PartSpec TAIL = new PartSpec(
-            0.0D, -18.0D, 61.0D,
-            9.0D, 9.0D, 59.0D
+            0.0D, -11.5D, 69.0D,
+            8.0D, 8.0D, 45.0D
     );
 
     public static final PartSpec LEGS = new PartSpec(
-            0.0D, 4.0D, 1.0D,
-            12.0D, 20.0D, 20.0D
+            0.0D, 4.0D, 4.0D,
+            12.0D, 21.0D, 24.0D
     );
 
     /** Approximate center of each wing's full visible span in model pixels. */
-    public static final double WING_CENTER_RIGHT_PX = 67.0D;
-    public static final double WING_CENTER_Y_PX = -24.0D;
-    public static final double WING_CENTER_Z_PX = 4.0D;
-    public static final double WING_HALF_LENGTH_PX = 65.0D;
-    public static final double WING_BASE_HALF_HEIGHT_PX = 9.0D;
-    public static final double WING_HALF_FORWARD_PX = 28.0D;
+    public static final double WING_CENTER_RIGHT_PX = 68.0D;
+    public static final double WING_CENTER_Y_PX = -20.5D;
+    public static final double WING_CENTER_Z_PX = 12.0D;
+    public static final double WING_HALF_LENGTH_PX = 64.0D;
+    public static final double WING_BASE_HALF_HEIGHT_PX = 8.0D;
+    public static final double WING_HALF_FORWARD_PX = 36.0D;
 
     private DragonMultipartLayout() {}
 
@@ -106,7 +111,7 @@ public final class DragonMultipartLayout {
         }
 
         double idleWing = 0.035D + Mth.sin(age * 0.06F) * 0.018D;
-        return -0.24D - idleWing;
+        return -0.10D - idleWing;
     }
 
     public static double rightWingRoll(DracarysDragonEntity dragon) {

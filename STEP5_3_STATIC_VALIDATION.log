@@ -1,0 +1,57 @@
+STEP 5.3 — Reference Fidelity static validation
+Checks: 52
+PASS: 52
+FAIL: 0
+
+[PASS] compat bone "body"
+[PASS] compat bone "neck_01"
+[PASS] compat bone "neck_02"
+[PASS] compat bone "neck_03"
+[PASS] compat bone "head"
+[PASS] compat bone "jaw"
+[PASS] compat bone "left_wing_root"
+[PASS] compat bone "right_wing_root"
+[PASS] compat bone "upper_arm"
+[PASS] compat bone "forearm"
+[PASS] compat bone "left_foreleg"
+[PASS] compat bone "right_foreleg"
+[PASS] compat bone "left_hindleg"
+[PASS] compat bone "right_hindleg"
+[PASS] compat bone "tail_01"
+[PASS] compat bone "tail_02"
+[PASS] compat bone "tail_03"
+[PASS] compat bone "tail_04"
+[PASS] exactly two createWing calls
+[PASS] four terrestrial leg calls
+[PASS] three dominant wing digits
+[PASS] segmented wing membranes
+[PASS] wing humerus
+[PASS] wing forearm
+[PASS] wing wrist
+[PASS] wing hand
+[PASS] front shoulder distinct
+[PASS] wing shoulder distinct
+[PASS] thorax present
+[PASS] abdomen present
+[PASS] pelvis present
+[PASS] five visible neck masses
+[PASS] eight visible tail masses
+[PASS] head staged taper
+[PASS] jaw independent
+[PASS] front metapodial closes foot gap
+[PASS] hind metapodial closes foot gap
+[PASS] neutral neck S-curve
+[PASS] ground wings swept back
+[PASS] flight opens wing yaw
+[PASS] grounded limb base pose
+[PASS] layout updated body
+[PASS] layout updated wing roll
+[PASS] protected unchanged DracarysDragonRenderer.java :: dc838e28ec00b2d004154f000990b3f26ff1506c631399aa5b350c6f6fffec92
+[PASS] protected unchanged CleanLongRangeDragonRenderEvents.java :: 2359b8cedfa61afa86f6189b17c533e3e40fef70f1bd822b7a6ad1c33ce95354
+[PASS] protected unchanged DracarysDragonEntity.java :: 02e8796f008c5f271f4fe91fc74ed675b3d7f5bc4ceb84ad7b01a9f33ba6a2c0
+[PASS] brace balance model
+[PASS] paren balance model
+[PASS] brace balance abstract
+[PASS] paren balance abstract
+[PASS] brace balance layout
+[PASS] paren balance layout
