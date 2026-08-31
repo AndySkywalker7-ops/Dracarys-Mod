@@ -1,0 +1,6 @@
+STEP 5.6 — MODIFIED CODE FILES
+
+src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java
+src/main/java/com/dracarys/dracarysmod/client/model/AbstractDracarysDragonModel.java
+
+No renderer/entity/Stage/SizeTier/multipart/long-range-render source file is included in this patch.

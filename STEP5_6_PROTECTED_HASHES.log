@@ -1,0 +1,7 @@
+STEP 5.6 PROTECTED FILE HASH CHECK
+Patch changes only model/pose files; protected systems are not packaged.
+
+SAME  src/main/java/com/dracarys/dracarysmod/client/renderer/DracarysDragonRenderer.java  8c55f83123c62ef589b6b54e12c33a3cef44731be888974d009ea26c2865abeb
+SAME  src/main/java/com/dracarys/dracarysmod/entity/DracarysDragonEntity.java  86b58eeb1d55977b1b459b7c55505960a02be81bf1059418a043d9fb32fe5e56
+SAME  src/main/java/com/dracarys/dracarysmod/dragon/DragonStage.java  b52397060a4f969c095577e835356c418026f8b461320620ee23a965028ad35f
+SAME  src/main/java/com/dracarys/dracarysmod/dragon/DragonSizeTier.java  5e22074be9e1d7df7abc65e8260354f5507925bb3988ae4135a69cc04c4a556d
