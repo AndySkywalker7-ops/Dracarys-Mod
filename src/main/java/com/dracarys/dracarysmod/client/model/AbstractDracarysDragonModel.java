@@ -185,62 +185,65 @@ public abstract class AbstractDracarysDragonModel<T extends DracarysDragonEntity
 
     private void resetAnimatedPose() {
         /*
-         * Step 5.4 neutral anatomy pose.
+         * Step 5.5 final-concept neutral pose.
          *
-         * This pose intentionally carries visible anatomical curvature.  The
-         * geometry is authored around these compatibility joints, so resetting
-         * them to zero would turn the neck, wings and digitigrade legs back
-         * into the straight box chains that Step 5.4 replaces.
+         * The geometry is intentionally muscular and broad.  The neutral rig
+         * must preserve that anatomy instead of straightening it: low chest,
+         * S-curved neck, four planted articulated legs, and enormous wings
+         * held broadly open enough to show their real planform while still
+         * swept slightly rearward from a full flight pose.
          */
-        body.xRot = -0.045F;
+        body.xRot = -0.075F;
         body.yRot = 0.0F;
         body.zRot = 0.0F;
 
-        // Long S-curve: rise from the thorax, arch, then project the skull forward.
-        neck01.xRot = -0.30F;
+        // Strong S-curve matching the reference's forward-reaching predatory neck.
+        neck01.xRot = -0.34F;
         neck01.yRot = 0.0F;
-        neck02.xRot = 0.12F;
+        neck02.xRot = 0.15F;
         neck02.yRot = 0.0F;
         neck03.xRot = 0.14F;
         neck03.yRot = 0.0F;
-        head.xRot = 0.055F;
+        head.xRot = 0.035F;
         head.yRot = 0.0F;
         jaw.xRot = 0.0F;
 
-        // Semi-folded bat-wing silhouette: high root, swept rearward, distal fan relaxed.
-        leftWingRoot.xRot = -0.035F;
-        leftWingRoot.yRot = -0.48F;
-        leftWingRoot.zRot = -0.085F;
-        leftUpperArm.xRot = -0.015F;
-        leftUpperArm.yRot = -0.10F;
-        leftUpperArm.zRot = -0.035F;
-        leftForearm.xRot = 0.015F;
-        leftForearm.yRot = -0.18F;
-        leftForearm.zRot = -0.025F;
+        // Broad, long wings.  Only a modest rear sweep is used in idle so the
+        // huge chord and finger fan remain visible instead of collapsing into
+        // thin blades from above.
+        leftWingRoot.xRot = -0.045F;
+        leftWingRoot.yRot = -0.18F;
+        leftWingRoot.zRot = -0.13F;
+        leftUpperArm.xRot = -0.02F;
+        leftUpperArm.yRot = -0.055F;
+        leftUpperArm.zRot = -0.055F;
+        leftForearm.xRot = 0.01F;
+        leftForearm.yRot = -0.10F;
+        leftForearm.zRot = -0.035F;
 
-        rightWingRoot.xRot = -0.035F;
-        rightWingRoot.yRot = 0.48F;
-        rightWingRoot.zRot = 0.085F;
-        rightUpperArm.xRot = -0.015F;
-        rightUpperArm.yRot = 0.10F;
-        rightUpperArm.zRot = 0.035F;
-        rightForearm.xRot = 0.015F;
-        rightForearm.yRot = 0.18F;
-        rightForearm.zRot = 0.025F;
+        rightWingRoot.xRot = -0.045F;
+        rightWingRoot.yRot = 0.18F;
+        rightWingRoot.zRot = 0.13F;
+        rightUpperArm.xRot = -0.02F;
+        rightUpperArm.yRot = 0.055F;
+        rightUpperArm.zRot = 0.055F;
+        rightForearm.xRot = 0.01F;
+        rightForearm.yRot = 0.10F;
+        rightForearm.zRot = 0.035F;
 
-        // Forelegs: powerful upper arm with elbow break instead of vertical columns.
-        leftForeleg.xRot = 0.12F;
-        rightForeleg.xRot = 0.12F;
-        leftForeLower.xRot = -0.30F;
-        rightForeLower.xRot = -0.30F;
+        // Front legs: elbows break backward while the distal forearm returns
+        // toward the ground. This avoids the "four straight columns" silhouette.
+        leftForeleg.xRot = 0.20F;
+        rightForeleg.xRot = 0.20F;
+        leftForeLower.xRot = -0.42F;
+        rightForeLower.xRot = -0.42F;
 
-        // Hind legs: pronounced digitigrade Z profile (thigh back, shin/tarsus forward).
-        leftHindleg.xRot = 0.30F;
-        rightHindleg.xRot = 0.30F;
-        leftHindLower.xRot = -0.58F;
-        rightHindLower.xRot = -0.58F;
+        // Hind legs: powerful digitigrade Z profile.
+        leftHindleg.xRot = 0.40F;
+        rightHindleg.xRot = 0.40F;
+        leftHindLower.xRot = -0.72F;
+        rightHindLower.xRot = -0.72F;
 
-        // X curvature is authored in the tail bone PartPoses; animation owns lateral sway.
         tail01.yRot = 0.0F;
         tail02.yRot = 0.0F;
         tail03.yRot = 0.0F;

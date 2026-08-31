@@ -1,0 +1,5 @@
+Modified Java files:
+- src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java
+- src/main/java/com/dracarys/dracarysmod/client/model/AbstractDracarysDragonModel.java
+
+Protected Java systems intentionally unchanged; see STEP5_5_PROTECTED_HASHES.log.

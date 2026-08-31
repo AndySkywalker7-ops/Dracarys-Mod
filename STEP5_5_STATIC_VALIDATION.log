@@ -1,0 +1,41 @@
+STEP 5.5 targeted static validation
+38/38 PASS
+
+PASS bone left_foreleg
+PASS bone right_foreleg
+PASS bone left_hindleg
+PASS bone right_hindleg
+PASS wing roots dynamic left/right
+PASS mass neck_mass_01
+PASS mass neck_mass_10
+PASS mass thorax_05
+PASS mass abdomen_04
+PASS mass pelvis_05
+PASS mass tail_mass_14
+PASS paired muscle _pectoral
+PASS paired muscle _latissimus
+PASS paired muscle _wing_deltoid
+PASS paired muscle _gluteal_mass
+PASS wing humerus_01
+PASS wing humerus_03
+PASS wing radius_ulna_01
+PASS wing radius_ulna_03
+PASS wing wrist_joint
+PASS wing metacarpal_02
+PASS wing wing_thumb
+PASS 3 wing digit loop
+PASS articulated finger mid
+PASS articulated finger tip
+PASS broad membrane
+PASS 25 membrane strips arrays
+PASS membrane thin
+PASS maximum chord 84
+PASS long articulated digits
+PASS front leg muscles
+PASS hind leg muscles
+PASS feet toes claws
+PASS neutral neck S
+PASS broad idle wings
+PASS front articulated pose
+PASS hind digitigrade pose
+PASS all protected SAME

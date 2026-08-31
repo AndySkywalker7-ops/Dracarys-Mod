@@ -1,0 +1,2 @@
+Gradle is not installed and gradle-wrapper.jar is not bundled in this generated workspace.
+Install Gradle 8.8 or import build.gradle in IntelliJ with JDK 17, then run: gradle build
