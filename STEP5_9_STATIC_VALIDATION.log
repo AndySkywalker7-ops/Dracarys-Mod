@@ -1,0 +1,51 @@
+STEP 5.9 TARGETED STATIC VALIDATION
+48/48 PASS
+
+[PASS] compat bone "body"
+[PASS] compat bone "neck_01"
+[PASS] compat bone "neck_02"
+[PASS] compat bone "neck_03"
+[PASS] compat bone "head"
+[PASS] compat bone "jaw"
+[PASS] compat bone "left_foreleg"
+[PASS] compat bone "right_foreleg"
+[PASS] compat bone "left_hindleg"
+[PASS] compat bone "right_hindleg"
+[PASS] compat bone "tail_01"
+[PASS] compat bone "tail_02"
+[PASS] compat bone "tail_03"
+[PASS] compat bone "tail_04"
+[PASS] wing root names generated left/right
+[PASS] smaller occipital 6.8
+[PASS] smaller muzzle 3.1
+[PASS] lateral eye offset 6.48
+[PASS] head crown helper
+[PASS] cheek spikes
+[PASS] facial scales
+[PASS] fore grasping hand
+[PASS] hind dedicated foot
+[PASS] hind thigh > fore upper arm
+[PASS] four grasp fingers
+[PASS] four wing digits
+[PASS] digit 4 membrane
+[PASS] pleated membrane linear
+[PASS] pleated membrane radial
+[PASS] membrane bridges
+[PASS] fold ribs
+[PASS] old linear helper removed
+[PASS] old radial helper removed
+[PASS] surface detail call
+[PASS] shoulder scales
+[PASS] hip scales
+[PASS] belly scutes
+[PASS] lower neck01 pose
+[PASS] lower neck02 pose
+[PASS] forward head pose
+[PASS] forelimb deep flex
+[PASS] hindlimb stronger flex
+[PASS] wing root arch
+[PASS] protected absent DracarysDragonRenderer.java
+[PASS] protected absent CleanLongRangeDragonRenderEvents.java
+[PASS] protected absent DracarysDragonEntity.java
+[PASS] protected absent DragonStage.java
+[PASS] protected absent DragonSizeTier.java

@@ -1,0 +1,102 @@
+--- /mnt/data/step59_work/base/src/main/java/com/dracarys/dracarysmod/client/model/AbstractDracarysDragonModel.java	2026-08-31 04:19:38.000000000 +0000
++++ /mnt/data/DracarysMod-Step5.9-Organic-Anatomy-Rebuild-PATCH/src/main/java/com/dracarys/dracarysmod/client/model/AbstractDracarysDragonModel.java	2026-08-31 05:14:33.390103717 +0000
+@@ -191,7 +191,7 @@
+ 
+     private void resetAnimatedPose() {
+         /*
+-         * Step 5.8 blueprint-locked neutral pose.
++         * Step 5.9 organic-anatomy neutral pose.
+          *
+          * BODY: low and nearly level.
+          * HEAD: forward with a tiny predatory downward bias.
+@@ -204,19 +204,19 @@
+         body.yRot = 0.0F;
+         body.zRot = 0.0F;
+ 
+-        neck01.xRot = 0.045F;
++        neck01.xRot = 0.020F;
+         neck01.yRot = 0.0F;
+         neck01.zRot = 0.0F;
+ 
+-        neck02.xRot = -0.070F;
++        neck02.xRot = -0.045F;
+         neck02.yRot = 0.0F;
+         neck02.zRot = 0.0F;
+ 
+-        neck03.xRot = 0.030F;
++        neck03.xRot = 0.018F;
+         neck03.yRot = 0.0F;
+         neck03.zRot = 0.0F;
+ 
+-        head.xRot = -0.025F;
++        head.xRot = 0.012F;
+         head.yRot = 0.0F;
+         head.zRot = 0.0F;
+         jaw.xRot = 0.012F;
+@@ -228,37 +228,37 @@
+          * The membrane sectors are parented to these bones and therefore
+          * follow this architecture instead of remaining a flat root plane.
+          */
+-        leftWingRoot.xRot = -0.065F;
+-        leftWingRoot.yRot = -0.325F;
+-        leftWingRoot.zRot = -0.305F;
+-        leftUpperArm.xRot = -0.018F;
+-        leftUpperArm.yRot = -0.105F;
+-        leftUpperArm.zRot = 0.145F;
+-        leftForearm.xRot = 0.018F;
+-        leftForearm.yRot = -0.185F;
+-        leftForearm.zRot = -0.085F;
+-
+-        rightWingRoot.xRot = -0.065F;
+-        rightWingRoot.yRot = 0.325F;
+-        rightWingRoot.zRot = 0.305F;
+-        rightUpperArm.xRot = -0.018F;
+-        rightUpperArm.yRot = 0.105F;
+-        rightUpperArm.zRot = -0.145F;
+-        rightForearm.xRot = 0.018F;
+-        rightForearm.yRot = 0.185F;
+-        rightForearm.zRot = 0.085F;
++        leftWingRoot.xRot = -0.080F;
++        leftWingRoot.yRot = -0.245F;
++        leftWingRoot.zRot = -0.385F;
++        leftUpperArm.xRot = -0.030F;
++        leftUpperArm.yRot = -0.120F;
++        leftUpperArm.zRot = 0.205F;
++        leftForearm.xRot = 0.025F;
++        leftForearm.yRot = -0.205F;
++        leftForearm.zRot = -0.120F;
++
++        rightWingRoot.xRot = -0.080F;
++        rightWingRoot.yRot = 0.245F;
++        rightWingRoot.zRot = 0.385F;
++        rightUpperArm.xRot = -0.030F;
++        rightUpperArm.yRot = 0.120F;
++        rightUpperArm.zRot = -0.205F;
++        rightForearm.xRot = 0.025F;
++        rightForearm.yRot = 0.205F;
++        rightForearm.zRot = 0.120F;
+ 
+         // Low, flexed forelimb chain.
+-        leftForeleg.xRot = 0.50F;
+-        rightForeleg.xRot = 0.50F;
+-        leftForeLower.xRot = -0.86F;
+-        rightForeLower.xRot = -0.86F;
+-
+-        // Strong reptilian/digitigrade Z.
+-        leftHindleg.xRot = 0.82F;
+-        rightHindleg.xRot = 0.82F;
+-        leftHindLower.xRot = -1.22F;
+-        rightHindLower.xRot = -1.22F;
++        leftForeleg.xRot = 0.56F;
++        rightForeleg.xRot = 0.56F;
++        leftForeLower.xRot = -0.94F;
++        rightForeLower.xRot = -0.94F;
++
++        // Heavy propulsion limbs retain a stronger reptilian/digitigrade Z.
++        leftHindleg.xRot = 0.88F;
++        rightHindleg.xRot = 0.88F;
++        leftHindLower.xRot = -1.28F;
++        rightHindLower.xRot = -1.28F;
+ 
+         // Base bends are restored by animateTail each frame.
+         tail01.yRot = 0.0F;
