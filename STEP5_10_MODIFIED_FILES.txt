@@ -1,0 +1,17 @@
+STEP 5.10 MODIFIED FILES
+
+MODIFIED
+src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java
+
+UNCHANGED / INCLUDED ONLY AS BASELINE
+src/main/java/com/dracarys/dracarysmod/client/model/AbstractDracarysDragonModel.java
+
+REFERENCE / DOCUMENTATION
+reference/STEP5_10_APPROVED_HEAD_REFERENCE.png
+STEP5_10_HEAD_BLUEPRINT.md
+STEP5_10_HEAD_IMPLEMENTATION.md
+STEP5_10_STATIC_VALIDATION.log
+STEP5_10_STUB_COMPILE.log
+STEP5_10_BUILD_ATTEMPT.log
+STEP5_10_BALANCED_DIFF.patch
+STEP5_10_SOURCE_PROMPT.txt

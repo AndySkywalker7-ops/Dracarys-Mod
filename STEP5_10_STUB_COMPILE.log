@@ -1,0 +1,4 @@
+STEP 5.10 STUB COMPILE
+RESULT: PASS
+BalancedDragonModel.java compiled successfully against minimal Minecraft/Dracarys API-compatible stubs.
+Purpose: detect Java syntax, missing helper, signature and local type errors before GitHub Actions.

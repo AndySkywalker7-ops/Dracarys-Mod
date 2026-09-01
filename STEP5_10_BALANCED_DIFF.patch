@@ -1,0 +1,561 @@
+--- /mnt/data/DracarysMod-Step5.9-Organic-Anatomy-Rebuild-PATCH/src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java	2026-08-31 18:16:12.104836647 +0000
++++ /mnt/data/step510_work/src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java	2026-08-31 18:18:37.006884024 +0000
+@@ -12,7 +12,7 @@
+ import net.minecraft.client.model.geom.builders.PartDefinition;
+ 
+ /**
+- * BALANCED — Step 5.9 organic voxel anatomical reconstruction.
++ * BALANCED — Step 5.10 reference-locked final skull/head reconstruction.
+  *
+  * <p>This is intentionally a sculptural rebuild instead of an incremental pass.
+  * Cuboids are used as overlapping anatomical masses: rib cage, pectorals,
+@@ -300,7 +300,7 @@
+     }
+ 
+     /* ====================================================================== */
+-    /* NECK + HEAD — fifteen visual masses, compact skull, anterolateral eyes   */
++    /* NECK + HEAD — neck preserved; skull rebuilt from approved turnaround      */
+     /* ====================================================================== */
+ 
+     private static void createNeckAndHead(PartDefinition body) {
+@@ -369,114 +369,328 @@
+     }
+ 
+ 
++
+     private static void createHead(PartDefinition head) {
+         /*
+-         * STEP 5.9: smaller draconic skull. The old head had crocodilian length
+-         * and mass; this version keeps a compact braincase, tapered wedge snout,
+-         * lateral eyes and a crown that visually flows into the neck.
++         * STEP 5.10 REFERENCE-LOCKED HEAD.
++         *
++         * Local coordinate convention:
++         * X = lateral, +left / -right
++         * Y = down
++         * Z = rearward; negative values project toward the snout
++         *
++         * The approved turnaround sheet is the authority. The skull is built as
++         * overlapping wedges/masses instead of one decorated box. Overall head
++         * size intentionally stays compact relative to the body.
+          */
+-        addEllipsoidMass(head, "occipital_mass", 6.8F, 4.7F, 8.6F,
+-                0.0F, -0.45F, 2.0F, -0.055F, 0, 218);
+-        addEllipsoidMass(head, "temporal_mass", 6.3F, 4.2F, 7.8F,
+-                0.0F, -0.35F, -2.9F, -0.040F, 34, 218);
+-        addEllipsoidMass(head, "orbital_cranium", 5.9F, 3.7F, 7.4F,
+-                0.0F, -0.15F, -7.4F, -0.020F, 68, 218);
+-        addEllipsoidMass(head, "snout_root", 4.8F, 2.85F, 7.2F,
+-                0.0F, 0.30F, -11.8F, 0.025F, 100, 218);
+-        addEllipsoidMass(head, "snout_mid", 3.9F, 2.25F, 6.5F,
+-                0.0F, 0.52F, -16.1F, 0.022F, 130, 218);
+-        addEllipsoidMass(head, "muzzle", 3.1F, 1.75F, 5.5F,
+-                0.0F, 0.66F, -20.0F, 0.018F, 160, 218);
+-        addEllipsoidMass(head, "nose_bridge", 2.45F, 1.35F, 4.0F,
+-                0.0F, 0.70F, -23.2F, 0.012F, 188, 218);
+ 
++        // Primary skull spline: broad posterior cranium -> narrow low muzzle.
++        addEllipsoidMass(head, "occipital_mass", 6.10F, 4.45F, 6.8F,
++                0.0F, -0.35F, 2.1F, -0.070F, 0, 212);
++        addEllipsoidMass(head, "rear_skull", 5.95F, 4.15F, 6.4F,
++                0.0F, -0.40F, -1.1F, -0.060F, 30, 212);
++        addEllipsoidMass(head, "main_cranium", 5.65F, 3.80F, 6.4F,
++                0.0F, -0.38F, -4.4F, -0.042F, 60, 212);
++        addEllipsoidMass(head, "front_cranium", 5.15F, 3.35F, 5.7F,
++                0.0F, -0.20F, -7.4F, -0.018F, 90, 212);
++
++        // Tapered wedge snout. Each mass is shorter, lower and narrower toward the nose.
++        addEllipsoidMass(head, "snout_root", 4.30F, 2.65F, 5.8F,
++                0.0F, 0.25F, -10.3F, 0.020F, 120, 212);
++        addEllipsoidMass(head, "snout_middle", 3.55F, 2.10F, 5.4F,
++                0.0F, 0.45F, -13.9F, 0.018F, 148, 212);
++        addEllipsoidMass(head, "muzzle", 2.90F, 1.65F, 4.7F,
++                0.0F, 0.58F, -17.2F, 0.014F, 176, 212);
++        addEllipsoidMass(head, "nose_mass", 2.38F, 1.36F, 3.7F,
++                0.0F, 0.62F, -20.0F, 0.010F, 202, 212);
++
++        // Posterior jaw muscles, cheeks and real orbital structures.
+         for (boolean left : new boolean[]{true, false}) {
+-            float side = left ? 1.0F : -1.0F;
++            float side = sideSign(left);
+             String q = left ? "left" : "right";
+-            addSideMass(head, q + "_jaw_adductor", left, 4.7F, 5.8F, 7.8F,
+-                    side * 4.8F, 0.9F, -4.2F, 0.03F, side * -0.13F, side * -0.12F, 0, 236);
+-            addSideMass(head, q + "_cheek_mass", left, 4.0F, 4.7F, 6.8F,
+-                    side * 4.9F, 1.3F, -8.4F, 0.03F, side * -0.14F, side * -0.11F, 28, 236);
++
++            addSideMass(head, q + "_temporal_mass", left, 4.8F, 4.7F, 6.6F,
++                    side * 4.55F, -0.35F, -2.4F,
++                    -0.030F, side * -0.11F, side * -0.10F, 2, 232);
++
++            addSideMass(head, q + "_jaw_adductor", left, 4.4F, 5.2F, 6.8F,
++                    side * 4.35F, 1.10F, -3.7F,
++                    0.035F, side * -0.12F, side * -0.11F, 28, 232);
++
++            addSideMass(head, q + "_cheek_mass", left, 3.8F, 4.25F, 5.9F,
++                    side * 4.65F, 1.25F, -6.6F,
++                    0.025F, side * -0.14F, side * -0.12F, 54, 232);
++
++            addSideMass(head, q + "_orbital_mass", left, 3.3F, 3.25F, 4.8F,
++                    side * 4.55F, -1.35F, -7.2F,
++                    -0.070F, side * -0.17F, side * -0.13F, 80, 232);
+ 
+             head.addOrReplaceChild(
+-                    q + "_eye_orbit",
+-                    builder(58, 236, left)
+-                            .addBox(-1.35F, -1.10F, -1.55F, 2.70F, 2.20F, 3.10F),
+-                    PartPose.offsetAndRotation(side * 5.65F, -2.10F, -8.2F,
+-                            -0.065F, side * -0.25F, side * -0.13F)
++                    q + "_brow_outer",
++                    builder(110, 232, left)
++                            .addBox(-2.15F, -0.46F, -2.10F, 4.30F, 0.92F, 4.20F),
++                    PartPose.offsetAndRotation(side * 4.18F, -3.20F, -7.15F,
++                            -0.18F, side * -0.17F, side * -0.18F)
+             );
+             head.addOrReplaceChild(
+-                    q + "_eye",
+-                    builder(76, 236, left)
+-                            .addBox(-0.52F, -0.50F, -0.62F, 1.04F, 1.00F, 1.24F),
+-                    PartPose.offsetAndRotation(side * 6.48F, -2.08F, -8.9F,
+-                            -0.025F, side * -0.31F, 0.0F)
++                    q + "_brow_inner",
++                    builder(130, 232, left)
++                            .addBox(-1.55F, -0.38F, -1.65F, 3.10F, 0.76F, 3.30F),
++                    PartPose.offsetAndRotation(side * 2.25F, -3.05F, -8.25F,
++                            -0.15F, side * -0.08F, side * -0.12F)
+             );
++
+             head.addOrReplaceChild(
+-                    q + "_brow_ridge",
+-                    builder(88, 236, left)
+-                            .addBox(-2.65F, -0.68F, -2.85F, 5.30F, 1.36F, 5.70F),
+-                    PartPose.offsetAndRotation(side * 3.7F, -3.55F, -8.3F,
+-                            -0.18F, side * -0.15F, side * -0.15F)
++                    q + "_eye",
++                    builder(150, 232, left)
++                            .addBox(-0.46F, -0.44F, -0.54F, 0.92F, 0.88F, 1.08F),
++                    PartPose.offsetAndRotation(side * 5.25F, -1.75F, -7.85F,
++                            -0.025F, side * -0.33F, 0.0F)
+             );
+ 
+             createHorn(head, left, true);
+             createHorn(head, left, false);
++            createTemporalHorn(head, left);
+             createCheekSpikes(head, left);
++            createSubmandibularSpikes(head, left);
+         }
+ 
++        PartDefinition upperJaw = head.addOrReplaceChild(
++                "upper_jaw", CubeListBuilder.create(),
++                PartPose.offset(0.0F, 1.45F, -7.6F)
++        );
++        addEllipsoidMass(upperJaw, "upper_jaw_rear", 4.65F, 1.55F, 6.8F,
++                0.0F, 0.05F, 0.0F, -0.010F, 0, 246);
++        addEllipsoidMass(upperJaw, "upper_jaw_mid", 3.65F, 1.25F, 7.2F,
++                0.0F, 0.02F, -4.8F, -0.012F, 34, 246);
++        addEllipsoidMass(upperJaw, "upper_jaw_front", 2.70F, 0.95F, 5.6F,
++                0.0F, -0.02F, -9.4F, -0.015F, 68, 246);
++
++        // Lower jaw pivots from the posterior hinge, not the middle of the muzzle.
+         PartDefinition jaw = head.addOrReplaceChild(
+                 "jaw", CubeListBuilder.create(),
+-                PartPose.offsetAndRotation(0.0F, 3.0F, -7.2F, 0.01F, 0.0F, 0.0F)
++                PartPose.offsetAndRotation(0.0F, 2.92F, -4.15F, 0.006F, 0.0F, 0.0F)
++        );
++        addEllipsoidMass(jaw, "jaw_hinge_mass", 4.95F, 1.90F, 6.2F,
++                0.0F, 0.25F, -0.4F, -0.025F, 100, 246);
++        addEllipsoidMass(jaw, "jaw_body", 4.15F, 1.55F, 7.4F,
++                0.0F, 0.28F, -4.1F, -0.020F, 132, 246);
++        addEllipsoidMass(jaw, "jaw_mid", 3.25F, 1.22F, 6.7F,
++                0.0F, 0.25F, -8.6F, -0.024F, 164, 246);
++        addEllipsoidMass(jaw, "jaw_tip", 2.35F, 0.88F, 4.9F,
++                0.0F, 0.18F, -12.4F, -0.032F, 196, 246);
++
++        jaw.addOrReplaceChild(
++                "tongue",
++                CubeListBuilder.create().texOffs(8, 250)
++                        .addBox(-2.15F, -0.28F, -10.8F, 4.30F, 0.56F, 10.9F),
++                PartPose.offsetAndRotation(0.0F, -0.95F, -0.6F, -0.020F, 0.0F, 0.0F)
++        );
++        jaw.addOrReplaceChild(
++                "oral_floor",
++                CubeListBuilder.create().texOffs(56, 250)
++                        .addBox(-2.55F, -0.24F, -11.3F, 5.10F, 0.48F, 11.8F),
++                PartPose.offset(0.0F, -0.40F, -0.4F)
+         );
+-        addEllipsoidMass(jaw, "jaw_hinge_mass", 5.2F, 2.25F, 7.5F,
+-                0.0F, 0.35F, 0.2F, -0.020F, 110, 236);
+-        addEllipsoidMass(jaw, "jaw_body", 4.4F, 1.80F, 8.8F,
+-                0.0F, 0.30F, -4.5F, -0.018F, 142, 236);
+-        addEllipsoidMass(jaw, "jaw_mid", 3.6F, 1.45F, 7.7F,
+-                0.0F, 0.25F, -9.6F, -0.025F, 174, 236);
+-        addEllipsoidMass(jaw, "jaw_tip", 2.7F, 1.05F, 5.3F,
+-                0.0F, 0.20F, -13.9F, -0.038F, 204, 236);
+ 
++        createTeeth(upperJaw, jaw);
++        createNostrilRidges(head);
+         createHeadCrown(head);
+         createFacialScales(head);
++        createCranialPlates(head);
+     }
+ 
+ 
+     private static void createHorn(PartDefinition head, boolean left, boolean primary) {
+-        float side = left ? 1.0F : -1.0F;
+-        float len1 = primary ? 8.2F : 5.5F;
+-        float thick = primary ? 2.15F : 1.55F;
+-        String name = (left ? "left" : "right") + (primary ? "_horn" : "_horn_secondary");
+-        PartDefinition horn = head.addOrReplaceChild(
++        float side = sideSign(left);
++        String q = left ? "left" : "right";
++        String name = q + (primary ? "_main_horn" : "_secondary_horn");
++
++        float rootLen = primary ? 5.7F : 4.4F;
++        float rootT = primary ? 1.75F : 1.28F;
++
++        PartDefinition rootHorn = head.addOrReplaceChild(
+                 name,
+-                builder(primary ? 108 : 134, 246, left)
+-                        .addBox(-thick * 0.5F, -thick * 0.5F, -0.7F, thick, thick, len1),
+-                PartPose.offsetAndRotation(side * (primary ? 4.6F : 5.0F),
+-                        primary ? -3.5F : -2.8F,
+-                        primary ? 1.7F : -3.0F,
+-                        primary ? -0.58F : -0.42F,
+-                        side * (primary ? 0.44F : 0.56F),
+-                        side * -0.13F)
++                builder(primary ? 108 : 136, 246, left)
++                        .addBox(-rootT * 0.5F, -rootT * 0.5F, -0.45F,
++                                rootT, rootT, rootLen),
++                PartPose.offsetAndRotation(
++                        side * (primary ? 4.15F : 4.75F),
++                        primary ? -3.55F : -2.85F,
++                        primary ? 0.8F : -3.6F,
++                        primary ? -0.43F : -0.34F,
++                        side * (primary ? 0.38F : 0.50F),
++                        side * (primary ? -0.12F : -0.10F)
++                )
++        );
++
++        float t2 = rootT * 0.74F;
++        float l2 = primary ? 5.1F : 3.7F;
++        PartDefinition seg2 = rootHorn.addOrReplaceChild(
++                "segment_02",
++                builder(primary ? 152 : 172, 246, left)
++                        .addBox(-t2 * 0.5F, -t2 * 0.5F, 0.0F, t2, t2, l2),
++                PartPose.offsetAndRotation(0.0F, 0.0F, rootLen - 0.55F,
++                        -0.20F, side * 0.10F, side * -0.035F)
++        );
++
++        float t3 = t2 * 0.68F;
++        float l3 = primary ? 4.2F : 2.9F;
++        PartDefinition seg3 = seg2.addOrReplaceChild(
++                "segment_03",
++                builder(primary ? 188 : 198, 246, left)
++                        .addBox(-t3 * 0.5F, -t3 * 0.5F, 0.0F, t3, t3, l3),
++                PartPose.offsetAndRotation(0.0F, 0.0F, l2 - 0.35F,
++                        -0.16F, side * 0.07F, side * -0.025F)
++        );
++
++        float t4 = Math.max(0.34F, t3 * 0.58F);
++        float l4 = primary ? 3.4F : 2.2F;
++        seg3.addOrReplaceChild(
++                "tip",
++                builder(primary ? 216 : 228, 246, left)
++                        .addBox(-t4 * 0.5F, -t4 * 0.5F, 0.0F, t4, t4, l4),
++                PartPose.offsetAndRotation(0.0F, 0.0F, l3 - 0.22F,
++                        -0.12F, side * 0.05F, 0.0F)
+         );
+-        float t2 = thick * 0.50F;
+-        PartDefinition tip = horn.addOrReplaceChild(
++    }
++
++
++    private static void createTemporalHorn(PartDefinition head, boolean left) {
++        float side = sideSign(left);
++        String q = left ? "left" : "right";
++        PartDefinition horn = head.addOrReplaceChild(
++                q + "_temporal_horn",
++                builder(194, 236, left)
++                        .addBox(-0.58F, -0.58F, 0.0F, 1.16F, 1.16F, 4.6F),
++                PartPose.offsetAndRotation(side * 5.15F, -1.05F, 0.1F,
++                        -0.18F, side * 0.66F, side * -0.13F)
++        );
++        horn.addOrReplaceChild(
+                 "tip",
+-                builder(primary ? 150 : 168, 246, left)
+-                        .addBox(-t2 * 0.5F, -t2 * 0.5F, 0.0F, t2, t2, len1 * 0.64F),
+-                PartPose.offsetAndRotation(0.0F, 0.0F, len1 - 0.8F,
+-                        -0.28F, side * 0.13F, side * -0.06F)
+-        );
+-        float t3 = Math.max(0.40F, t2 * 0.52F);
+-        tip.addOrReplaceChild(
+-                "needle",
+-                builder(primary ? 188 : 202, 246, left)
+-                        .addBox(-t3 * 0.5F, -t3 * 0.5F, 0.0F, t3, t3, len1 * 0.35F),
+-                PartPose.offsetAndRotation(0.0F, 0.0F, len1 * 0.58F,
+-                        -0.20F, side * 0.08F, 0.0F)
++                builder(210, 236, left)
++                        .addBox(-0.32F, -0.32F, 0.0F, 0.64F, 0.64F, 3.0F),
++                PartPose.offsetAndRotation(0.0F, 0.0F, 4.25F,
++                        -0.11F, side * 0.08F, 0.0F)
+         );
+     }
+ 
++
++    private static void createTeeth(PartDefinition upperJaw, PartDefinition lowerJaw) {
++        for (boolean left : new boolean[]{true, false}) {
++            float side = sideSign(left);
++            String q = left ? "l" : "r";
++            for (int i = 0; i < 6; i++) {
++                float z = -1.2F - i * 1.75F;
++                float x = side * (3.55F - i * 0.22F);
++                float len = (i == 1 || i == 2) ? 1.55F : 1.18F;
++                upperJaw.addOrReplaceChild(
++                        q + "_upper_tooth_" + (i + 1),
++                        builder((18 + i * 9) % 224, 252, left)
++                                .addBox(-0.28F, 0.0F, -0.30F, 0.56F, len, 0.60F),
++                        PartPose.offsetAndRotation(x, 0.86F, z,
++                                0.06F, side * -0.04F, side * 0.08F)
++                );
++
++                lowerJaw.addOrReplaceChild(
++                        q + "_lower_tooth_" + (i + 1),
++                        builder((82 + i * 9) % 224, 252, left)
++                                .addBox(-0.27F, -len, -0.29F, 0.54F, len, 0.58F),
++                        PartPose.offsetAndRotation(side * (3.72F - i * 0.23F), -0.73F, -2.2F - i * 1.75F,
++                                -0.04F, side * 0.035F, side * -0.07F)
++                );
++            }
++
++            upperJaw.addOrReplaceChild(
++                    q + "_upper_fang",
++                    builder(146, 252, left)
++                            .addBox(-0.34F, 0.0F, -0.36F, 0.68F, 2.15F, 0.72F),
++                    PartPose.offsetAndRotation(side * 3.05F, 0.78F, -4.0F,
++                            0.10F, side * -0.03F, side * 0.06F)
++            );
++            lowerJaw.addOrReplaceChild(
++                    q + "_lower_fang",
++                    builder(160, 252, left)
++                            .addBox(-0.32F, -1.85F, -0.34F, 0.64F, 1.85F, 0.68F),
++                    PartPose.offsetAndRotation(side * 3.12F, -0.62F, -4.6F,
++                            -0.08F, side * 0.03F, side * -0.05F)
++            );
++        }
++
++        for (int i = -1; i <= 1; i += 2) {
++            upperJaw.addOrReplaceChild(
++                    "upper_front_tooth_" + (i < 0 ? "l" : "r"),
++                    CubeListBuilder.create().texOffs(176, 252)
++                            .addBox(-0.26F, 0.0F, -0.28F, 0.52F, 1.25F, 0.56F),
++                    PartPose.offset(i * 0.95F, 0.70F, -11.15F)
++            );
++            lowerJaw.addOrReplaceChild(
++                    "lower_front_tooth_" + (i < 0 ? "l" : "r"),
++                    CubeListBuilder.create().texOffs(184, 252)
++                            .addBox(-0.24F, -1.10F, -0.26F, 0.48F, 1.10F, 0.52F),
++                    PartPose.offset(i * 0.90F, -0.55F, -13.0F)
++            );
++        }
++    }
++
++
++    private static void createNostrilRidges(PartDefinition head) {
++        for (boolean left : new boolean[]{true, false}) {
++            float side = sideSign(left);
++            String q = left ? "left" : "right";
++            head.addOrReplaceChild(
++                    q + "_nostril_ridge",
++                    builder(206, 238, left)
++                            .addBox(-0.72F, -0.24F, -0.90F, 1.44F, 0.48F, 1.80F),
++                    PartPose.offsetAndRotation(side * 1.25F, -0.72F, -20.15F,
++                            -0.13F, side * -0.10F, side * -0.04F)
++            );
++            head.addOrReplaceChild(
++                    q + "_nasal_plate",
++                    builder(220, 238, left)
++                            .addBox(-0.92F, -0.20F, -1.25F, 1.84F, 0.40F, 2.50F),
++                    PartPose.offsetAndRotation(side * 1.35F, -1.05F, -18.75F,
++                            -0.10F, side * -0.08F, side * -0.05F)
++            );
++        }
++    }
++
++
++    private static void createCranialPlates(PartDefinition head) {
++        float[] z = {-5.0F, -7.2F, -9.3F, -11.4F, -13.4F, -15.3F};
++        float[] w = {4.2F, 4.0F, 3.7F, 3.35F, 3.0F, 2.65F};
++        for (int i = 0; i < z.length; i++) {
++            head.addOrReplaceChild(
++                    "forehead_plate_" + (i + 1),
++                    CubeListBuilder.create().texOffs((20 + i * 18) % 220, 240)
++                            .addBox(-w[i] * 0.5F, -0.22F, -1.15F, w[i], 0.44F, 2.30F),
++                    PartPose.offsetAndRotation(0.0F, -3.32F + i * 0.18F, z[i],
++                            -0.07F + i * 0.010F, 0.0F, 0.0F)
++            );
++        }
++
++        for (boolean left : new boolean[]{true, false}) {
++            float side = sideSign(left);
++            String q = left ? "l" : "r";
++            for (int i = 0; i < 6; i++) {
++                float width = 2.25F - i * 0.12F;
++                head.addOrReplaceChild(
++                        q + "_orbital_plate_" + (i + 1),
++                        builder((128 + i * 14) % 224, 240, left)
++                                .addBox(-width * 0.5F, -0.20F, -1.05F, width, 0.40F, 2.10F),
++                        PartPose.offsetAndRotation(
++                                side * (4.75F - i * 0.25F),
++                                -2.15F + i * 0.42F,
++                                -5.2F - i * 1.85F,
++                                -0.05F,
++                                side * -0.12F,
++                                side * (0.22F - i * 0.02F)
++                        )
++                );
++            }
++        }
++    }
++
+     /* ====================================================================== */
+     /* WINGS — chiropteran/dragon skeleton + continuous pleated web     */
+     /* ====================================================================== */
+@@ -1003,31 +1217,82 @@
+     }
+ 
+ 
++
+     private static void createHeadCrown(PartDefinition head) {
+-        float[] z = {3.0F, 0.2F, -2.6F, -5.4F, -8.2F, -11.0F, -13.7F};
+-        float[] h = {6.8F, 7.2F, 6.8F, 6.0F, 5.1F, 4.1F, 3.1F};
++        float[] z = {2.8F, 0.7F, -1.5F, -3.8F, -6.0F, -8.2F, -10.4F, -12.5F};
++        float[] h = {5.4F, 6.2F, 6.7F, 6.3F, 5.7F, 4.9F, 4.0F, 3.1F};
+         for (int i = 0; i < z.length; i++) {
+             head.addOrReplaceChild(
+                     "crown_spine_" + (i + 1),
+-                    CubeListBuilder.create().texOffs(18 + i * 15, 246)
+-                            .addBox(-0.52F, -h[i], -0.85F, 1.04F, h[i], 1.70F),
+-                    PartPose.offsetAndRotation(0.0F, -3.25F + i * 0.10F, z[i],
+-                            -0.36F, 0.0F, (i % 2 == 0 ? 0.025F : -0.025F))
++                    CubeListBuilder.create().texOffs((12 + i * 14) % 224, 246)
++                            .addBox(-0.46F, -h[i], -0.72F, 0.92F, h[i], 1.44F),
++                    PartPose.offsetAndRotation(0.0F, -3.10F + i * 0.10F, z[i],
++                            -0.31F + i * 0.012F, 0.0F,
++                            (i % 2 == 0 ? 0.018F : -0.018F))
+             );
+         }
++
++        for (boolean left : new boolean[]{true, false}) {
++            float side = sideSign(left);
++            String q = left ? "l" : "r";
++            for (int i = 0; i < 6; i++) {
++                float len = 4.9F - i * 0.42F;
++                head.addOrReplaceChild(
++                        q + "_crown_lateral_" + (i + 1),
++                        builder((132 + i * 12) % 224, 246, left)
++                                .addBox(-0.40F, -0.40F, 0.0F, 0.80F, 0.80F, len),
++                        PartPose.offsetAndRotation(
++                                side * (2.25F + i * 0.43F),
++                                -3.20F + i * 0.26F,
++                                0.6F - i * 2.15F,
++                                -0.34F + i * 0.025F,
++                                side * (0.32F + i * 0.055F),
++                                side * -0.10F
++                        )
++                );
++            }
++        }
+     }
+ 
+     private static void createCheekSpikes(PartDefinition head, boolean left) {
+         float side = sideSign(left);
+         String q = left ? "left" : "right";
+-        for (int i = 0; i < 3; i++) {
+-            float len = 4.6F - i * 0.7F;
++        float[] z = {-3.8F, -5.8F, -7.8F, -9.7F};
++        for (int i = 0; i < z.length; i++) {
++            float len = 4.0F - i * 0.55F;
+             head.addOrReplaceChild(
+                     q + "_cheek_spike_" + (i + 1),
+                     builder((112 + i * 12) % 224, 246, left)
+-                            .addBox(-0.38F, -0.38F, 0.0F, 0.76F, 0.76F, len),
+-                    PartPose.offsetAndRotation(side * (5.2F - i * 0.18F), 1.1F + i * 0.55F, -5.4F - i * 2.2F,
+-                            0.18F, side * (0.72F + i * 0.06F), side * -0.13F)
++                            .addBox(-0.34F, -0.34F, 0.0F, 0.68F, 0.68F, len),
++                    PartPose.offsetAndRotation(
++                            side * (5.05F - i * 0.10F),
++                            0.55F + i * 0.42F,
++                            z[i],
++                            0.17F,
++                            side * (0.72F + i * 0.05F),
++                            side * -0.12F
++                    )
++            );
++        }
++    }
++
++    private static void createSubmandibularSpikes(PartDefinition head, boolean left) {
++        float side = sideSign(left);
++        String q = left ? "left" : "right";
++        for (int i = 0; i < 3; i++) {
++            float len = 2.8F - i * 0.45F;
++            head.addOrReplaceChild(
++                    q + "_submandibular_spike_" + (i + 1),
++                    builder((164 + i * 11) % 224, 246, left)
++                            .addBox(-0.30F, 0.0F, -0.28F, 0.60F, len, 0.56F),
++                    PartPose.offsetAndRotation(
++                            side * (3.75F - i * 0.40F),
++                            2.95F,
++                            -5.1F - i * 2.45F,
++                            0.04F,
++                            side * 0.04F,
++                            side * 0.13F
++                    )
+             );
+         }
+     }
+@@ -1036,14 +1301,38 @@
+         for (boolean left : new boolean[]{true, false}) {
+             float side = sideSign(left);
+             String q = left ? "l" : "r";
++
++            for (int i = 0; i < 7; i++) {
++                float w = 2.15F - i * 0.12F;
++                head.addOrReplaceChild(
++                        q + "_cheek_scale_" + (i + 1),
++                        builder((i * 16) % 220, 232, left)
++                                .addBox(-w * 0.5F, -0.22F, -1.05F, w, 0.44F, 2.10F),
++                        PartPose.offsetAndRotation(
++                                side * (4.80F - i * 0.18F),
++                                -0.25F + i * 0.38F,
++                                -2.7F - i * 2.25F,
++                                -0.04F,
++                                side * -0.10F,
++                                side * (0.24F - i * 0.022F)
++                        )
++                );
++            }
++
+             for (int i = 0; i < 5; i++) {
+-                float w = 2.3F - i * 0.18F;
++                float w = 1.85F - i * 0.10F;
+                 head.addOrReplaceChild(
+-                        q + "_face_scale_" + (i + 1),
+-                        builder((i * 18) % 220, 232, left)
+-                                .addBox(-w * 0.5F, -0.24F, -1.15F, w, 0.48F, 2.30F),
+-                        PartPose.offsetAndRotation(side * (5.4F - i * 0.22F), -0.4F + i * 0.32F, -3.2F - i * 3.1F,
+-                                -0.05F, side * -0.10F, side * (0.22F - i * 0.025F))
++                        q + "_jaw_plate_" + (i + 1),
++                        builder((120 + i * 17) % 220, 234, left)
++                                .addBox(-w * 0.5F, -0.18F, -1.0F, w, 0.36F, 2.0F),
++                        PartPose.offsetAndRotation(
++                                side * (4.25F - i * 0.25F),
++                                2.35F + i * 0.10F,
++                                -5.2F - i * 2.45F,
++                                0.08F,
++                                side * -0.08F,
++                                side * (0.18F - i * 0.018F)
++                        )
+                 );
+             }
+         }

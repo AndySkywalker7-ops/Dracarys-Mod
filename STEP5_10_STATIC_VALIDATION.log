@@ -1,0 +1,62 @@
+STEP 5.10 — REFERENCE-LOCKED HEAD STATIC VALIDATION
+
+RESULT: 58/58 PASS
+
+[PASS] contains "occipital_mass"
+[PASS] contains "rear_skull"
+[PASS] contains "main_cranium"
+[PASS] contains "front_cranium"
+[PASS] contains "snout_root"
+[PASS] contains "snout_middle"
+[PASS] contains "muzzle"
+[PASS] contains "nose_mass"
+[PASS] contains "upper_jaw"
+[PASS] contains "jaw"
+[PASS] contains createTemporalHorn
+[PASS] contains createSubmandibularSpikes
+[PASS] contains createTeeth
+[PASS] contains createNostrilRidges
+[PASS] contains createCranialPlates
+[PASS] bilateral eye loop exists
+[PASS] eyes use ±5.25 lateral placement
+[PASS] eyes yaw anterolaterally
+[PASS] jaw pivots posteriorly
+[PASS] individual upper teeth
+[PASS] individual lower teeth
+[PASS] upper fangs
+[PASS] lower fangs
+[PASS] tongue is child of moving jaw
+[PASS] oral floor is child of moving jaw
+[PASS] horn segment 02
+[PASS] horn segment 03
+[PASS] horn tips
+[PASS] temporal horns
+[PASS] forehead plates
+[PASS] orbital plates
+[PASS] cheek scales
+[PASS] jaw plates
+[PASS] central crown spines
+[PASS] lateral crown spines
+[PASS] cheek spikes
+[PASS] submandibular spikes
+[PASS] nostril ridges
+[PASS] nasal plates
+[PASS] head compatibility bone preserved
+[PASS] jaw compatibility bone preserved
+[PASS] protected method unchanged: createTorso
+[PASS] protected method unchanged: addGirdleMuscles
+[PASS] protected method unchanged: addEllipsoidMass
+[PASS] protected method unchanged: addSideMass
+[PASS] protected method unchanged: createWing
+[PASS] protected method unchanged: createForeleg
+[PASS] protected method unchanged: createHindleg
+[PASS] protected method unchanged: createTail
+[PASS] protected method unchanged: createDorsalCrest
+[PASS] protected method unchanged: createBodySurfaceDetail
+[PASS] protected method unchanged: createWingFoldRibs
+[PASS] protected method unchanged: addFoldRib
+[PASS] protected method unchanged: addMembraneBridge
+[PASS] STEP 5.9 crocodilian forward extent removed
+[PASS] STEP 5.10 nose center locked at -20.0
+[PASS] Abstract model unchanged
+[PASS] stub compile passed

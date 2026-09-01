@@ -1,0 +1,1177 @@
+# ================================================================
+# STEP 5.10 — DRACARYS DRAGON
+# FINAL SKULL / HEAD IMPLEMENTATION
+# REFERENCE-LOCKED HIGH-FIDELITY RECONSTRUCTION
+# ================================================================
+
+Actúa como DESARROLLADOR SÉNIOR experto en:
+
+- Minecraft Forge 1.20.1
+- Java
+- ModelPart / HierarchicalModel
+- GeckoLib 4 cuando corresponda
+- modelado anatómico de criaturas
+- modelado voxel / semi-orgánico de alta fidelidad
+- reconstrucción 3D desde referencias visuales
+- rigging jerárquico
+- pivots y articulaciones
+- jaws / eyes / horns
+- multipart hitboxes
+- animaciones de entidades complejas
+
+Trabajas sobre:
+
+DRACARYS MOD
+
+Modelo:
+
+BALANCED DRAGON
+
+Etapa:
+
+STEP 5.10 — FINAL HEAD / SKULL
+
+===============================================================
+OBJETIVO ABSOLUTO
+===============================================================
+
+EL DISEÑO DE LA CABEZA YA ESTÁ APROBADO.
+
+NO quiero que diseñes otra cabeza.
+
+NO quiero reinterpretaciones.
+
+NO quiero una cabeza "inspirada" en la referencia.
+
+NO quiero que simplifiques el diseño porque es Minecraft.
+
+Quiero que tomes la ficha visual de cabeza que te proporcioné y
+RECONSTRUYAS ESA CABEZA DENTRO DEL JUEGO.
+
+La referencia visual es la AUTORIDAD.
+
+El objetivo es:
+
+REFERENCIA 2D/3D
+        ↓
+BLUEPRINT NUMÉRICO
+        ↓
+GEOMETRÍA REAL DEL MODELO
+        ↓
+MISMA CABEZA DENTRO DE MINECRAFT
+
+===============================================================
+REGLA PRINCIPAL
+===============================================================
+
+La pregunta final NO es:
+
+"¿Se parece?"
+
+La pregunta final es:
+
+"¿Es esta misma cabeza trasladada a Minecraft?"
+
+Quiero reconocer inmediatamente:
+
+- cráneo;
+- hocico;
+- ojos;
+- mandíbula;
+- cuernos;
+- placas;
+- espinas;
+- mejillas;
+- cuello craneal;
+
+desde:
+
+FRONTAL
+LATERAL IZQUIERDA
+LATERAL DERECHA
+SUPERIOR
+INFERIOR
+POSTERIOR
+3/4 FRONTAL IZQUIERDA
+3/4 FRONTAL DERECHA
+3/4 POSTERIOR
+
+===============================================================
+ALCANCE ESTRICTO
+===============================================================
+
+TRABAJA ÚNICAMENTE:
+
+HEAD / SKULL.
+
+Puedes modificar los hijos visuales asociados a:
+
+head
+jaw
+
+y crear nuevos ModelPart hijos del head.
+
+Puedes realizar el ajuste mínimo necesario en:
+
+última transición neck_03 → head
+
+SOLAMENTE para conectar correctamente el nuevo cráneo.
+
+NO reconstruyas todavía:
+
+body
+chest
+abdomen
+pelvis
+front legs
+hind legs
+wings
+tail
+
+NO hagas cambios cosméticos en otras regiones.
+
+===============================================================
+NO TOCAR
+===============================================================
+
+NO modificar:
+
+DracarysDragonRenderer
+
+CleanLongRangeDragonRenderEvents
+
+long-range rendering
+
+fallback renderer
+
+tracking distance
+
+DracarysDragonEntity salvo requerimiento absolutamente inevitable
+
+DragonStage
+
+DragonSizeTier
+
+AI
+
+combat
+
+taming
+
+ownership
+
+navigation
+
+spawn
+
+worldgen
+
+wing geometry
+
+leg geometry
+
+tail geometry
+
+body geometry
+
+===============================================================
+REFERENCIA VISUAL
+===============================================================
+
+La ficha de cabeza proporcionada define:
+
+- vista frontal;
+- vista lateral izquierda;
+- vista lateral derecha;
+- vista superior;
+- vista inferior;
+- vista posterior;
+- vistas 3/4;
+- mandíbula abierta;
+- disposición de cuernos;
+- disposición de espinas;
+- estructura simplificada;
+- forma general del cuello craneal.
+
+UTILIZA ESA FICHA COMO REFERENCIA PRINCIPAL.
+
+No extrapoles otra anatomía.
+
+===============================================================
+PASO 1 — NO PROGRAMAR TODAVÍA
+===============================================================
+
+ANTES DE ESCRIBIR GEOMETRÍA:
+
+analiza la referencia y genera un:
+
+STEP5_10_HEAD_BLUEPRINT.md
+
+El blueprint debe describir NUMÉRICAMENTE la cabeza aprobada.
+
+No quiero descripciones vagas.
+
+===============================================================
+SISTEMA NORMALIZADO
+===============================================================
+
+Define:
+
+HEAD_LENGTH = 100 unidades
+
+Todas las demás dimensiones del cráneo se expresarán relativamente.
+
+Genera como mínimo:
+
+TOTAL HEAD LENGTH
+MAX SKULL WIDTH
+MAX SKULL HEIGHT
+
+SNOUT LENGTH
+SNOUT ROOT WIDTH
+SNOUT TIP WIDTH
+SNOUT ROOT HEIGHT
+SNOUT TIP HEIGHT
+
+CRANIUM LENGTH
+CRANIUM WIDTH
+CRANIUM HEIGHT
+
+JAW LENGTH
+JAW ROOT HEIGHT
+JAW TIP HEIGHT
+
+EYE X/Y/Z
+
+LEFT/RIGHT BROW X/Y/Z
+
+LEFT/RIGHT CHEEK X/Y/Z
+
+OCCIPITAL CENTER
+
+MAIN HORN ROOT
+MAIN HORN MID
+MAIN HORN TIP
+
+SECONDARY HORN ROOT/MID/TIP
+
+CRANIAL SPIKE ROOTS
+
+NECK CONNECTION CENTER
+
+===============================================================
+LANDMARKS OBLIGATORIOS
+===============================================================
+
+Define coordenadas para:
+
+NOSE TIP
+
+LEFT NOSTRIL
+RIGHT NOSTRIL
+
+SNOUT CENTER
+
+UPPER JAW CENTER
+LOWER JAW CENTER
+
+LEFT MOUTH CORNER
+RIGHT MOUTH CORNER
+
+LEFT EYE CENTER
+RIGHT EYE CENTER
+
+LEFT BROW CENTER
+RIGHT BROW CENTER
+
+LEFT CHEEK CENTER
+RIGHT CHEEK CENTER
+
+CRANIUM CENTER
+
+OCCIPITAL CENTER
+
+LEFT MAIN HORN ROOT
+RIGHT MAIN HORN ROOT
+
+LEFT MAIN HORN TIP
+RIGHT MAIN HORN TIP
+
+SECONDARY HORNS
+
+CROWN SPIKES
+
+CHEEK SPIKES
+
+SUBMANDIBULAR SPIKES
+
+NECK CONNECTION.
+
+===============================================================
+PROPORCIÓN GENERAL DEL CRÁNEO
+===============================================================
+
+La cabeza debe permanecer relativamente PEQUEÑA respecto del dragón.
+
+NO quiero volver a la cabeza sobredimensionada.
+
+No debe parecer:
+
+cocodrilo
+lagarto gigante
+T-Rex
+bloque rectangular.
+
+Debe ser:
+
+alargada
+afilada
+baja
+elegante
+dracónica
+depredadora.
+
+===============================================================
+VISTA LATERAL — AUTORIDAD PRINCIPAL
+===============================================================
+
+El perfil debe aproximarse al diseño aprobado:
+
+                horns / crown
+             /^^^^^^^^^^^^^^^^
+          __/                 
+      ___/     CRANIUM
+ ____/________________
+/        orbital      \____
+          region           \__
+                             \___ NOSE
+------------------------------------
+        upper jaw
+ \________________________________
+             lower jaw
+
+
+La línea superior NO debe ser perfectamente recta.
+
+Debe existir:
+
+forehead slope
+→ orbital rise
+→ cranial crown
+→ horn transition.
+
+===============================================================
+HOCICO
+===============================================================
+
+El hocico es uno de los elementos más importantes.
+
+Debe ser:
+
+más corto que el modelo cocodriliano anterior;
+
+estrecho delante;
+
+más ancho gradualmente hacia la región orbital;
+
+ligeramente comprimido verticalmente;
+
+angular y dracónico.
+
+VISTA SUPERIOR:
+
+          NOSE
+           ██
+         █████
+        ███████
+       █████████
+     █████████████
+        CRANIUM
+
+NO:
+
+████████████████████
+
+===============================================================
+VISTA FRONTAL
+===============================================================
+
+La cabeza debe ser aproximadamente:
+
+            ▲
+       horn │ horn
+        \   │   /
+        █████████
+      ███  O O  ███
+     ██           ██
+       █████████
+         █████
+          ███
+          nose
+
+Debe existir una forma triangular / wedge.
+
+NO debe tener frente de caja.
+
+===============================================================
+OJOS
+===============================================================
+
+CRÍTICO.
+
+Los ojos deben ser ANTEROLATERALES.
+
+NO frontales.
+
+VISTA SUPERIOR:
+
+             NOSE
+              |
+        ______|______
+      /               \
+     | O             O |
+     |                 |
+      \_____SKULL_____/
+
+Los ojos deben:
+
+- mirar parcialmente hacia delante;
+- estar claramente situados hacia los lados;
+- quedar protegidos por brow ridges;
+- no sobresalir como esferas flotantes.
+
+Los ojos deben estar contenidos físicamente dentro de las órbitas.
+
+===============================================================
+ÓRBITA / BROW RIDGE
+===============================================================
+
+Cada ojo necesita una auténtica estructura orbital.
+
+Crear:
+
+left_orbital_mass
+right_orbital_mass
+
+left_brow_outer
+left_brow_inner
+
+right_brow_outer
+right_brow_inner
+
+Las cejas óseas deben proyectarse sobre el ojo.
+
+Esto debe generar sombra y agresividad incluso sin textura.
+
+===============================================================
+CRÁNEO
+===============================================================
+
+NO utilizar:
+
+main_head_cube
+
+como solución dominante.
+
+El cráneo debe construirse mediante MASAS.
+
+Como mínimo:
+
+rear_skull
+occipital_mass
+main_cranium
+front_cranium
+left_temporal_mass
+right_temporal_mass
+left_orbital_mass
+right_orbital_mass
+left_cheek_mass
+right_cheek_mass
+snout_root
+snout_middle
+nose_mass
+
+Cada sección:
+
+- debe solaparse;
+- debe modificar ligeramente ancho/altura;
+- puede utilizar rotaciones pequeñas;
+- debe contribuir a la silueta.
+
+===============================================================
+VOLUMETRÍA
+===============================================================
+
+NO quiero cajas largas visibles.
+
+Cada masa anatómica importante debe usar:
+
+core
++
+left contour
++
+right contour
++
+dorsal contour
++
+ventral/diagonal transition
+
+cuando sea visualmente necesario.
+
+La forma final debe ser percibida como una sola superficie.
+
+===============================================================
+MEJILLAS / TEMPORALES
+===============================================================
+
+La referencia tiene mucha identidad en esta zona.
+
+Construir:
+
+left_temporal_mass
+right_temporal_mass
+
+left_cheek_mass
+right_cheek_mass
+
+jaw_adductor_left
+jaw_adductor_right
+
+Estas regiones deben dar:
+
+anchura posterior
++
+potencia mandibular
+
+sin aumentar demasiado el hocico.
+
+===============================================================
+MANDÍBULA
+===============================================================
+
+Debe existir:
+
+upperJaw
+lowerJaw
+
+claramente articulados.
+
+La mandíbula inferior debe pivotar desde la zona posterior real.
+
+NO desde el centro.
+
+Debe poder abrirse sin separarse visualmente del cráneo.
+
+===============================================================
+SILUETA DE MANDÍBULA
+===============================================================
+
+LATERAL:
+
+   cheek
+    ████
+      \___________________
+       \                  \
+        \__________________\
+              jaw
+
+Debe ser:
+
+gruesa atrás
+más fina delante.
+
+NO una barra rectangular uniforme.
+
+===============================================================
+BOCA
+===============================================================
+
+Con boca cerrada:
+
+upper + lower jaw deben encajar visualmente.
+
+Con boca abierta:
+
+deben aparecer:
+
+oral cavity
+tongue
+upper teeth
+lower teeth
+
+sin huecos extraños entre cráneo y mandíbula.
+
+===============================================================
+DIENTES
+===============================================================
+
+Crear dientes individuales o pequeños grupos.
+
+No utilizar:
+
+una gran barra blanca dentada.
+
+Debe existir:
+
+upper front teeth
+upper lateral teeth
+upper rear teeth
+
+lower front teeth
+lower lateral teeth
+lower rear teeth
+
+Colmillos principales ligeramente mayores.
+
+Los dientes deben:
+
+- nacer de las mandíbulas;
+- no flotar;
+- quedar contenidos dentro del contorno de boca.
+
+===============================================================
+NARIZ / NARINAS
+===============================================================
+
+La punta del hocico debe poseer una masa nasal específica.
+
+Crear:
+
+nose_bridge
+nose_tip
+left_nostril_ridge
+right_nostril_ridge
+
+Las narinas pueden resolverse mediante:
+
+contraste de textura
++
+pequeña geometría de reborde.
+
+No crear cubos negros flotantes.
+
+===============================================================
+CUERNOS PRINCIPALES
+===============================================================
+
+Los cuernos deben salir físicamente del cráneo.
+
+NO piezas flotantes.
+
+Cada cuerno principal:
+
+ROOT
+→ SEGMENT 01
+→ SEGMENT 02
+→ SEGMENT 03
+→ TIP
+
+Cada sección debe:
+
+- disminuir de grosor;
+- cambiar ligeramente de dirección;
+- generar una curva hacia atrás.
+
+NO quiero:
+
+un cono/bloque largo recto.
+
+===============================================================
+CUERNOS SECUNDARIOS
+===============================================================
+
+Añadir cuernos secundarios según referencia.
+
+Jerarquía:
+
+MAIN HORNS
+mayores
+
+SECONDARY HORNS
+medianos
+
+CRANIAL SPIKES
+pequeños.
+
+No todos del mismo tamaño.
+
+===============================================================
+ESPINAS CRANEALES
+===============================================================
+
+La referencia muestra una corona compleja.
+
+Construir espinas en:
+
+crown
+supraorbital region
+temporal region
+cheeks
+rear skull
+
+pero cada una debe tener un ROOT conectado a una masa del cráneo.
+
+===============================================================
+ESCAMAS
+===============================================================
+
+Agregar escalas de tres niveles.
+
+LEVEL 1 — STRUCTURAL PLATES
+
+grandes placas craneales.
+
+LEVEL 2 — SECONDARY SCALES
+
+alrededor de:
+
+eyes
+cheeks
+jaw
+crown.
+
+LEVEL 3 — MICRO DETAIL
+
+usar principalmente textura.
+
+NO modelar cada microescama como ModelPart.
+
+===============================================================
+PLACAS FACIALES
+===============================================================
+
+La referencia muestra un patrón de placas solapadas.
+
+Crear varias placas finas:
+
+forehead plates
+orbital plates
+cheek plates
+jaw plates
+
+con pequeñas diferencias de:
+
+position
+scale
+rotation.
+
+Deben parecer:
+
+SOLAPADAS.
+
+NO:
+
+pegadas aleatoriamente.
+
+===============================================================
+TRANSICIÓN AL CUELLO
+===============================================================
+
+La parte posterior del cráneo debe estrecharse gradualmente hasta neck_03.
+
+No quiero:
+
+HEAD ███████
+       |
+      neck
+
+Quiero:
+
+HEAD ███████
+       ██████
+        █████
+         ████
+          ███
+          neck
+
+Debe existir continuidad.
+
+===============================================================
+POSE NEUTRAL
+===============================================================
+
+La cabeza NO debe mirar hacia arriba.
+
+Pose base:
+
+HEAD →
+
+o ligeramente:
+
+HEAD ↘
+
+aproximadamente.
+
+No usar un pitch positivo fuerte.
+
+===============================================================
+SIMETRÍA
+===============================================================
+
+La geometría base puede ser simétrica.
+
+Pero pequeños elementos secundarios pueden tener variación controlada.
+
+NO crear asimetría suficiente como para cambiar la anatomía.
+
+===============================================================
+GEOMETRÍA PERMITIDA
+===============================================================
+
+NO te limites a cubos grandes.
+
+Puedes utilizar:
+
+muchos cuboides pequeños
+cuboides rotados
+planos finos
+placas
+wedges simulados mediante piezas escalonadas
+strips
+overlap
+tapering.
+
+Objetivo:
+
+MINECRAFT
++
+SEMI-ORGÁNICO
+
+similar a modelos complejos de mods avanzados.
+
+===============================================================
+PRESUPUESTO DE GEOMETRÍA
+===============================================================
+
+Para HEAD únicamente:
+
+AUTORIZADO aproximadamente:
+
+120–250 ModelParts
+
+200–500 cuboids / plates
+
+si realmente aportan forma.
+
+NO optimizar todavía.
+
+Primero:
+
+FIDELIDAD.
+
+===============================================================
+TEXTURA
+===============================================================
+
+NO intentar corregir geometría mala mediante textura.
+
+Primero:
+
+GEOMETRÍA.
+
+Luego la textura debe reforzar:
+
+scales
+plates
+eye sockets
+nostrils
+mouth
+horn keratin
+teeth
+surface variation.
+
+===============================================================
+TEST OBLIGATORIO — SILUETA
+===============================================================
+
+Convierte mentalmente el cráneo a NEGRO PURO.
+
+Si el perfil se sigue pareciendo a:
+
+cocodrilo
+rectángulo
+lagarto genérico
+
+FALLÓ.
+
+Debe reconocerse inmediatamente la cabeza aprobada.
+
+===============================================================
+TEST FRONTAL
+===============================================================
+
+Comprobar:
+
+- taper nasal;
+- ojos laterales;
+- brow ridges;
+- corona;
+- mejillas;
+- simetría;
+- mandíbula.
+
+===============================================================
+TEST SUPERIOR
+===============================================================
+
+Comprobar:
+
+- nose estrecho;
+- orbital expansion;
+- posterior skull ancho;
+- ojos laterales;
+- cuernos hacia atrás.
+
+===============================================================
+TEST INFERIOR
+===============================================================
+
+Comprobar:
+
+- mandíbula;
+- garganta;
+- unión al cuello;
+- simetría;
+- dientes contenidos.
+
+===============================================================
+TEST POSTERIOR
+===============================================================
+
+Comprobar:
+
+- occipital mass;
+- raíces de cuernos;
+- crown;
+- transición neck/head.
+
+===============================================================
+TEST 3/4
+===============================================================
+
+ÉSTE ES EL TEST MÁS IMPORTANTE.
+
+La referencia aprobada se debe reconocer inmediatamente en:
+
+3/4 FRONT LEFT
+3/4 FRONT RIGHT.
+
+Si la vista frontal y lateral funcionan
+pero 3/4 parece una caja:
+
+FALLÓ.
+
+===============================================================
+MANDÍBULA ABIERTA
+===============================================================
+
+Probar:
+
+CLOSED
+
+25 %
+
+50 %
+
+100 %
+
+No debe existir separación o clipping grave.
+
+===============================================================
+HITBOX
+===============================================================
+
+NO reconstruyas todo el multipart.
+
+Solamente, después de aprobar el cráneo:
+
+recalibra HEAD hitbox si es estrictamente necesario.
+
+Debe cubrir:
+
+skull
+snout
+jaw
+
+de forma razonable.
+
+NO incluir cuernos largos dentro de hitbox de daño salvo que el sistema
+actual lo requiera explícitamente.
+
+===============================================================
+ARCHIVOS
+===============================================================
+
+Prioridad:
+
+BalancedDragonModel.java
+
+y solamente los helpers visuales estrictamente necesarios.
+
+Si AbstractDracarysDragonModel requiere cambios:
+
+solo para:
+
+head neutral pose
+jaw animation
+look animation.
+
+No alterar otras animaciones.
+
+===============================================================
+VALIDACIONES ANTES DE FINALIZAR
+===============================================================
+
+Verificar:
+
+1. head bone existe.
+2. jaw bone existe.
+3. ningún elemento craneal está huérfano.
+4. cuernos son hijos del head / skull.
+5. dientes son hijos de jaws.
+6. eyes están dentro de orbital geometry.
+7. no floating geometry.
+8. closed jaw encaja.
+9. open jaw articula.
+10. head animation sigue funcionando.
+11. long-range render no fue modificado.
+12. entity gameplay no fue modificado.
+13. wings no fueron modificadas.
+14. legs no fueron modificadas.
+15. torso no fue modificado.
+16. tail no fue modificada.
+
+===============================================================
+ENTREGABLES OBLIGATORIOS
+===============================================================
+
+Devuélveme:
+
+1. STEP5_10_HEAD_BLUEPRINT.md
+
+2. BalancedDragonModel.java actualizado.
+
+3. AbstractDracarysDragonModel.java
+   SOLAMENTE si fue necesario.
+
+4. STEP5_10_HEAD_IMPLEMENTATION.md
+
+5. STEP5_10_MODIFIED_FILES.txt
+
+6. STEP5_10_STATIC_VALIDATION.log
+
+7. build attempt
+
+8. patch ZIP
+
+9. SHA-256.
+
+===============================================================
+NO QUIERO
+===============================================================
+
+NO quiero:
+
+explicaciones teóricas largas.
+
+NO quiero:
+
+"podríamos hacer".
+
+NO quiero:
+
+"una posible solución".
+
+NO quiero:
+
+pseudo-código.
+
+NO quiero:
+
+una lista de recomendaciones sin implementación.
+
+QUIERO:
+
+EL CÓDIGO.
+
+===============================================================
+CRITERIO FINAL DE APROBACIÓN
+===============================================================
+
+STEP 5.10 solo estará terminado cuando:
+
+VISTA FRONTAL
+VISTA LATERAL IZQUIERDA
+VISTA LATERAL DERECHA
+VISTA SUPERIOR
+VISTA INFERIOR
+VISTA POSTERIOR
+VISTA 3/4 IZQUIERDA
+VISTA 3/4 DERECHA
+
+reproduzcan de manera consistente
+LA MISMA CABEZA APROBADA.
+
+No aceptar:
+
+una vista buena y las demás malas.
+
+No aceptar:
+
+"más o menos parecido".
+
+No aceptar:
+
+gran desviación de proporciones.
+
+No aceptar:
+
+cocodrilo.
+
+No aceptar:
+
+cabeza sobredimensionada.
+
+No aceptar:
+
+cuernos flotantes.
+
+No aceptar:
+
+ojos frontales.
+
+No aceptar:
+
+mandíbula rectangular.
+
+No aceptar:
+
+bloques decorados para aparentar anatomía.
+
+===============================================================
+RESUMEN ABSOLUTO
+===============================================================
+
+NO DISEÑES.
+
+RECONSTRUYE.
+
+NO INTERPRETES.
+
+MIDE.
+
+NO SIMPLIFIQUES.
+
+TRADUCE.
+
+LA REFERENCIA YA ESTÁ APROBADA.
+
+CONVIÉRTELA EN GEOMETRÍA REAL DE MINECRAFT.
+
+La meta es:
+
+ESTA CABEZA EXACTA
+
+→
+
+DENTRO DE DRACARYS MOD.

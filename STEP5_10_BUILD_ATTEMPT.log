@@ -1,0 +1,10 @@
+STEP 5.10 BUILD ATTEMPT
+
+Workspace: /mnt/data/DracarysMod-1.20.1
+Checking wrapper:
+gradlew missing
+Checking system Gradle:
+gradle command not installed
+
+Result: full Forge build cannot be executed in this sandbox because no Gradle wrapper or system Gradle is available.
+Fallback compile: STEP5_10_STUB_COMPILE.log = PASS
