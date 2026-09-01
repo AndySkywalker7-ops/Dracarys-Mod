@@ -1,0 +1,2 @@
+javac --release 17: PASS
+MESH_RESOURCE_LOAD_PASS

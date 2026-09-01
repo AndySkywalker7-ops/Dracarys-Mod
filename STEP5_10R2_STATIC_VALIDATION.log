@@ -1,0 +1,32 @@
+STEP 5.10R2 STATIC VALIDATION
+================================
+
+Original GitHub error addressed:
+- AuthoredDragonHeadMesh.java: code too large
+- Cause: giant Java static array literals compiled into <clinit>
+
+Checks:
+PASS - Java source no longer embeds SKULL_VERTICES array literal
+PASS - Java source no longer embeds SKULL_INDICES array literal
+PASS - Java source no longer embeds SKULL_NORMALS array literal
+PASS - Java source no longer embeds JAW_VERTICES array literal
+PASS - Java source no longer embeds JAW_INDICES array literal
+PASS - Java source no longer embeds JAW_NORMALS array literal
+PASS - Runtime .mesh resource created
+PASS - Mesh magic DRHM valid
+PASS - Mesh version 1 valid
+PASS - Binary round-trip preserves all vertex floats within float32 tolerance
+PASS - Binary round-trip preserves all indices exactly
+PASS - Binary round-trip preserves all normals within float32 tolerance
+PASS - Skull vertex groups XYZUV valid: 653
+PASS - Skull triangles valid: 732
+PASS - Jaw vertex groups XYZUV valid: 241
+PASS - Jaw triangles valid: 272
+PASS - javac --release 17 with API stubs
+PASS - runtime classloader resource load test
+
+RESULT: 18/18 PASS
+
+Important:
+This validates the hotfix storage/loader path and Java syntax.
+The real Forge build remains GitHub Actions.

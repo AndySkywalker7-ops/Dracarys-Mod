@@ -1,0 +1,9 @@
+src/main/java/com/dracarys/dracarysmod/client/model/mesh/AuthoredDragonHeadMesh.java
+src/main/resources/assets/dracarysmod/models/entity/dragon/head/dracarys_head.mesh
+src/main/resources/assets/dracarysmod/models/entity/dragon/head/dracarys_head.obj
+src/main/resources/assets/dracarysmod/models/entity/dragon/head/dracarys_head.mtl
+src/main/resources/assets/dracarysmod/models/entity/dragon/head/dracarys_head.asset.json
+STEP5_10R2_CODE_TOO_LARGE_HOTFIX.md
+STEP5_10R2_MODIFIED_FILES.txt
+STEP5_10R2_STATIC_VALIDATION.log
+STEP5_10R2_STUB_COMPILE.log
