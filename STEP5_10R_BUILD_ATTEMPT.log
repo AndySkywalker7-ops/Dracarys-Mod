@@ -1,0 +1,13 @@
+STEP 5.10R — Forge build attempt
+
+A full Forge/Gradle build could not be executed in this container because the available project archives do not include gradle/wrapper/gradle-wrapper.jar and no compatible Gradle runtime is installed locally.
+
+Targeted Java compilation against API-shaped stubs was executed for:
+- AuthoredDragonHeadMesh.java
+- BalancedDragonModel.java
+- DracarysHeadAssetLayer.java
+- DracarysDragonRenderer.java
+
+Result: PASS (exit code 0).
+
+This validates Java syntax, generated array sizing, local method/type usage, and the new integration surface. It does NOT replace the real Forge build in GitHub Actions.

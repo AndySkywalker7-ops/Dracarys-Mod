@@ -2,6 +2,7 @@ package com.dracarys.dracarysmod.client.renderer;
 
 import com.dracarys.dracarysmod.DracarysMod;
 import com.dracarys.dracarysmod.client.model.anatomy.BalancedDragonModel;
+import com.dracarys.dracarysmod.client.renderer.layer.DracarysHeadAssetLayer;
 import com.dracarys.dracarysmod.client.render.DragonRenderDebug;
 import com.dracarys.dracarysmod.entity.DracarysDragonEntity;
 import com.mojang.blaze3d.vertex.PoseStack;
@@ -28,6 +29,7 @@ public class DracarysDragonRenderer
                 new BalancedDragonModel<>(context.bakeLayer(BalancedDragonModel.LAYER)),
                 1.2F
         );
+        this.addLayer(new DracarysHeadAssetLayer(this));
     }
 
     @Override

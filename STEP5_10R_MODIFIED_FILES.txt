@@ -1,0 +1,21 @@
+Modified:
+src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java
+src/main/java/com/dracarys/dracarysmod/client/renderer/DracarysDragonRenderer.java
+
+Added:
+src/main/java/com/dracarys/dracarysmod/client/model/mesh/AuthoredDragonHeadMesh.java
+src/main/java/com/dracarys/dracarysmod/client/renderer/layer/DracarysHeadAssetLayer.java
+src/main/resources/assets/dracarysmod/models/entity/dragon/head/dracarys_head.obj
+src/main/resources/assets/dracarysmod/models/entity/dragon/head/dracarys_head.mtl
+src/main/resources/assets/dracarysmod/models/entity/dragon/head/dracarys_head.asset.json
+src/main/resources/assets/dracarysmod/textures/entity/dragon/head/*.png (15 variants)
+
+Documentation / validation:
+STEP5_10R_HEAD_ASSET_REBUILD.md
+STEP5_10R_TEST_PLAN.md
+STEP5_10R_STATIC_VALIDATION.log
+STEP5_10R_STUB_COMPILE.log
+STEP5_10R_BUILD_ATTEMPT.log
+STEP5_10R_ASSET_TURNAROUND.png
+STEP5_10R_TEXTURED_TURNAROUND.png
+reference/STEP5_10_APPROVED_HEAD_REFERENCE.png

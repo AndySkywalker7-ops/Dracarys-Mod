@@ -1,0 +1,182 @@
+--- /tmp/old_bal.java	2026-09-01 02:49:19.294191614 +0000
++++ /mnt/data/DracarysMod-Step5.10R-Authored-Head-Asset-Rebuild-PATCH/src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java	2026-09-01 02:49:19.165732481 +0000
+@@ -2,6 +2,9 @@
+ 
+ import com.dracarys.dracarysmod.DracarysMod;
+ import com.dracarys.dracarysmod.client.model.AbstractDracarysDragonModel;
++import com.dracarys.dracarysmod.client.model.mesh.AuthoredDragonHeadMesh;
++import com.mojang.blaze3d.vertex.PoseStack;
++import com.mojang.blaze3d.vertex.VertexConsumer;
+ import com.dracarys.dracarysmod.entity.DracarysDragonEntity;
+ import net.minecraft.client.model.geom.ModelLayerLocation;
+ import net.minecraft.client.model.geom.ModelPart;
+@@ -372,132 +375,47 @@
+ 
+     private static void createHead(PartDefinition head) {
+         /*
+-         * STEP 5.10 REFERENCE-LOCKED HEAD.
++         * STEP 5.10R — AUTHORED HEAD ASSET ANCHORS ONLY.
+          *
+-         * Local coordinate convention:
+-         * X = lateral, +left / -right
+-         * Y = down
+-         * Z = rearward; negative values project toward the snout
+-         *
+-         * The approved turnaround sheet is the authority. The skull is built as
+-         * overlapping wedges/masses instead of one decorated box. Overall head
+-         * size intentionally stays compact relative to the body.
++         * The rejected STEP 5.10 CubeListBuilder skull has been removed. The
++         * visible head is rendered by AuthoredDragonHeadMesh through a dedicated
++         * RenderLayer. These empty ModelParts remain solely as animation anchors
++         * so existing head look and jaw animation contracts stay intact.
+          */
++        head.addOrReplaceChild(
++                "jaw",
++                CubeListBuilder.create(),
++                PartPose.offsetAndRotation(0.0F, 3.0F, -4.15F, 0.006F, 0.0F, 0.0F)
++        );
++    }
+ 
+-        // Primary skull spline: broad posterior cranium -> narrow low muzzle.
+-        addEllipsoidMass(head, "occipital_mass", 6.10F, 4.45F, 6.8F,
+-                0.0F, -0.35F, 2.1F, -0.070F, 0, 212);
+-        addEllipsoidMass(head, "rear_skull", 5.95F, 4.15F, 6.4F,
+-                0.0F, -0.40F, -1.1F, -0.060F, 30, 212);
+-        addEllipsoidMass(head, "main_cranium", 5.65F, 3.80F, 6.4F,
+-                0.0F, -0.38F, -4.4F, -0.042F, 60, 212);
+-        addEllipsoidMass(head, "front_cranium", 5.15F, 3.35F, 5.7F,
+-                0.0F, -0.20F, -7.4F, -0.018F, 90, 212);
+-
+-        // Tapered wedge snout. Each mass is shorter, lower and narrower toward the nose.
+-        addEllipsoidMass(head, "snout_root", 4.30F, 2.65F, 5.8F,
+-                0.0F, 0.25F, -10.3F, 0.020F, 120, 212);
+-        addEllipsoidMass(head, "snout_middle", 3.55F, 2.10F, 5.4F,
+-                0.0F, 0.45F, -13.9F, 0.018F, 148, 212);
+-        addEllipsoidMass(head, "muzzle", 2.90F, 1.65F, 4.7F,
+-                0.0F, 0.58F, -17.2F, 0.014F, 176, 212);
+-        addEllipsoidMass(head, "nose_mass", 2.38F, 1.36F, 3.7F,
+-                0.0F, 0.62F, -20.0F, 0.010F, 202, 212);
+-
+-        // Posterior jaw muscles, cheeks and real orbital structures.
+-        for (boolean left : new boolean[]{true, false}) {
+-            float side = sideSign(left);
+-            String q = left ? "left" : "right";
+-
+-            addSideMass(head, q + "_temporal_mass", left, 4.8F, 4.7F, 6.6F,
+-                    side * 4.55F, -0.35F, -2.4F,
+-                    -0.030F, side * -0.11F, side * -0.10F, 2, 232);
+-
+-            addSideMass(head, q + "_jaw_adductor", left, 4.4F, 5.2F, 6.8F,
+-                    side * 4.35F, 1.10F, -3.7F,
+-                    0.035F, side * -0.12F, side * -0.11F, 28, 232);
+-
+-            addSideMass(head, q + "_cheek_mass", left, 3.8F, 4.25F, 5.9F,
+-                    side * 4.65F, 1.25F, -6.6F,
+-                    0.025F, side * -0.14F, side * -0.12F, 54, 232);
+-
+-            addSideMass(head, q + "_orbital_mass", left, 3.3F, 3.25F, 4.8F,
+-                    side * 4.55F, -1.35F, -7.2F,
+-                    -0.070F, side * -0.17F, side * -0.13F, 80, 232);
+-
+-            head.addOrReplaceChild(
+-                    q + "_brow_outer",
+-                    builder(110, 232, left)
+-                            .addBox(-2.15F, -0.46F, -2.10F, 4.30F, 0.92F, 4.20F),
+-                    PartPose.offsetAndRotation(side * 4.18F, -3.20F, -7.15F,
+-                            -0.18F, side * -0.17F, side * -0.18F)
+-            );
+-            head.addOrReplaceChild(
+-                    q + "_brow_inner",
+-                    builder(130, 232, left)
+-                            .addBox(-1.55F, -0.38F, -1.65F, 3.10F, 0.76F, 3.30F),
+-                    PartPose.offsetAndRotation(side * 2.25F, -3.05F, -8.25F,
+-                            -0.15F, side * -0.08F, side * -0.12F)
+-            );
+-
+-            head.addOrReplaceChild(
+-                    q + "_eye",
+-                    builder(150, 232, left)
+-                            .addBox(-0.46F, -0.44F, -0.54F, 0.92F, 0.88F, 1.08F),
+-                    PartPose.offsetAndRotation(side * 5.25F, -1.75F, -7.85F,
+-                            -0.025F, side * -0.33F, 0.0F)
+-            );
+-
+-            createHorn(head, left, true);
+-            createHorn(head, left, false);
+-            createTemporalHorn(head, left);
+-            createCheekSpikes(head, left);
+-            createSubmandibularSpikes(head, left);
+-        }
++    /**
++     * Applies the existing articulated neck/head rig and renders the authored
++     * polygon asset. Called by the dedicated head layer after the regular body
++     * model has rendered. No head cuboids are present in the base layer.
++     */
++    public void renderAuthoredHead(
++            PoseStack poseStack,
++            VertexConsumer consumer,
++            int packedLight,
++            int packedOverlay
++    ) {
++        poseStack.pushPose();
++        root.translateAndRotate(poseStack);
++        body.translateAndRotate(poseStack);
++        neck01.translateAndRotate(poseStack);
++        neck02.translateAndRotate(poseStack);
++        neck03.translateAndRotate(poseStack);
++        head.translateAndRotate(poseStack);
++
++        AuthoredDragonHeadMesh.renderSkull(poseStack, consumer, packedLight, packedOverlay);
++
++        poseStack.pushPose();
++        jaw.translateAndRotate(poseStack);
++        AuthoredDragonHeadMesh.renderJaw(poseStack, consumer, packedLight, packedOverlay);
++        poseStack.popPose();
+ 
+-        PartDefinition upperJaw = head.addOrReplaceChild(
+-                "upper_jaw", CubeListBuilder.create(),
+-                PartPose.offset(0.0F, 1.45F, -7.6F)
+-        );
+-        addEllipsoidMass(upperJaw, "upper_jaw_rear", 4.65F, 1.55F, 6.8F,
+-                0.0F, 0.05F, 0.0F, -0.010F, 0, 246);
+-        addEllipsoidMass(upperJaw, "upper_jaw_mid", 3.65F, 1.25F, 7.2F,
+-                0.0F, 0.02F, -4.8F, -0.012F, 34, 246);
+-        addEllipsoidMass(upperJaw, "upper_jaw_front", 2.70F, 0.95F, 5.6F,
+-                0.0F, -0.02F, -9.4F, -0.015F, 68, 246);
+-
+-        // Lower jaw pivots from the posterior hinge, not the middle of the muzzle.
+-        PartDefinition jaw = head.addOrReplaceChild(
+-                "jaw", CubeListBuilder.create(),
+-                PartPose.offsetAndRotation(0.0F, 2.92F, -4.15F, 0.006F, 0.0F, 0.0F)
+-        );
+-        addEllipsoidMass(jaw, "jaw_hinge_mass", 4.95F, 1.90F, 6.2F,
+-                0.0F, 0.25F, -0.4F, -0.025F, 100, 246);
+-        addEllipsoidMass(jaw, "jaw_body", 4.15F, 1.55F, 7.4F,
+-                0.0F, 0.28F, -4.1F, -0.020F, 132, 246);
+-        addEllipsoidMass(jaw, "jaw_mid", 3.25F, 1.22F, 6.7F,
+-                0.0F, 0.25F, -8.6F, -0.024F, 164, 246);
+-        addEllipsoidMass(jaw, "jaw_tip", 2.35F, 0.88F, 4.9F,
+-                0.0F, 0.18F, -12.4F, -0.032F, 196, 246);
+-
+-        jaw.addOrReplaceChild(
+-                "tongue",
+-                CubeListBuilder.create().texOffs(8, 250)
+-                        .addBox(-2.15F, -0.28F, -10.8F, 4.30F, 0.56F, 10.9F),
+-                PartPose.offsetAndRotation(0.0F, -0.95F, -0.6F, -0.020F, 0.0F, 0.0F)
+-        );
+-        jaw.addOrReplaceChild(
+-                "oral_floor",
+-                CubeListBuilder.create().texOffs(56, 250)
+-                        .addBox(-2.55F, -0.24F, -11.3F, 5.10F, 0.48F, 11.8F),
+-                PartPose.offset(0.0F, -0.40F, -0.4F)
+-        );
+-
+-        createTeeth(upperJaw, jaw);
+-        createNostrilRidges(head);
+-        createHeadCrown(head);
+-        createFacialScales(head);
+-        createCranialPlates(head);
++        poseStack.popPose();
+     }
+ 
+ 

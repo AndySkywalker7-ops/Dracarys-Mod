@@ -1,0 +1,18 @@
+--- /tmp/old_renderer.java	2026-09-01 02:49:19.306191917 +0000
++++ /mnt/data/DracarysMod-Step5.10R-Authored-Head-Asset-Rebuild-PATCH/src/main/java/com/dracarys/dracarysmod/client/renderer/DracarysDragonRenderer.java	2026-09-01 02:49:19.182255114 +0000
+@@ -2,6 +2,7 @@
+ 
+ import com.dracarys.dracarysmod.DracarysMod;
+ import com.dracarys.dracarysmod.client.model.anatomy.BalancedDragonModel;
++import com.dracarys.dracarysmod.client.renderer.layer.DracarysHeadAssetLayer;
+ import com.dracarys.dracarysmod.client.render.DragonRenderDebug;
+ import com.dracarys.dracarysmod.entity.DracarysDragonEntity;
+ import com.mojang.blaze3d.vertex.PoseStack;
+@@ -28,6 +29,7 @@
+                 new BalancedDragonModel<>(context.bakeLayer(BalancedDragonModel.LAYER)),
+                 1.2F
+         );
++        this.addLayer(new DracarysHeadAssetLayer(this));
+     }
+ 
+     @Override

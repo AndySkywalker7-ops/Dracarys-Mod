@@ -1,0 +1,21 @@
+STEP 5.10R STATIC VALIDATION
+
+PASS | head anchor retained
+PASS | jaw anchor retained
+PASS | createHead has no addBox
+PASS | createHead has no addEllipsoidMass
+PASS | authored render method present
+PASS | runtime mesh has no CubeListBuilder API usage
+PASS | custom mesh renderer present
+PASS | dedicated layer present
+PASS | layer uses dedicated head texture
+PASS | renderer registers head layer
+PASS | long range shouldRender preserved
+PASS | no FAR/head proxy code added
+PASS | all 15 head variants exist
+PASS | all head textures 256x256
+PASS | editable OBJ exists
+PASS | asset manifest exists
+PASS | targeted stub compile passed
+
+TOTAL: 17/17 PASS
