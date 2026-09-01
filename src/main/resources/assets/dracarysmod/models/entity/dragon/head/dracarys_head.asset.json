@@ -1,5 +1,5 @@
 {
-  "format": "Dracarys authored head source 1.0",
+  "format": "Dracarys authored head source 1.1-R3",
   "units": "Minecraft model pixels (runtime divides by 16)",
   "head_anchor": "existing neck_03/head ModelPart",
   "jaw_anchor": {
@@ -10,8 +10,8 @@
     ],
     "bone": "head/jaw"
   },
-  "skull_vertices": 653,
-  "skull_triangles": 732,
+  "skull_vertices": 662,
+  "skull_triangles": 748,
   "jaw_vertices": 241,
   "jaw_triangles": 272,
   "reference": "reference/STEP5_10_APPROVED_HEAD_REFERENCE.png"

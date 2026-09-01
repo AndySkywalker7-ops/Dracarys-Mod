@@ -1,0 +1,25 @@
+STEP 5.10R3 files changed relative to STEP 5.10R2:
+
+MODIFIED
+src/main/resources/assets/dracarysmod/models/entity/dragon/head/dracarys_head.obj
+src/main/resources/assets/dracarysmod/models/entity/dragon/head/dracarys_head.mesh
+src/main/resources/assets/dracarysmod/models/entity/dragon/head/dracarys_head.asset.json
+
+DOCUMENTATION / REPRODUCIBILITY
+STEP5_10R3_SKULL_PROPORTION_PASS.md
+STEP5_10R3_VERTEX_REGION_CHANGES.md
+STEP5_10R3_STATIC_VALIDATION.log
+STEP5_10R3_STUB_COMPILE.log
+STEP5_10R3_BUILD_ATTEMPT.log
+STEP5_10R3_MODIFIED_FILES.txt
+tools/generate_head_asset_r3.py
+reference/STEP5_10R3_ASSET_TURNAROUND.png
+reference/STEP5_10R3_TEXTURED_TURNAROUND.png
+reference/STEP5_10R3_R2_VS_R3_COMPARISON.png
+
+CARRIED FORWARD BUT BYTE-IDENTICAL TO R2 IN FULL PACKAGE
+src/main/java/com/dracarys/dracarysmod/client/model/mesh/AuthoredDragonHeadMesh.java
+src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java
+src/main/java/com/dracarys/dracarysmod/client/renderer/layer/DracarysHeadAssetLayer.java
+src/main/java/com/dracarys/dracarysmod/client/renderer/DracarysDragonRenderer.java
+all 15 head variant PNG textures

@@ -1,0 +1,36 @@
+PASS | UNCHANGED src/main/java/com/dracarys/dracarysmod/client/model/mesh/AuthoredDragonHeadMesh.java
+PASS | UNCHANGED src/main/java/com/dracarys/dracarysmod/client/model/anatomy/BalancedDragonModel.java
+PASS | UNCHANGED src/main/java/com/dracarys/dracarysmod/client/renderer/layer/DracarysHeadAssetLayer.java
+PASS | UNCHANGED src/main/java/com/dracarys/dracarysmod/client/renderer/DracarysDragonRenderer.java
+PASS | TEXTURE UNCHANGED black.png
+PASS | TEXTURE UNCHANGED blue.png
+PASS | TEXTURE UNCHANGED brown.png
+PASS | TEXTURE UNCHANGED crimson.png
+PASS | TEXTURE UNCHANGED dark_blue.png
+PASS | TEXTURE UNCHANGED dark_green.png
+PASS | TEXTURE UNCHANGED gold.png
+PASS | TEXTURE UNCHANGED gray.png
+PASS | TEXTURE UNCHANGED green.png
+PASS | TEXTURE UNCHANGED orange.png
+PASS | TEXTURE UNCHANGED purple.png
+PASS | TEXTURE UNCHANGED red.png
+PASS | TEXTURE UNCHANGED silver.png
+PASS | TEXTURE UNCHANGED turquoise.png
+PASS | TEXTURE UNCHANGED white.png
+PASS | OBJ skull vertex count | 662
+PASS | OBJ jaw vertex count | 241
+PASS | OBJ skull triangle count | 748
+PASS | OBJ jaw triangle count | 272
+PASS | MESH magic | 0x4452484d
+PASS | MESH version | 1
+PASS | MESH fully consumed | 42572/42572
+PASS | MESH skull XYZUV | 3310
+PASS | MESH skull indices | 2244
+PASS | MESH skull normals | 2244
+PASS | MESH jaw XYZUV | 1205
+PASS | MESH jaw indices | 816
+PASS | MESH jaw normals | 816
+PASS | R3 skull finite
+PASS | R3 jaw finite
+
+TOTAL: 34/34 PASS

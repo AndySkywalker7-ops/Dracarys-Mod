@@ -1,0 +1,8 @@
+STEP 5.10R3 BUILD ATTEMPT
+
+Full Forge/Gradle build was not executed in this sandbox because the available current project workspace does not include gradle-wrapper.jar and no system Gradle executable is installed.
+
+A Java 17 stub compilation of the unchanged external mesh loader was executed instead:
+AuthoredDragonHeadMesh.java -> PASS (exit code 0)
+
+The authoritative full build remains GitHub Actions after applying this patch to the repository.
